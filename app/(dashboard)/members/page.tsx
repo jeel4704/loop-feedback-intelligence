@@ -1,6 +1,7 @@
 import { DataTable } from "@/components/tables";
+import { Avatar } from "@/components/common";
+import { demoMembers } from "@/data/users";
 import { Badge, Button, SectionHeader } from "@/components/ui";
-import { members } from "@/lib/mock-data";
 
 const roleVariant = {
   ADMIN: "blue",
@@ -9,10 +10,19 @@ const roleVariant = {
 } as const;
 
 export default function MembersPage() {
-  const rows = members.map((member) => [
+  const rows = demoMembers.map((member) => [
     <div key={`${member.email}-identity`}>
-      <p className="font-medium text-slate-900">{member.name}</p>
-      <p className="mt-1 text-xs text-slate-500">{member.email}</p>
+      <div className="flex items-center gap-3">
+        <Avatar initials={member.avatarInitials} name={member.name} />
+        <div>
+          <p className="font-medium text-slate-900 dark:text-slate-100">
+            {member.name}
+          </p>
+          <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+            {member.email}
+          </p>
+        </div>
+      </div>
     </div>,
     <Badge
       key={`${member.email}-role`}
@@ -21,8 +31,11 @@ export default function MembersPage() {
     >
       {member.role}
     </Badge>,
-    <span key={`${member.email}-scope`} className="text-sm text-slate-600">
-      Northstar Labs workspace
+    <span
+      key={`${member.email}-scope`}
+      className="text-sm text-slate-600 dark:text-slate-300"
+    >
+      Acme Technologies workspace
     </span>
   ]);
 

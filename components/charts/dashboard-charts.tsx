@@ -4,6 +4,10 @@ import {
   Bar,
   BarChart,
   Cell,
+  CartesianGrid,
+  Legend,
+  Line,
+  LineChart,
   Pie,
   PieChart,
   ResponsiveContainer,
@@ -29,19 +33,35 @@ interface ThemeDatum {
   count: number;
 }
 
+interface WeeklyTrendDatum {
+  name: string;
+  total: number;
+  negative: number;
+  positive: number;
+}
+
+interface ChannelDatum {
+  name: string;
+  value: number;
+}
+
 interface DashboardChartsProps {
-  volumeData: VolumeDatum[];
-  sentimentData: SentimentDatum[];
-  themeData: ThemeDatum[];
+  volumeData: ReadonlyArray<VolumeDatum>;
+  sentimentData: ReadonlyArray<SentimentDatum>;
+  themeData: ReadonlyArray<ThemeDatum>;
+  weeklyTrendData: ReadonlyArray<WeeklyTrendDatum>;
+  channelData: ReadonlyArray<ChannelDatum>;
 }
 
 export function DashboardCharts({
   volumeData,
   sentimentData,
-  themeData
+  themeData,
+  weeklyTrendData,
+  channelData
 }: DashboardChartsProps) {
   return (
-    <div className="grid gap-6 xl:grid-cols-3">
+    <div className="grid gap-6 xl:grid-cols-6">
       <Card className="xl:col-span-2">
         <CardContent className="p-6">
           <div className="mb-6">
@@ -55,6 +75,7 @@ export function DashboardCharts({
           <div className="h-72">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={volumeData}>
+                <CartesianGrid vertical={false} stroke="#e2e8f0" />
                 <XAxis dataKey="name" stroke="#64748b" fontSize={12} />
                 <YAxis stroke="#64748b" fontSize={12} />
                 <Tooltip />
@@ -121,6 +142,7 @@ export function DashboardCharts({
           <div className="h-72">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart layout="vertical" data={themeData} margin={{ left: 24 }}>
+                <CartesianGrid horizontal={false} stroke="#e2e8f0" />
                 <XAxis type="number" stroke="#64748b" fontSize={12} />
                 <YAxis
                   type="category"
@@ -136,7 +158,55 @@ export function DashboardCharts({
           </div>
         </CardContent>
       </Card>
+
+      <Card className="xl:col-span-3">
+        <CardContent className="p-6">
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold text-slate-950">Weekly Trend</h3>
+            <p className="mt-1 text-sm text-slate-500">
+              Weekly trend of total, positive, and negative feedback.
+            </p>
+          </div>
+          <div className="h-72">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={weeklyTrendData}>
+                <CartesianGrid vertical={false} stroke="#e2e8f0" />
+                <XAxis dataKey="name" stroke="#64748b" fontSize={12} />
+                <YAxis stroke="#64748b" fontSize={12} />
+                <Tooltip />
+                <Legend />
+                <Line type="monotone" dataKey="total" stroke="#2563eb" strokeWidth={3} />
+                <Line type="monotone" dataKey="positive" stroke="#4f46e5" strokeWidth={2} />
+                <Line type="monotone" dataKey="negative" stroke="#f43f5e" strokeWidth={2} />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="xl:col-span-3">
+        <CardContent className="p-6">
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold text-slate-950">
+              Channel Distribution
+            </h3>
+            <p className="mt-1 text-sm text-slate-500">
+              Volume by source channel in the current demo workspace.
+            </p>
+          </div>
+          <div className="h-72">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={channelData}>
+                <CartesianGrid vertical={false} stroke="#e2e8f0" />
+                <XAxis dataKey="name" stroke="#64748b" fontSize={11} interval={0} angle={-15} textAnchor="end" height={64} />
+                <YAxis stroke="#64748b" fontSize={12} />
+                <Tooltip />
+                <Bar dataKey="value" fill="#1d4ed8" radius={[10, 10, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
-

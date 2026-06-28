@@ -16,12 +16,11 @@ export function EmptyState({
     <Card>
       <CardContent className="flex flex-col items-start gap-4 p-8">
         <div>
-          <h3 className="text-lg font-semibold text-slate-900">{title}</h3>
-          <p className="mt-2 text-sm text-slate-600">{description}</p>
+          <h3 className="text-lg font-semibold text-slate-900 dark:text-slate-50">{title}</h3>
+          <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">{description}</p>
         </div>
         {action}
       </CardContent>
     </Card>
   );
 }
-

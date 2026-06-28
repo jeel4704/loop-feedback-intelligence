@@ -26,8 +26,8 @@ export function StatCard({
       <CardContent className="p-5">
         <div className="flex items-start justify-between gap-3">
           <div>
-            <p className="text-sm text-slate-500">{label}</p>
-            <p className="mt-3 text-3xl font-semibold tracking-tight text-slate-950">
+            <p className="text-sm text-slate-500 dark:text-slate-400">{label}</p>
+            <p className="mt-3 text-3xl font-semibold tracking-tight text-slate-950 dark:text-slate-50">
               {value}
             </p>
           </div>
@@ -42,4 +42,3 @@ export function StatCard({
     </Card>
   );
 }
-

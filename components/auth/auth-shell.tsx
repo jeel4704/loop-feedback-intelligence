@@ -48,11 +48,11 @@ export function AuthShell({ title, description, children }: AuthShellProps) {
           </div>
         </section>
 
-        <section className="rounded-[32px] border border-slate-200 bg-white p-8 shadow-sm sm:p-10">
-          <p className="text-sm font-semibold uppercase tracking-[0.24em] text-blue-600">
+        <section className="rounded-[32px] border border-slate-200 bg-white p-8 shadow-sm dark:border-slate-800 dark:bg-slate-950 sm:p-10">
+          <p className="text-sm font-semibold uppercase tracking-[0.24em] text-blue-600 dark:text-blue-400">
             {title}
           </p>
-          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-slate-950">
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-slate-950 dark:text-slate-50">
             {description}
           </h2>
           <div className="mt-8">{children}</div>
@@ -61,4 +61,3 @@ export function AuthShell({ title, description, children }: AuthShellProps) {
     </main>
   );
 }
-

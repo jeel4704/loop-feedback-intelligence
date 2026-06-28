@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { ReportPreview } from "@/components/reports";
 import {
   Badge,
@@ -7,9 +10,11 @@ import {
   Input,
   SectionHeader
 } from "@/components/ui";
-import { reportCards } from "@/lib/mock-data";
+import { demoReports } from "@/data/reports";
 
 export default function ReportsPage() {
+  const [selectedReport, setSelectedReport] = useState(demoReports[0]);
+
   return (
     <div className="space-y-6">
       <SectionHeader
@@ -37,41 +42,45 @@ export default function ReportsPage() {
 
       <div className="grid gap-6 xl:grid-cols-[0.9fr_1.1fr]">
         <div className="space-y-6">
-          {reportCards.map((report) => (
-            <Card key={report.title}>
+          {demoReports.map((report) => (
+            <button
+              key={report.id}
+              type="button"
+              className="block w-full text-left"
+              onClick={() => setSelectedReport(report)}
+            >
+            <Card className={selectedReport.id === report.id ? "ring-2 ring-blue-200 dark:ring-blue-900" : ""}>
               <CardContent className="p-6">
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <h2 className="text-lg font-semibold text-slate-950">
+                    <h2 className="text-lg font-semibold text-slate-950 dark:text-slate-50">
                       {report.title}
                     </h2>
-                    <p className="mt-2 text-sm text-slate-500">{report.date}</p>
+                    <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+                      {report.dateRange}
+                    </p>
                   </div>
-                  <Badge variant={report.status === "Ready" ? "green" : "amber"}>
+                  <Badge variant={report.status === "READY" ? "green" : "amber"}>
                     {report.status}
                   </Badge>
                 </div>
-                <p className="mt-4 text-sm text-slate-600">{report.summary}</p>
+                <p className="mt-4 text-sm text-slate-600 dark:text-slate-400">
+                  {report.sentimentSummary}
+                </p>
               </CardContent>
             </Card>
+            </button>
           ))}
         </div>
 
         <ReportPreview
-          topThemes={["Support speed", "Onboarding friction", "Billing clarity"]}
+          topThemes={selectedReport.topThemes}
           sentimentChanges={[
-            "Positive sentiment increased 11 points for support speed.",
-            "Onboarding friction became the top negative theme this week."
+            selectedReport.sentimentSummary,
+            `Generated for ${selectedReport.dateRange}.`
           ]}
-          customerQuotes={[
-            "The support team resolved my issue in under ten minutes.",
-            "I had to repeat steps in onboarding before import finally worked."
-          ]}
-          recommendedActions={[
-            "Simplify the onboarding checklist for first-time users.",
-            "Clarify team seat pricing in upgrade and billing surfaces.",
-            "Turn support workflow wins into onboarding guidance."
-          ]}
+          customerQuotes={selectedReport.customerQuotes}
+          recommendedActions={selectedReport.recommendedActions}
         />
       </div>
     </div>

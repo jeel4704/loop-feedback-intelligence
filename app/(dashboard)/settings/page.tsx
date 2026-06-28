@@ -19,10 +19,10 @@ export default function SettingsPage() {
             </h2>
             <form className="mt-6 space-y-5">
               <FormField label="Workspace name">
-                <Input defaultValue="Northstar Labs" />
+                <Input defaultValue="Acme Technologies" />
               </FormField>
               <FormField label="Workspace slug">
-                <Input defaultValue="northstar-labs" />
+                <Input defaultValue="acme-technologies" />
               </FormField>
               <Button type="submit">Save workspace</Button>
             </form>
@@ -39,7 +39,7 @@ export default function SettingsPage() {
                 <Input defaultValue="Ariana Rao" />
               </FormField>
               <FormField label="Email">
-                <Input defaultValue="ariana@northstarlabs.ai" />
+                <Input defaultValue="admin@loop.com" />
               </FormField>
               <Button type="submit" variant="secondary">
                 Update profile

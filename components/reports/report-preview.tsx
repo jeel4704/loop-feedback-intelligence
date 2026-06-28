@@ -57,9 +57,12 @@ export function ReportPreview({
             <h4 className="text-sm font-semibold uppercase tracking-[0.22em] text-slate-500">
               Customer quotes
             </h4>
-            <ul className="mt-3 space-y-3 text-sm text-slate-700">
+            <ul className="mt-3 space-y-3 text-sm text-slate-700 dark:text-slate-300">
               {customerQuotes.map((quote) => (
-                <li key={quote} className="rounded-2xl bg-slate-50 p-3">
+                <li
+                  key={quote}
+                  className="rounded-2xl bg-slate-50 p-3 dark:bg-slate-900"
+                >
                   “{quote}”
                 </li>
               ))}
@@ -81,4 +84,3 @@ export function ReportPreview({
     </Card>
   );
 }
-

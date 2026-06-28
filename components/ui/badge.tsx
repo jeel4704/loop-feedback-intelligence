@@ -20,7 +20,8 @@ const badgeVariants: Record<NonNullable<BadgeProps["variant"]>, string> = {
   green: "bg-emerald-50 text-emerald-700 ring-1 ring-inset ring-emerald-100",
   amber: "bg-amber-50 text-amber-700 ring-1 ring-inset ring-amber-100",
   rose: "bg-rose-50 text-rose-700 ring-1 ring-inset ring-rose-100",
-  outline: "bg-white text-slate-600 ring-1 ring-inset ring-slate-200"
+  outline:
+    "bg-white text-slate-600 ring-1 ring-inset ring-slate-200 dark:bg-slate-900 dark:text-slate-300 dark:ring-slate-700"
 };
 
 export function Badge({
@@ -42,4 +43,3 @@ export function Badge({
     </span>
   );
 }
-

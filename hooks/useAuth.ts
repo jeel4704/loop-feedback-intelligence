@@ -1,9 +1,8 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import { useAuthContext } from "@/providers/SessionProvider";
 
-// Auth hook wrapper to keep component imports consistent.
+// Hook wrapper for the frontend demo authentication state.
 export function useAuth() {
-  return useSession();
+  return useAuthContext();
 }
-
