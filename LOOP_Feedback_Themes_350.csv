@@ -1,0 +1,501 @@
+feedback,channel,theme,sentiment,status
+Edward Parker: Please add dark mode,Survey,Dark Mode,Neutral,Closed
+Zachary Lopez: Semantic search misses results,Play Store,Search,Negative,In Review
+Matthew Randall: Search is fast,App Store,Search,Positive,Closed
+Brittney Gonzales: Buttons are too small,Survey,UI/UX,Negative,Closed
+Wendy Moore: Need Slack integration,Email,Integrations,Neutral,In Review
+Kristina Steele: Need larger file support,Website,CSV Import,Neutral,Closed
+Ryan Henderson: Search is fast,Survey,Search,Positive,Resolved
+Joe Moreno: Need AMOLED dark theme,Email,Dark Mode,Neutral,Resolved
+Anthony Weiss: Report formatting needs improvement,Support Ticket,Reports,Neutral,New
+Justin Rodriguez: Need AMOLED dark theme,Email,Dark Mode,Neutral,Resolved
+Jennifer Lawrence: Need Slack integration,Mobile App,Integrations,Neutral,New
+James Day: Import mapping is confusing,App Store,CSV Import,Negative,In Review
+John Nelson: Dark mode would improve usability,Live Chat,Dark Mode,Negative,Closed
+Deanna Taylor: Need PDF export,Website,Reports,Neutral,Closed
+Trevor Dennis: Search is fast,Email,Search,Positive,New
+Jeffrey Harris: Email notifications are delayed,Support Ticket,Notifications,Negative,Closed
+Eileen Spears: Search is fast,Play Store,Search,Positive,In Review
+Donna Robinson: AI summary is accurate,Website,AI Insights,Positive,Resolved
+Stephanie Ray: App freezes while uploading CSV,Mobile App,Performance,Negative,Closed
+Marisa Reyes: Semantic search misses results,Live Chat,Search,Negative,New
+Emily Jefferson: Scheduled reports required,Play Store,Reports,Negative,In Review
+Brian Harris: Scheduled reports required,Live Chat,Reports,Negative,Resolved
+Karen Christian: Dashboard loads slowly,Survey,Performance,Negative,Resolved
+Leonard Daniels: Import mapping is confusing,Survey,CSV Import,Negative,In Review
+John Stevenson: Import mapping is confusing,Live Chat,CSV Import,Negative,New
+Claudia Miller: Need PDF export,Support Ticket,Reports,Neutral,In Review
+Bryan Grant: Please add dark mode,Email,Dark Mode,Neutral,New
+Joseph Hall: Report formatting needs improvement,Email,Reports,Neutral,Closed
+Pamela Ayala: Navigation is confusing,Live Chat,UI/UX,Negative,New
+Suzanne Garner: Please add Jira integration,Mobile App,Integrations,Neutral,Closed
+Gilbert Cooper: Session expires quickly,App Store,Authentication,Negative,Resolved
+Amy Wood: App freezes while uploading CSV,Website,Performance,Negative,In Review
+Linda Francis: Push notifications don't arrive,Email,Notifications,Negative,Resolved
+Jason Peterson: Need Slack integration,Support Ticket,Integrations,Neutral,Closed
+Calvin Parker: Need advanced filters,Support Ticket,Search,Neutral,Resolved
+Jason Harper: Theme detection is excellent,Website,AI Insights,Positive,Resolved
+Howard Davis: Theme detection is excellent,Support Ticket,AI Insights,Positive,New
+Craig Cooper: Navigation is confusing,Survey,UI/UX,Negative,Closed
+Susan Brown: Webhook support required,Play Store,Integrations,Negative,Closed
+Danielle Williamson: Need PDF export,Survey,Reports,Neutral,In Review
+Thomas Miller: Search is very slow,Mobile App,Performance,Negative,In Review
+Beth Porter: Need advanced filters,App Store,Search,Neutral,Closed
+Adrienne Little: App freezes while uploading CSV,Email,Performance,Negative,In Review
+Jeffrey Ryan: OTP not received,Email,Authentication,Negative,Closed
+Chelsey Guzman: Reports take too long,Website,Performance,Negative,Closed
+Tammy Anderson: Too many email alerts,Live Chat,Notifications,Negative,Resolved
+Marcus Green: Please add dark mode,Live Chat,Dark Mode,Neutral,New
+Christopher Lawrence: Semantic search misses results,Support Ticket,Search,Negative,Closed
+Ashley Chambers: Push notifications don't arrive,Play Store,Notifications,Negative,Resolved
+Rachel Bird: Search is fast,Survey,Search,Positive,In Review
+Bryan Harris: Please add dark mode,Survey,Dark Mode,Neutral,Resolved
+Brittany Scott: App freezes while uploading CSV,Survey,Performance,Negative,Closed
+Stephanie Price: Email notifications are delayed,Survey,Notifications,Negative,New
+Austin Garcia: OTP not received,Survey,Authentication,Negative,Resolved
+Justin Jacobs: Cannot reset password,Support Ticket,Authentication,Negative,Closed
+Mary Brady: Need AMOLED dark theme,Survey,Dark Mode,Neutral,In Review
+Christina Cooper: Need advanced filters,Play Store,Search,Neutral,Resolved
+Wyatt Thomas: Import mapping is confusing,Live Chat,CSV Import,Negative,Closed
+Brenda Nelson: Navigation is confusing,Live Chat,UI/UX,Negative,New
+Elizabeth Davis: Need Slack integration,Live Chat,Integrations,Neutral,Closed
+Monique Rhodes: Reports take too long,Website,Performance,Negative,In Review
+Sabrina Ryan: Need larger file support,Email,CSV Import,Neutral,New
+Katrina Johnson: Import mapping is confusing,Website,CSV Import,Negative,Closed
+Frank Barnes: Sidebar is cluttered,Live Chat,UI/UX,Negative,New
+Michele Taylor: Need larger file support,Email,CSV Import,Neutral,Closed
+Marie Krueger: CSV upload failed,Website,CSV Import,Negative,New
+Stephen Johnston: Session expires quickly,Play Store,Authentication,Negative,In Review
+Alejandra Graham: Please add dark mode,Support Ticket,Dark Mode,Neutral,New
+Margaret Woodard: Scheduled reports required,Live Chat,Reports,Negative,Closed
+Erik Richmond: Sentiment analysis is incorrect,Survey,AI Insights,Negative,New
+Scott Goodwin: Need AMOLED dark theme,Live Chat,Dark Mode,Neutral,In Review
+Dennis Mckenzie: Navigation is confusing,App Store,UI/UX,Negative,Closed
+Kristen Arnold: Import mapping is confusing,App Store,CSV Import,Negative,Closed
+Connie Anderson: Dashboard loads slowly,Mobile App,Performance,Negative,Closed
+Kimberly Cook: Theme detection is excellent,App Store,AI Insights,Positive,New
+Joshua Wright: Need larger file support,Support Ticket,CSV Import,Neutral,In Review
+Virginia Beck: Dashboard loads slowly,Live Chat,Performance,Negative,Closed
+Hector Garcia: Need larger file support,Email,CSV Import,Neutral,In Review
+Benjamin Fernandez: Need PDF export,Play Store,Reports,Neutral,In Review
+Amy Sanchez: Session expires quickly,Email,Authentication,Negative,Closed
+Jason Hart: Theme detection is excellent,Support Ticket,AI Insights,Positive,Closed
+Nathan Pennington: Need advanced filters,Support Ticket,Search,Neutral,New
+Rebecca Lawson: Scheduled reports required,Website,Reports,Negative,New
+Jose Lopez: Semantic search misses results,Support Ticket,Search,Negative,New
+Katherine Sparks: Dark mode would improve usability,Survey,Dark Mode,Negative,New
+Stephanie Frazier: Sentiment analysis is incorrect,Live Chat,AI Insights,Negative,New
+Alexander Walton: Cannot reset password,Email,Authentication,Negative,In Review
+Nathan Cervantes: Push notifications don't arrive,Support Ticket,Notifications,Negative,In Review
+Troy Stuart: Dark mode would improve usability,Play Store,Dark Mode,Negative,Resolved
+Kelly Coleman: CSV upload failed,Survey,CSV Import,Negative,Resolved
+Jared Vincent: Need Slack integration,Website,Integrations,Neutral,In Review
+Stephanie Cooper: Sidebar is cluttered,App Store,UI/UX,Negative,In Review
+Bradley Robertson: Please add Jira integration,Live Chat,Integrations,Neutral,New
+Scott Cain: CSV upload failed,Website,CSV Import,Negative,In Review
+Carrie Smith: Search is very slow,Live Chat,Performance,Negative,In Review
+Michael Sherman: Email notifications are delayed,Survey,Notifications,Negative,Closed
+Alexander Davis: AI summary is accurate,Mobile App,AI Insights,Positive,Resolved
+Morgan Torres: Dark mode would improve usability,Play Store,Dark Mode,Negative,Resolved
+Lisa Crawford: Scheduled reports required,Survey,Reports,Negative,In Review
+Adrian Smith: Need Slack integration,Website,Integrations,Neutral,New
+Eric Prince: Semantic search misses results,Survey,Search,Negative,New
+Steven Knight: Need advanced filters,App Store,Search,Neutral,New
+Melissa Nguyen: CSV upload failed,Live Chat,CSV Import,Negative,New
+Noah Hines: Search is very slow,Survey,Performance,Negative,Resolved
+Wesley Williams: Please add dark mode,App Store,Dark Mode,Neutral,Closed
+Richard Acosta: Theme detection is excellent,Live Chat,AI Insights,Positive,New
+Christopher York: Buttons are too small,Mobile App,UI/UX,Negative,Closed
+Angela Welch: Reports take too long,Support Ticket,Performance,Negative,In Review
+Joshua Williams: Dark mode would improve usability,Live Chat,Dark Mode,Negative,Closed
+Laura Graham: Import mapping is confusing,Website,CSV Import,Negative,In Review
+Ashley Abbott: Search is fast,Survey,Search,Positive,Closed
+James Walker: Search is very slow,App Store,Performance,Negative,Closed
+David Hartman: CSV upload failed,Email,CSV Import,Negative,In Review
+Claudia Cardenas: Need AMOLED dark theme,Support Ticket,Dark Mode,Neutral,Resolved
+Frank Mitchell: Please add dark mode,Support Ticket,Dark Mode,Neutral,New
+Gloria Gutierrez: CSV upload failed,Website,CSV Import,Negative,In Review
+Dana Doyle: Report formatting needs improvement,App Store,Reports,Neutral,In Review
+John Green: Email notifications are delayed,Mobile App,Notifications,Negative,In Review
+Jeremy Thomas: Need PDF export,Play Store,Reports,Neutral,New
+Randall Doyle: Need PDF export,Survey,Reports,Neutral,New
+Derrick Martinez: Webhook support required,Support Ticket,Integrations,Negative,In Review
+Joshua Brown: Please add Jira integration,App Store,Integrations,Neutral,In Review
+Angela Hall: Login failed with correct password,Email,Authentication,Negative,New
+Shane West: Sidebar is cluttered,Website,UI/UX,Negative,In Review
+Brandi Taylor: App freezes while uploading CSV,Website,Performance,Negative,In Review
+Beth Bryant: Too many email alerts,Live Chat,Notifications,Negative,New
+Vanessa Edwards: AI summary is accurate,Website,AI Insights,Positive,New
+Jeffrey Gardner: Need Slack integration,Live Chat,Integrations,Neutral,Resolved
+Jennifer Alexander: Buttons are too small,Mobile App,UI/UX,Negative,Resolved
+Richard Perez: Need Slack integration,Mobile App,Integrations,Neutral,Closed
+Nicholas Acosta: Navigation is confusing,Survey,UI/UX,Negative,In Review
+Amy Taylor: Dark mode would improve usability,Website,Dark Mode,Negative,New
+Katherine Morris: Scheduled reports required,Website,Reports,Negative,Closed
+Jennifer Mcgrath: Email notifications are delayed,Mobile App,Notifications,Negative,Resolved
+Karen Black: Scheduled reports required,Play Store,Reports,Negative,Closed
+Amy Novak: Need larger file support,Website,CSV Import,Neutral,Closed
+Catherine Garcia: Webhook support required,Live Chat,Integrations,Negative,Closed
+Brandon Young: Search is very slow,Website,Performance,Negative,New
+Ronnie Hunter: Import mapping is confusing,Mobile App,CSV Import,Negative,Closed
+Jessica Reyes: Dashboard loads slowly,Play Store,Performance,Negative,In Review
+Gary Phillips: Dark mode would improve usability,Live Chat,Dark Mode,Negative,In Review
+Dennis Gill: Dark mode would improve usability,Live Chat,Dark Mode,Negative,In Review
+Debra Smith: Dark mode would improve usability,Website,Dark Mode,Negative,In Review
+Evelyn Barber: OTP not received,Survey,Authentication,Negative,Closed
+Michael Frederick: Need Slack integration,Live Chat,Integrations,Neutral,Closed
+Curtis Williams: Cannot reset password,Mobile App,Authentication,Negative,Resolved
+Brad Young: Import mapping is confusing,Live Chat,CSV Import,Negative,In Review
+Heather Gallegos: Push notifications don't arrive,Play Store,Notifications,Negative,Resolved
+Leslie White: Buttons are too small,Mobile App,UI/UX,Negative,In Review
+Dylan Clarke: Please add dark mode,Website,Dark Mode,Neutral,New
+Jessica Erickson: Session expires quickly,Survey,Authentication,Negative,Resolved
+Cynthia Mcdaniel: Sentiment analysis is incorrect,Survey,AI Insights,Negative,Closed
+Jennifer Nash: Push notifications don't arrive,Email,Notifications,Negative,Resolved
+Kimberly Schmidt: Scheduled reports required,Play Store,Reports,Negative,Closed
+Suzanne Lawson: Buttons are too small,Survey,UI/UX,Negative,Resolved
+Ryan Jones: Need advanced filters,App Store,Search,Neutral,Resolved
+Sherri Hinton: Scheduled reports required,Email,Reports,Negative,New
+Rebecca Garcia: Need larger file support,Website,CSV Import,Neutral,Closed
+Edward James: Email notifications are delayed,Play Store,Notifications,Negative,Resolved
+Joshua Ramirez: CSV upload failed,Website,CSV Import,Negative,New
+Timothy Price: Report formatting needs improvement,Website,Reports,Neutral,New
+Amy Duarte: Need AMOLED dark theme,Play Store,Dark Mode,Neutral,Closed
+Martha Fernandez: Push notifications don't arrive,App Store,Notifications,Negative,Closed
+Brian Jenkins: Theme detection is excellent,App Store,AI Insights,Positive,Resolved
+Sheila Davis: AI summary is accurate,Play Store,AI Insights,Positive,Resolved
+Jessica Anthony: Search is fast,Support Ticket,Search,Positive,Resolved
+Emily Owens: Need advanced filters,App Store,Search,Neutral,New
+Joshua Turner: App freezes while uploading CSV,Support Ticket,Performance,Negative,Resolved
+Jerome Stewart: Scheduled reports required,Survey,Reports,Negative,In Review
+Timothy Russell: Email notifications are delayed,Website,Notifications,Negative,New
+Patricia Brown: Need AMOLED dark theme,Live Chat,Dark Mode,Neutral,Resolved
+Brendan Walker: Need advanced filters,Support Ticket,Search,Neutral,In Review
+Melissa Jones: Reports take too long,Survey,Performance,Negative,In Review
+Sarah Munoz: Cannot reset password,Support Ticket,Authentication,Negative,New
+Marissa Cabrera: Login failed with correct password,Website,Authentication,Negative,Closed
+Ryan Davis: CSV upload failed,Mobile App,CSV Import,Negative,New
+Jennifer Prince: Webhook support required,App Store,Integrations,Negative,Closed
+Jessica Davis: Reports take too long,Support Ticket,Performance,Negative,In Review
+Kayla Hughes: Report formatting needs improvement,Play Store,Reports,Neutral,Closed
+Travis Gonzales: Need Slack integration,Website,Integrations,Neutral,Closed
+Theresa Beck: Dark mode would improve usability,Survey,Dark Mode,Negative,New
+Jessica Edwards: Report formatting needs improvement,Mobile App,Reports,Neutral,New
+Haley Schmidt: Please add dark mode,Live Chat,Dark Mode,Neutral,Resolved
+Richard Roberts: Report formatting needs improvement,Website,Reports,Neutral,Resolved
+Erika Barrera: Please add dark mode,Mobile App,Dark Mode,Neutral,New
+James Gibson: Search is fast,App Store,Search,Positive,In Review
+Anna Wood: OTP not received,Email,Authentication,Negative,New
+Bernard Hickman: CSV upload failed,Mobile App,CSV Import,Negative,New
+Hayley Smith: Push notifications don't arrive,Play Store,Notifications,Negative,New
+Paul Nguyen: Need AMOLED dark theme,Mobile App,Dark Mode,Neutral,In Review
+Nicholas Riley: Scheduled reports required,Website,Reports,Negative,In Review
+Susan Dean: Please add Jira integration,Website,Integrations,Neutral,Closed
+Craig Green: CSV upload failed,Survey,CSV Import,Negative,Resolved
+Angela Hayden: Search is fast,Live Chat,Search,Positive,Resolved
+Michael Rodriguez: Email notifications are delayed,Survey,Notifications,Negative,New
+Krystal Wallace: Navigation is confusing,Email,UI/UX,Negative,Closed
+Anthony Sexton: Theme detection is excellent,Email,AI Insights,Positive,Resolved
+Kyle Rodriguez: Session expires quickly,Live Chat,Authentication,Negative,Resolved
+Travis Tanner: Need larger file support,Survey,CSV Import,Neutral,Closed
+Jennifer Green: Dashboard loads slowly,Support Ticket,Performance,Negative,Resolved
+Kimberly Hicks: Push notifications don't arrive,Website,Notifications,Negative,Closed
+Matthew Harris: Need PDF export,Website,Reports,Neutral,Closed
+Andrea Gibbs: Theme detection is excellent,Email,AI Insights,Positive,New
+Christina Oneill: Please add dark mode,Support Ticket,Dark Mode,Neutral,New
+Beth Morris: Search is fast,Website,Search,Positive,Resolved
+Douglas Chan: Need AMOLED dark theme,Mobile App,Dark Mode,Neutral,New
+Cheryl Gillespie: Need PDF export,Play Store,Reports,Neutral,New
+Aaron Harris: Search is fast,Survey,Search,Positive,In Review
+Jasmine Guerra: Import mapping is confusing,Play Store,CSV Import,Negative,In Review
+Jose Wilson: Please add dark mode,Play Store,Dark Mode,Neutral,Resolved
+Lori Johnson: Navigation is confusing,Live Chat,UI/UX,Negative,In Review
+Gloria Kemp: Dark mode would improve usability,App Store,Dark Mode,Negative,Resolved
+Colleen Barnett: Search is fast,Play Store,Search,Positive,New
+Laura Clark: Webhook support required,Survey,Integrations,Negative,Closed
+Lauren Jackson: Need larger file support,Live Chat,CSV Import,Neutral,In Review
+John Graham: Too many email alerts,Play Store,Notifications,Negative,New
+Charles Ross: Scheduled reports required,Survey,Reports,Negative,Resolved
+Rita Mann: Need advanced filters,Live Chat,Search,Neutral,New
+Kimberly Savage: Need Slack integration,Website,Integrations,Neutral,New
+Connie White: Import mapping is confusing,Play Store,CSV Import,Negative,In Review
+Jason Carlson: Please add dark mode,Live Chat,Dark Mode,Neutral,Resolved
+Gilbert Morris: CSV upload failed,Live Chat,CSV Import,Negative,Resolved
+John Murphy: Search is very slow,Website,Performance,Negative,Resolved
+Michael Foster: Session expires quickly,Survey,Authentication,Negative,Resolved
+Peggy Jones: Login failed with correct password,Mobile App,Authentication,Negative,Resolved
+Ashley Miller: Need PDF export,Survey,Reports,Neutral,New
+Stacey Miller: Reports take too long,Play Store,Performance,Negative,Closed
+Christopher Bryant: Sentiment analysis is incorrect,Website,AI Insights,Negative,New
+Savannah Franklin: Need Slack integration,Email,Integrations,Neutral,New
+Willie Garcia: Need larger file support,Live Chat,CSV Import,Neutral,Resolved
+Joy Ramirez: Reports take too long,Play Store,Performance,Negative,Closed
+Charles Moore: Search is fast,Live Chat,Search,Positive,In Review
+Lori Wyatt: Sentiment analysis is incorrect,Play Store,AI Insights,Negative,New
+Jason Barton: Sentiment analysis is incorrect,Survey,AI Insights,Negative,In Review
+Sydney Johnson: AI summary is accurate,Play Store,AI Insights,Positive,Resolved
+Daniel Harris: Need AMOLED dark theme,Survey,Dark Mode,Neutral,In Review
+Daniel Carlson: Report formatting needs improvement,App Store,Reports,Neutral,In Review
+Christine Myers: Theme detection is excellent,Play Store,AI Insights,Positive,In Review
+David Wilson: Sidebar is cluttered,Live Chat,UI/UX,Negative,In Review
+Gerald Brown: Navigation is confusing,Email,UI/UX,Negative,In Review
+Donald Smith: Need AMOLED dark theme,Mobile App,Dark Mode,Neutral,New
+Kimberly Simpson: Please add Jira integration,Survey,Integrations,Neutral,Resolved
+Barbara Coleman: Dashboard looks clean,Support Ticket,UI/UX,Positive,Closed
+Jessica Schneider: Need larger file support,Survey,CSV Import,Neutral,Resolved
+Louis Baker: Buttons are too small,Play Store,UI/UX,Negative,In Review
+Amanda Smith: Sidebar is cluttered,Support Ticket,UI/UX,Negative,In Review
+Elaine Clarke: AI summary is accurate,Survey,AI Insights,Positive,New
+Traci Rhodes: Too many email alerts,Play Store,Notifications,Negative,Closed
+Pamela Williams: Dark mode would improve usability,Email,Dark Mode,Negative,Resolved
+Cassandra Cox: Push notifications don't arrive,Email,Notifications,Negative,In Review
+Richard Perkins: CSV upload failed,Support Ticket,CSV Import,Negative,New
+Albert Beck: Need advanced filters,Live Chat,Search,Neutral,Closed
+Corey Smith: Theme detection is excellent,Survey,AI Insights,Positive,New
+Shawn Anderson: Buttons are too small,Play Store,UI/UX,Negative,Closed
+Tyler Wilson: Webhook support required,Survey,Integrations,Negative,New
+Matthew Davidson: Report formatting needs improvement,Play Store,Reports,Neutral,Closed
+Juan Beck: Please add dark mode,Live Chat,Dark Mode,Neutral,Closed
+Sharon Miles: Semantic search misses results,Mobile App,Search,Negative,New
+Roger Johnson: Buttons are too small,Support Ticket,UI/UX,Negative,Resolved
+Steven Martin: CSV upload failed,Website,CSV Import,Negative,Resolved
+Lindsey Hunt: Need Slack integration,Survey,Integrations,Neutral,Resolved
+Jason Fernandez: Cannot reset password,Website,Authentication,Negative,Closed
+Kimberly Durham: Please add Jira integration,Live Chat,Integrations,Neutral,In Review
+Leslie Fowler: Scheduled reports required,Play Store,Reports,Negative,New
+Kimberly Meyers: AI summary is accurate,Support Ticket,AI Insights,Positive,Resolved
+Karen Bowman: Reports take too long,Email,Performance,Negative,Closed
+Erin Smith: Scheduled reports required,Survey,Reports,Negative,Resolved
+Michael Rose: Push notifications don't arrive,Mobile App,Notifications,Negative,New
+Justin Garcia: Import mapping is confusing,App Store,CSV Import,Negative,New
+Teresa Kent: Need AMOLED dark theme,Website,Dark Mode,Neutral,Closed
+Amber Smith: Reports take too long,Mobile App,Performance,Negative,Resolved
+Teresa Buck: OTP not received,App Store,Authentication,Negative,Closed
+Jacob Anderson: Buttons are too small,Live Chat,UI/UX,Negative,In Review
+Mark Leonard: App freezes while uploading CSV,App Store,Performance,Negative,Resolved
+Rachel Lee: Buttons are too small,Website,UI/UX,Negative,In Review
+Donna Rowland: Need AMOLED dark theme,Play Store,Dark Mode,Neutral,Closed
+Emma Schneider: Push notifications don't arrive,Website,Notifications,Negative,In Review
+Melissa Miles: Reports take too long,Survey,Performance,Negative,In Review
+Ashley Wolf: Sentiment analysis is incorrect,Email,AI Insights,Negative,Resolved
+Kristen Henderson: Search is very slow,Website,Performance,Negative,Closed
+Mary Moses: AI summary is accurate,Play Store,AI Insights,Positive,New
+Jennifer Bradley: Webhook support required,Support Ticket,Integrations,Negative,In Review
+Diane Campbell: Scheduled reports required,Mobile App,Reports,Negative,New
+Thomas Martinez: Need Slack integration,Survey,Integrations,Neutral,In Review
+Amy Woods: Webhook support required,Mobile App,Integrations,Negative,Resolved
+Lisa Morris: Dashboard looks clean,Website,UI/UX,Positive,Closed
+Lisa Marshall: Import mapping is confusing,Survey,CSV Import,Negative,In Review
+Corey Brooks: Semantic search misses results,Live Chat,Search,Negative,Resolved
+Daniel Watson: Please add dark mode,Mobile App,Dark Mode,Neutral,Resolved
+Laura White: Search is very slow,Mobile App,Performance,Negative,In Review
+Cindy Pitts: CSV upload failed,App Store,CSV Import,Negative,Closed
+Ashley Allen: Dashboard looks clean,Website,UI/UX,Positive,In Review
+Melissa Jones: AI summary is accurate,App Store,AI Insights,Positive,Closed
+Sarah Lee: Dashboard looks clean,Mobile App,UI/UX,Positive,New
+Richard Morrow: Scheduled reports required,Survey,Reports,Negative,Resolved
+Briana Curtis: Please add dark mode,Support Ticket,Dark Mode,Neutral,Resolved
+David Nunez: AI summary is accurate,App Store,AI Insights,Positive,In Review
+Marissa Heath: OTP not received,Mobile App,Authentication,Negative,Closed
+Jacob Gonzalez: CSV upload failed,Email,CSV Import,Negative,New
+Susan Barnes: App freezes while uploading CSV,Mobile App,Performance,Negative,Closed
+Daniel Miller: Dashboard looks clean,Survey,UI/UX,Positive,In Review
+Nathan Moyer: Need AMOLED dark theme,Email,Dark Mode,Neutral,In Review
+Jacqueline Collins: Push notifications don't arrive,Play Store,Notifications,Negative,In Review
+Latasha Hayes: Session expires quickly,Play Store,Authentication,Negative,Resolved
+Olivia Mitchell: Search is very slow,Email,Performance,Negative,Resolved
+Marissa Higgins: Too many email alerts,App Store,Notifications,Negative,Closed
+Lisa Wilson: Too many email alerts,Mobile App,Notifications,Negative,In Review
+Sandra Gonzalez: CSV upload failed,Mobile App,CSV Import,Negative,New
+Nathan Branch: Webhook support required,Survey,Integrations,Negative,Closed
+Kevin Sutton: Dark mode would improve usability,Survey,Dark Mode,Negative,New
+Derek Pacheco: Scheduled reports required,Live Chat,Reports,Negative,Resolved
+Martin Christian: Need Slack integration,Support Ticket,Integrations,Neutral,New
+Gina Gillespie: OTP not received,Play Store,Authentication,Negative,In Review
+Cynthia Williams: Push notifications don't arrive,Survey,Notifications,Negative,Closed
+Kelly Vincent: Sentiment analysis is incorrect,Email,AI Insights,Negative,Resolved
+Carrie Palmer: Cannot reset password,Mobile App,Authentication,Negative,In Review
+Charles Butler: Dashboard looks clean,Support Ticket,UI/UX,Positive,Closed
+Michelle Lee: Dark mode would improve usability,Support Ticket,Dark Mode,Negative,Closed
+Sara Herman: Buttons are too small,Support Ticket,UI/UX,Negative,New
+Brenda Lee: Please add Jira integration,Mobile App,Integrations,Neutral,Resolved
+Kelsey Reyes: Sidebar is cluttered,Play Store,UI/UX,Negative,Closed
+Raymond Lawson: Need Slack integration,Support Ticket,Integrations,Neutral,New
+Brianna Soto: Dashboard loads slowly,App Store,Performance,Negative,Closed
+Gregory Rivera: Sidebar is cluttered,Website,UI/UX,Negative,New
+Kathleen Jackson: Dashboard loads slowly,Email,Performance,Negative,In Review
+Anita Stout: Theme detection is excellent,Live Chat,AI Insights,Positive,Closed
+Sarah Baker: Login failed with correct password,Mobile App,Authentication,Negative,New
+Stephen Morales: Need PDF export,Live Chat,Reports,Neutral,In Review
+Dawn Mccormick: Need Slack integration,Mobile App,Integrations,Neutral,Closed
+Gregory Hill: Dark mode would improve usability,Play Store,Dark Mode,Negative,New
+Edward Peterson: Please add dark mode,Website,Dark Mode,Neutral,In Review
+Michael Cunningham: Cannot reset password,Live Chat,Authentication,Negative,Resolved
+Amy Dean: CSV upload failed,App Store,CSV Import,Negative,In Review
+Robert Robinson: Email notifications are delayed,Survey,Notifications,Negative,Resolved
+Holly Wall: Sentiment analysis is incorrect,Website,AI Insights,Negative,Resolved
+William Gutierrez: Push notifications don't arrive,Mobile App,Notifications,Negative,In Review
+Henry Flores: OTP not received,Play Store,Authentication,Negative,Resolved
+Natalie Coleman: Need AMOLED dark theme,Support Ticket,Dark Mode,Neutral,Closed
+Kathleen Cook: Dark mode would improve usability,Support Ticket,Dark Mode,Negative,New
+Jack Lopez: App freezes while uploading CSV,App Store,Performance,Negative,New
+Vanessa Howard: Need PDF export,Support Ticket,Reports,Neutral,In Review
+Kathy Montgomery: CSV upload failed,Live Chat,CSV Import,Negative,Closed
+Erin Smith: Webhook support required,Mobile App,Integrations,Negative,Resolved
+Michael Wu: Session expires quickly,Email,Authentication,Negative,Closed
+Dorothy Andrews: Need advanced filters,Play Store,Search,Neutral,In Review
+Elizabeth Coffey: Need advanced filters,Mobile App,Search,Neutral,New
+Sheryl Rios: Cannot reset password,Play Store,Authentication,Negative,Resolved
+Ebony Roberts: Theme detection is excellent,Website,AI Insights,Positive,In Review
+Stephanie Williams: Search is fast,App Store,Search,Positive,Resolved
+Nicholas Robinson: Scheduled reports required,Live Chat,Reports,Negative,In Review
+John Gallagher: Webhook support required,App Store,Integrations,Negative,New
+Michele Sullivan: Cannot reset password,Mobile App,Authentication,Negative,New
+Joshua Brown: Please add Jira integration,Support Ticket,Integrations,Neutral,Closed
+Ruben Long: Semantic search misses results,Survey,Search,Negative,Closed
+Shannon Rogers: Please add dark mode,Mobile App,Dark Mode,Neutral,Resolved
+Dwayne Johnson: Login failed with correct password,Play Store,Authentication,Negative,In Review
+Alexandria Cervantes: Sentiment analysis is incorrect,Survey,AI Insights,Negative,Resolved
+Christopher Blake: Dashboard looks clean,App Store,UI/UX,Positive,Closed
+Richard Dixon: Need advanced filters,Survey,Search,Neutral,In Review
+Steven Ramirez: App freezes while uploading CSV,Play Store,Performance,Negative,Resolved
+Marissa Foster: Need larger file support,Email,CSV Import,Neutral,Resolved
+Nicholas Brown: Need AMOLED dark theme,Website,Dark Mode,Neutral,Resolved
+Michael Davis: Dark mode would improve usability,Mobile App,Dark Mode,Negative,In Review
+Christie Walker: Too many email alerts,Live Chat,Notifications,Negative,In Review
+Alexander Scott: Push notifications don't arrive,Live Chat,Notifications,Negative,Resolved
+Emily Scott: Need AMOLED dark theme,Play Store,Dark Mode,Neutral,Closed
+Jeffrey Tucker: Scheduled reports required,Website,Reports,Negative,In Review
+Sean Key: CSV upload failed,Play Store,CSV Import,Negative,Resolved
+Shelby Saunders: Cannot reset password,Support Ticket,Authentication,Negative,Closed
+Spencer Lee: OTP not received,Mobile App,Authentication,Negative,In Review
+Travis Dodson: Search is fast,App Store,Search,Positive,In Review
+Cynthia Jones: Need Slack integration,Website,Integrations,Neutral,Resolved
+Luis Richardson: Cannot reset password,Mobile App,Authentication,Negative,In Review
+Caleb Zavala: Reports take too long,Website,Performance,Negative,Closed
+Lori Burgess: Scheduled reports required,Live Chat,Reports,Negative,In Review
+Courtney Brown: Navigation is confusing,Survey,UI/UX,Negative,New
+Samantha Williams: OTP not received,Support Ticket,Authentication,Negative,Resolved
+Timothy Williams: CSV upload failed,Survey,CSV Import,Negative,New
+Tara Roman: Scheduled reports required,App Store,Reports,Negative,Closed
+Erin Jackson: Please add dark mode,Support Ticket,Dark Mode,Neutral,Resolved
+Darryl Lopez: Report formatting needs improvement,Play Store,Reports,Neutral,Closed
+Lori Olson: Need advanced filters,Survey,Search,Neutral,New
+Mark Kane: Push notifications don't arrive,Mobile App,Notifications,Negative,Closed
+Jeffrey Stevenson: Cannot reset password,Website,Authentication,Negative,Closed
+Mary Rowe: Need PDF export,Website,Reports,Neutral,New
+Robert Sanchez: OTP not received,Survey,Authentication,Negative,In Review
+Michelle Green: Need larger file support,Mobile App,CSV Import,Neutral,New
+Megan Norris: Webhook support required,Live Chat,Integrations,Negative,In Review
+Paul Lawson: Please add dark mode,Play Store,Dark Mode,Neutral,Resolved
+Michael Chapman: Need advanced filters,Live Chat,Search,Neutral,In Review
+Shannon Orozco: Cannot reset password,Play Store,Authentication,Negative,New
+Melissa Valentine: Import mapping is confusing,Mobile App,CSV Import,Negative,New
+Clinton Armstrong: Dark mode would improve usability,Email,Dark Mode,Negative,Resolved
+Ryan Wilson: Login failed with correct password,Support Ticket,Authentication,Negative,Closed
+Evan Brown: Dashboard loads slowly,Email,Performance,Negative,Resolved
+Michael Miller: Webhook support required,Email,Integrations,Negative,Resolved
+Carl Hicks: Webhook support required,Support Ticket,Integrations,Negative,In Review
+Whitney Evans: Need Slack integration,Website,Integrations,Neutral,Resolved
+Lisa Garza: Cannot reset password,Email,Authentication,Negative,New
+Eric Pierce: Dashboard loads slowly,Play Store,Performance,Negative,In Review
+Donna Fields: Search is fast,App Store,Search,Positive,Resolved
+Tammy Myers: Session expires quickly,Website,Authentication,Negative,In Review
+Joe Reeves: Need PDF export,Email,Reports,Neutral,New
+Angela Ward: Need AMOLED dark theme,App Store,Dark Mode,Neutral,Resolved
+Earl Collins: Too many email alerts,Survey,Notifications,Negative,Resolved
+Antonio Richardson: Search is fast,Live Chat,Search,Positive,Resolved
+Richard Brown: Webhook support required,Mobile App,Integrations,Negative,In Review
+Sean Williams: Too many email alerts,Mobile App,Notifications,Negative,Resolved
+Chris Simon: Theme detection is excellent,Email,AI Insights,Positive,Resolved
+April Rollins: Import mapping is confusing,Survey,CSV Import,Negative,New
+Wanda Miles: AI summary is accurate,Mobile App,AI Insights,Positive,Resolved
+Mackenzie Bush: Dark mode would improve usability,App Store,Dark Mode,Negative,Resolved
+Mindy Lopez: Dashboard looks clean,Support Ticket,UI/UX,Positive,Resolved
+Philip Cervantes: Navigation is confusing,Play Store,UI/UX,Negative,New
+Cynthia Kline: Semantic search misses results,Play Store,Search,Negative,Closed
+Jermaine Caldwell: Search is very slow,Live Chat,Performance,Negative,New
+Debra Smith: AI summary is accurate,Live Chat,AI Insights,Positive,Resolved
+Brandon Butler: Too many email alerts,App Store,Notifications,Negative,Resolved
+Rebecca Novak: Reports take too long,App Store,Performance,Negative,Resolved
+Martha Jackson: Please add dark mode,Mobile App,Dark Mode,Neutral,New
+Melissa Williams: Webhook support required,Support Ticket,Integrations,Negative,In Review
+Zachary Lindsey: Scheduled reports required,Mobile App,Reports,Negative,In Review
+Nicole Andrews: Dashboard loads slowly,Email,Performance,Negative,New
+Joseph Cardenas: CSV upload failed,Email,CSV Import,Negative,In Review
+Dean Matthews: Dashboard looks clean,Support Ticket,UI/UX,Positive,Closed
+Anthony Wright: Login failed with correct password,Play Store,Authentication,Negative,In Review
+Daniel Myers: Dashboard looks clean,Website,UI/UX,Positive,In Review
+Ricky Morgan: App freezes while uploading CSV,Survey,Performance,Negative,Closed
+Brittany Sanchez: Need PDF export,Email,Reports,Neutral,Resolved
+Darryl Murphy: Please add dark mode,Support Ticket,Dark Mode,Neutral,In Review
+Jeffrey Wood: Dark mode would improve usability,App Store,Dark Mode,Negative,Closed
+Bruce White: Import mapping is confusing,Survey,CSV Import,Negative,Closed
+Patricia Clark: Please add dark mode,Email,Dark Mode,Neutral,Closed
+Heidi Reyes: Scheduled reports required,Website,Reports,Negative,Closed
+Mary Jenkins: Dark mode would improve usability,Play Store,Dark Mode,Negative,Resolved
+Julian Mcpherson: Scheduled reports required,Live Chat,Reports,Negative,New
+Pamela Brown: CSV upload failed,Support Ticket,CSV Import,Negative,In Review
+Tina Hodge: Need advanced filters,Survey,Search,Neutral,Closed
+David Salinas: Semantic search misses results,Website,Search,Negative,Closed
+Jennifer Evans: Search is very slow,Play Store,Performance,Negative,In Review
+Abigail Sullivan: Session expires quickly,App Store,Authentication,Negative,In Review
+Elizabeth Bailey: Sentiment analysis is incorrect,Support Ticket,AI Insights,Negative,New
+Christopher Park: Email notifications are delayed,Live Chat,Notifications,Negative,Resolved
+Kelli Paul: Session expires quickly,Email,Authentication,Negative,Closed
+Theresa Norris: Search is very slow,Email,Performance,Negative,Closed
+Kyle Sanders: AI summary is accurate,App Store,AI Insights,Positive,In Review
+Felicia Mcdonald: Sentiment analysis is incorrect,Email,AI Insights,Negative,New
+Michael Nunez: Reports take too long,Mobile App,Performance,Negative,Resolved
+Justin Burke: Webhook support required,Mobile App,Integrations,Negative,Resolved
+Cindy White: Need advanced filters,Website,Search,Neutral,In Review
+Jonathan Elliott: Email notifications are delayed,Website,Notifications,Negative,In Review
+Patrick Downs: AI summary is accurate,Mobile App,AI Insights,Positive,Resolved
+Jamie Archer: Report formatting needs improvement,Mobile App,Reports,Neutral,New
+Allen Mason: Push notifications don't arrive,Play Store,Notifications,Negative,In Review
+Michael Fitzgerald: Need PDF export,Website,Reports,Neutral,Resolved
+Brenda Miller: Too many email alerts,Email,Notifications,Negative,Resolved
+Alexandra Johnson: Webhook support required,Support Ticket,Integrations,Negative,Resolved
+Tracy Gonzales: Cannot reset password,Website,Authentication,Negative,Closed
+Julie Moore: App freezes while uploading CSV,Support Ticket,Performance,Negative,Closed
+Melissa Fields: Please add dark mode,Play Store,Dark Mode,Neutral,In Review
+Stephen Miller: Theme detection is excellent,Live Chat,AI Insights,Positive,New
+Leslie Frederick: Theme detection is excellent,Website,AI Insights,Positive,New
+Sara Walsh: Semantic search misses results,Website,Search,Negative,New
+Christina Blair: OTP not received,Email,Authentication,Negative,Resolved
+Timothy Smith: Navigation is confusing,Website,UI/UX,Negative,Resolved
+Taylor Thompson: Reports take too long,Email,Performance,Negative,Closed
+Joshua Rodriguez: Import mapping is confusing,Email,CSV Import,Negative,Closed
+Kimberly White: Need Slack integration,Mobile App,Integrations,Neutral,New
+Courtney Baldwin: Semantic search misses results,Mobile App,Search,Negative,New
+Jeffrey Harrison: Too many email alerts,Mobile App,Notifications,Negative,Closed
+Joshua Johnson: Email notifications are delayed,Email,Notifications,Negative,Resolved
+Cody Strong: Semantic search misses results,Email,Search,Negative,Closed
+Colleen Green: Scheduled reports required,Support Ticket,Reports,Negative,New
+David Francis: Semantic search misses results,Live Chat,Search,Negative,Closed
+Charles Schneider: Reports take too long,Survey,Performance,Negative,Resolved
+Thomas Newton: Cannot reset password,Website,Authentication,Negative,Closed
+Kenneth Rosales: Theme detection is excellent,Survey,AI Insights,Positive,In Review
+Steve Phillips: Please add dark mode,App Store,Dark Mode,Neutral,New
+Cesar Johnson: Dashboard loads slowly,App Store,Performance,Negative,Closed
+Nicole Barnes: Sentiment analysis is incorrect,Website,AI Insights,Negative,New
+Howard Miller: Sentiment analysis is incorrect,Live Chat,AI Insights,Negative,In Review
+Jeremy Acosta: Semantic search misses results,Website,Search,Negative,In Review
+Mary Hudson: Reports take too long,Website,Performance,Negative,In Review
+Michael Rose: Report formatting needs improvement,Support Ticket,Reports,Neutral,Resolved
+Chelsea Dillon: Sentiment analysis is incorrect,Email,AI Insights,Negative,Resolved
+Sarah Brennan: Buttons are too small,Mobile App,UI/UX,Negative,New
+Alicia Gilbert: Dashboard looks clean,Play Store,UI/UX,Positive,Closed
+Andrew Hicks: App freezes while uploading CSV,Mobile App,Performance,Negative,In Review
+Stephanie Austin: CSV upload failed,App Store,CSV Import,Negative,Resolved
+Erin Ramos: Need PDF export,Mobile App,Reports,Neutral,In Review
+Timothy Wood: Dark mode would improve usability,Support Ticket,Dark Mode,Negative,New
+Donald Clark: Please add dark mode,Survey,Dark Mode,Neutral,New
+Joshua Schroeder: Reports take too long,Play Store,Performance,Negative,New
+Rachael Hawkins: Need advanced filters,Email,Search,Neutral,Closed
+Stacy Brown: App freezes while uploading CSV,Play Store,Performance,Negative,Resolved
+Jonathan Walton: Cannot reset password,Play Store,Authentication,Negative,Resolved
+Brandon Lee: Sidebar is cluttered,Survey,UI/UX,Negative,Resolved
+Cindy Clark: Need larger file support,Live Chat,CSV Import,Neutral,In Review
+Marisa Jones: Sentiment analysis is incorrect,Website,AI Insights,Negative,In Review
+Willie Delgado: Report formatting needs improvement,Website,Reports,Neutral,New

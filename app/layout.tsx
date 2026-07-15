@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import "./globals.css";
 import { AppSessionProvider } from "@/providers/SessionProvider";
 import { AppThemeProvider } from "@/providers/ThemeProvider";
+import { NotificationProvider } from "@/hooks/useNotifications";
 
 export const metadata: Metadata = {
   title: "LOOP AI Customer Feedback Intelligence Platform",
@@ -16,7 +17,9 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body>
         <AppThemeProvider>
-          <AppSessionProvider>{children}</AppSessionProvider>
+          <NotificationProvider>
+            <AppSessionProvider>{children}</AppSessionProvider>
+          </NotificationProvider>
         </AppThemeProvider>
       </body>
     </html>

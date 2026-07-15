@@ -1,39 +1,14 @@
 import { DashboardCharts } from "@/components/charts";
 import { Badge, Card, CardContent, SectionHeader } from "@/components/ui";
 import {
-  channelDistribution,
-  feedbackVolume30Days,
-  sentimentBreakdown,
-  themeDistribution,
-  weeklyTrend
-} from "@/data/dashboard";
-import { demoThemes } from "@/data/themes";
+  feedbackVolumeData,
+  sentimentData,
+  themeGrowth,
+  topThemesData,
+  trendCards
+} from "@/lib/mock-data";
 
 export default function TrendsPage() {
-  const trendCards = [
-    {
-      label: "Fastest growing theme",
-      value: "Onboarding",
-      detail: "+24% week over week"
-    },
-    {
-      label: "Largest spike",
-      value: "Billing",
-      detail: "Spike detected after pricing update"
-    },
-    {
-      label: "Positive momentum",
-      value: "Dashboard",
-      detail: "+11 sentiment points"
-    }
-  ];
-
-  const themeGrowth = demoThemes.slice(0, 4).map((theme, index) => ({
-    name: theme.name,
-    growth: [`+24%`, `+18%`, `+10%`, `+7%`][index],
-    spike: index < 2
-  }));
-
   return (
     <div className="space-y-6">
       <SectionHeader
@@ -59,9 +34,7 @@ export default function TrendsPage() {
       <div className="grid gap-6 xl:grid-cols-[0.85fr_1.15fr]">
         <Card>
           <CardContent className="p-6">
-            <h3 className="text-lg font-semibold text-slate-950 dark:text-slate-50">
-              Theme Growth
-            </h3>
+            <h3 className="text-lg font-semibold text-slate-950">Theme Growth</h3>
             <div className="mt-5 space-y-3">
               {themeGrowth.map((theme) => (
                 <div
@@ -84,11 +57,9 @@ export default function TrendsPage() {
         </Card>
 
         <DashboardCharts
-          volumeData={feedbackVolume30Days}
-          sentimentData={sentimentBreakdown}
-          themeData={themeDistribution}
-          weeklyTrendData={weeklyTrend}
-          channelData={channelDistribution}
+          volumeData={[...feedbackVolumeData]}
+          sentimentData={[...sentimentData]}
+          themeData={[...topThemesData]}
         />
       </div>
     </div>

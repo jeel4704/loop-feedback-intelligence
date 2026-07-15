@@ -6,10 +6,6 @@
   color-scheme: light;
 }
 
-.dark {
-  color-scheme: dark;
-}
-
 * {
   box-sizing: border-box;
 }
@@ -19,9 +15,8 @@ html {
 }
 
 body {
-  @apply min-h-screen bg-slate-50 text-slate-950 antialiased;
+  @apply min-h-screen bg-slate-50 text-slate-950 antialiased dark:bg-slate-950 dark:text-slate-50;
   font-feature-settings: "rlig" 1, "calt" 1;
-  @apply dark:bg-slate-950 dark:text-slate-100;
 }
 
 a {
@@ -31,3 +26,33 @@ a {
 ::selection {
   @apply bg-blue-100 text-blue-950;
 }
+
+/* Thin modern custom scrollbar matching Notion/Linear */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4.5px;
+  height: 4.5px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #334155;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Hide horizontal scrollbar scroll overflow */
+.custom-scrollbar {
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+.dark .custom-scrollbar {
+  scrollbar-color: #334155 transparent;
+}
+

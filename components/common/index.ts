@@ -1,3 +1,3 @@
-export { Avatar } from "@/components/common/avatar";
-export { NotificationList } from "@/components/common/notification-list";
-export { ThemeToggle } from "@/components/common/theme-toggle";
+// Common app-wide components live in this folder.
+export const commonPlaceholder = "common";
+
