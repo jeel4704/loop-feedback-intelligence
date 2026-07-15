@@ -2,57 +2,57 @@
 
 import NextLink from "next/link";
 import { MarketingLayout } from "@/components/marketing/marketing-layout";
-import { Badge, Card, CardContent } from "@/components/ui";
-import { BrainCircuit, Laptop, Users, Shield, ArrowRight, Check } from "lucide-react";
+import { Badge, Card } from "@/components/ui";
+import { BrainCircuit, LineChart, FileSpreadsheet, Lock, ArrowRight, Check, Activity, Search } from "lucide-react";
 
 export default function SolutionsPage() {
-  const solutions = [
+  const loopFeatures = [
     {
-      role: "Product Managers",
-      desc: "Stop guessing feature priorities. Cluster support complaints automatically, search customer quotes semantically, and build evidence-backed product roadmaps.",
-      icon: Laptop,
-      color: "text-blue-600",
-      bg: "bg-blue-50",
-      points: [
-        "Semantic thematic clustering",
-        "Release regression bug alerts",
-        "Evidence-backed feature prioritization lists"
-      ]
-    },
-    {
-      role: "Customer Success",
-      desc: "Detect account churning indicators early. Loop aggregates user feedback from multiple channels, analyzing shifts in sentiment scores to flag VIP issues.",
-      icon: Users,
-      color: "text-indigo-600",
-      bg: "bg-indigo-50",
-      points: [
-        "NPS comment classification pipelines",
-        "VIP account sentiment regression alert logs",
-        "Automated customer feedback briefs"
-      ]
-    },
-    {
-      role: "Customer Support Ops",
-      desc: "Slash ticket queue times and reduce agent burnout. Automatically tag and route ticket intent categories to the right dev team in real-time.",
+      title: "AI-Powered Sentiment & Theme Analysis",
+      desc: "Stop manually reading through thousands of complaints. LOOP aggregates user feedback and uses advanced AI to automatically assign sentiment scores and group related issues into actionable themes.",
       icon: BrainCircuit,
-      color: "text-rose-600",
-      bg: "bg-rose-50",
+      color: "text-blue-500",
+      bg: "bg-blue-500/10",
       points: [
-        "Instant NLP category routing",
-        "Automatic support ticket summaries",
-        "CSV logs auto parser ingestion"
+        "Real-time semantic thematic clustering",
+        "Automated sentiment scoring (Positive, Neutral, Negative)",
+        "Semantic search to find exact contexts instantly"
       ]
     },
     {
-      role: "Enterprise Security Leaders",
-      desc: "Consolidate customer insights safely. Clean data partitions, AES-256 vault configurations, and RBAC policies guarantee full regulatory compliance.",
-      icon: Shield,
-      color: "text-emerald-600",
-      bg: "bg-emerald-50",
+      title: "Data Import & CSV Processing",
+      desc: "Easily ingest feedback from any source. Import your existing CSV backup databases, spreadsheets, or Intercom data files, map the headers, and begin your analysis in seconds.",
+      icon: FileSpreadsheet,
+      color: "text-indigo-500",
+      bg: "bg-indigo-500/10",
       points: [
-        "Isolated multi-tenant database partitions",
-        "Admin, Analyst, and Viewer role restrictions",
-        "Comprehensive API token vault management"
+        "Robust CSV auto-parser ingestion",
+        "Map custom data fields to LOOP standard metadata",
+        "Handle thousands of rows rapidly without timeouts"
+      ]
+    },
+    {
+      title: "Dashboard Analytics & Reports",
+      desc: "Visualize the voice of the customer. Generate comprehensive reports and monitor trends over time to identify whether recent releases have caused sentiment regressions or improvements.",
+      icon: LineChart,
+      color: "text-rose-500",
+      bg: "bg-rose-500/10",
+      points: [
+        "Live sentiment trend monitoring",
+        "Automated VOC (Voice of Customer) reporting",
+        "Track volume and issue spikes instantly"
+      ]
+    },
+    {
+      title: "Workspace Collaboration & Security",
+      desc: "Built for enterprise scale. Isolate your data in secure tenant boundaries with AES-256 encryption. Manage team access securely using precise role-based access control (RBAC).",
+      icon: Lock,
+      color: "text-emerald-500",
+      bg: "bg-emerald-500/10",
+      points: [
+        "Strict multi-tenant database partitions",
+        "AES-256 data encryption at rest and in transit",
+        "Admin, Analyst, and Viewer RBAC assignments"
       ]
     }
   ];
@@ -61,37 +61,37 @@ export default function SolutionsPage() {
     <MarketingLayout>
       {/* Hero */}
       <section className="relative mx-auto max-w-7xl px-6 pt-20 pb-16 text-center">
-        <Badge variant="blue" className="px-3 py-1 bg-blue-50 text-blue-600 rounded-full font-bold text-xs uppercase tracking-wider">
-          Industries & Teams
+        <Badge variant="blue" className="px-3 py-1 bg-blue-500/10 text-blue-500 rounded-full font-bold text-xs uppercase tracking-wider border border-blue-500/20">
+          Why LOOP
         </Badge>
-        <h1 className="mt-6 text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.15]">
-          Built for teams who <span className="text-blue-600">value clarity</span>
+        <h1 className="mt-6 text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.15]">
+          Customer Feedback <span className="text-blue-500">Intelligence</span>
         </h1>
-        <p className="mt-6 text-slate-600 text-lg sm:text-xl font-medium max-w-2xl mx-auto leading-relaxed">
-          Whether you are building the core product, managing support workflows, or securing customer records, LOOP aligns your team.
+        <p className="mt-6 text-slate-400 text-lg sm:text-xl font-medium max-w-2xl mx-auto leading-relaxed">
+          From AI-driven categorization to enterprise-grade workspace security, LOOP gives you the tools to understand your users perfectly.
         </p>
       </section>
 
       {/* Solutions blocks */}
       <section className="mx-auto max-w-7xl px-6 py-10 space-y-10">
         <div className="grid gap-8 lg:grid-cols-2">
-          {solutions.map((sol, idx) => {
-            const Icon = sol.icon;
+          {loopFeatures.map((feat, idx) => {
+            const Icon = feat.icon;
             return (
-              <Card key={idx} className="rounded-[24px] border border-slate-200/60 bg-white p-8 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow duration-300 text-left">
+              <Card key={idx} className="rounded-[24px] border border-slate-800 bg-slate-900/50 p-8 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow duration-300 text-left">
                 <div className="space-y-6">
                   <div className="flex items-center gap-4">
-                    <div className={`h-11 w-11 rounded-[14px] ${sol.bg} ${sol.color} flex items-center justify-center shadow-inner`}>
-                      <Icon className="h-5.5 w-5.5" />
+                    <div className={`h-11 w-11 rounded-[14px] ${feat.bg} ${feat.color} flex items-center justify-center border border-slate-700/50`}>
+                      <Icon className="h-5 w-5" />
                     </div>
-                    <h3 className="text-xl font-extrabold text-slate-900">{sol.role}</h3>
+                    <h3 className="text-xl font-extrabold text-white">{feat.title}</h3>
                   </div>
-                  <p className="text-slate-500 font-semibold text-xs leading-relaxed">{sol.desc}</p>
+                  <p className="text-slate-400 font-medium text-sm leading-relaxed">{feat.desc}</p>
                   
                   <ul className="space-y-2.5 pt-2">
-                    {sol.points.map((p, pIdx) => (
-                      <li key={pIdx} className="flex items-center gap-2.5 text-xs text-slate-700 font-semibold">
-                        <Check className="h-4.5 w-4.5 text-emerald-500 flex-shrink-0" />
+                    {feat.points.map((p, pIdx) => (
+                      <li key={pIdx} className="flex items-start gap-2.5 text-sm text-slate-300 font-medium">
+                        <Check className="h-5 w-5 text-emerald-500 flex-shrink-0 mt-0.5" />
                         <span>{p}</span>
                       </li>
                     ))}
@@ -106,9 +106,9 @@ export default function SolutionsPage() {
       {/* Footer CTA */}
       <section className="mx-auto max-w-5xl px-6 py-20">
         <div className="rounded-[32px] bg-gradient-to-tr from-slate-950 to-slate-900 border border-slate-800 p-8 sm:p-12 text-center text-white shadow-xl">
-          <h2 className="text-3xl font-extrabold tracking-tight">Ready to align your organization?</h2>
+          <h2 className="text-3xl font-extrabold tracking-tight">Ready to understand your customers?</h2>
           <p className="mt-4 text-slate-400 max-w-xl mx-auto font-semibold">
-            Choose a solution that fits your workspace size. Start making databased decisions.
+            Deploy your secure workspace in 2 minutes. Start uncovering actionable insights today.
           </p>
           <div className="mt-8 flex justify-center gap-4">
             <NextLink

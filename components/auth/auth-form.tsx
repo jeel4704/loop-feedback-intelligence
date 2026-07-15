@@ -14,7 +14,7 @@ interface AuthFormProps {
 // ============================================================
 // Password strength validation rules
 // ============================================================
-const PASSWORD_RULES = [
+export const PASSWORD_RULES = [
   { key: "minLength", label: "Minimum 8 characters", test: (p: string) => p.length >= 8 },
   { key: "maxLength", label: "Maximum 64 characters", test: (p: string) => p.length <= 64 },
   { key: "uppercase", label: "One uppercase letter", test: (p: string) => /[A-Z]/.test(p) },
@@ -23,7 +23,7 @@ const PASSWORD_RULES = [
   { key: "special", label: "One special character", test: (p: string) => /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?`~]/.test(p) }
 ];
 
-function PasswordToggleInput({
+export function PasswordToggleInput({
   value,
   onChange,
   placeholder,
@@ -63,7 +63,7 @@ function PasswordToggleInput({
   );
 }
 
-function PasswordStrengthMeter({ password }: { password: string }) {
+export function PasswordStrengthMeter({ password }: { password: string }) {
   const results = PASSWORD_RULES.map((rule) => ({
     ...rule,
     passed: rule.test(password)
@@ -152,6 +152,8 @@ export function AuthForm({ mode }: AuthFormProps) {
       ? "This verification link is invalid or has expired."
       : errorParam === "expired_token"
       ? "This verification link has expired. Please sign up again."
+      : errorParam === "CredentialsSignin" || errorParam === "CallbackRouteError"
+      ? "Invalid email or password. Please check your credentials."
       : ""
   );
   const messageParam = searchParams.get("message");
@@ -228,23 +230,22 @@ export function AuthForm({ mode }: AuthFormProps) {
     setLoading(true);
 
     try {
-      const result = await signIn("credentials", {
-        redirect: false,
+      // In NextAuth v5, redirect: false with Credentials can sometimes hang or throw unexpectedly.
+      // We'll let NextAuth handle the redirect natively.
+      await signIn("credentials", {
         email,
-        password
+        password,
+        redirectTo: "/dashboard" // v5 uses redirectTo
       });
-
-      if (result?.error) {
-        setError("Invalid email or password. Please check your credentials.");
-        setLoading(false);
-      } else {
-        // Use replace instead of push so login is removed from browser history
-        router.replace("/dashboard");
-        router.refresh();
+      // The code below might not execute if the page unloads, but we'll reset loading just in case
+      setLoading(false);
+    } catch (err: any) {
+      console.error("Login error caught:", err);
+      // NextAuth v5 throws NEXT_REDIRECT errors, we shouldn't catch them as generic errors
+      if (err?.message?.includes('NEXT_REDIRECT')) {
+        return;
       }
-    } catch (err) {
-      console.error(err);
-      setError("An unexpected error occurred.");
+      setError("Invalid email or password, or an unexpected error occurred.");
       setLoading(false);
     }
   };
@@ -256,26 +257,26 @@ export function AuthForm({ mode }: AuthFormProps) {
     return (
       <form className="space-y-5" onSubmit={handleLoginSubmit}>
         {success && (
-          <div className="rounded-xl bg-teal-50 border border-teal-200 p-4 text-xs text-teal-800 font-semibold flex items-center gap-2">
-            <ShieldCheck className="h-4 w-4 text-teal-600 flex-shrink-0" />
+          <div className="rounded-xl bg-emerald-500/10 border border-emerald-500/20 p-4 text-xs text-emerald-400 font-semibold flex items-center gap-2">
+            <ShieldCheck className="h-4 w-4 text-emerald-500 flex-shrink-0" />
             {success}
           </div>
         )}
         {error && (
-          <div className="rounded-xl bg-rose-50 border border-rose-200 p-4 text-xs text-rose-700 space-y-3">
+          <div className="rounded-xl bg-rose-500/10 border border-rose-500/20 p-4 text-xs text-rose-400 space-y-3">
             <p className="font-semibold">{error}</p>
             {errorParam === "unauthorized" && (
               <div className="flex gap-2">
                 <button
                   type="button"
                   onClick={() => setError("")}
-                  className="rounded-lg bg-rose-600 px-3 py-1.5 text-[11px] font-semibold text-white hover:bg-rose-700 transition-colors"
+                  className="rounded-lg bg-rose-600 px-3 py-1.5 text-[11px] font-semibold text-white hover:bg-rose-700 transition-colors shadow-lg shadow-rose-500/20"
                 >
                   Login
                 </button>
                 <Link
                   href="/signup"
-                  className="rounded-lg border border-rose-300 bg-white px-3 py-1.5 text-[11px] font-semibold text-rose-700 hover:bg-rose-50 transition-colors"
+                  className="rounded-lg border border-slate-700 bg-slate-800 px-3 py-1.5 text-[11px] font-semibold text-white hover:bg-slate-700 transition-colors shadow-lg"
                 >
                   Create Workspace
                 </Link>
@@ -285,7 +286,7 @@ export function AuthForm({ mode }: AuthFormProps) {
         )}
 
         <label className="block">
-          <span className="mb-2 block text-sm font-medium text-slate-700">
+          <span className="mb-2 block text-sm font-medium text-slate-300">
             Email
           </span>
           <Input 
@@ -299,9 +300,14 @@ export function AuthForm({ mode }: AuthFormProps) {
         </label>
 
         <label className="block">
-          <span className="mb-2 block text-sm font-medium text-slate-700">
-            Password
-          </span>
+          <div className="mb-2 flex items-center justify-between">
+            <span className="block text-sm font-medium text-slate-300">
+              Password
+            </span>
+            <Link href="/forgot-password" className="text-[11px] font-semibold text-blue-500 hover:text-blue-400">
+              Forgot password?
+            </Link>
+          </div>
           <PasswordToggleInput
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -313,11 +319,11 @@ export function AuthForm({ mode }: AuthFormProps) {
           {loading ? "Signing in..." : "Sign in"}
         </Button>
 
-        <p className="text-sm text-slate-600">
+        <p className="text-sm text-slate-400">
           New to LOOP?{" "}
           <Link
             href="/signup"
-            className="font-medium text-blue-600 hover:text-blue-700"
+            className="font-semibold text-blue-500 hover:text-blue-400 transition-colors"
           >
             Create an account
           </Link>
@@ -332,19 +338,19 @@ export function AuthForm({ mode }: AuthFormProps) {
   return (
     <form className="space-y-5" onSubmit={handleSendMagicLink}>
       {error && (
-        <div className="rounded-xl bg-rose-50 border border-rose-200 p-3 text-xs font-semibold text-rose-700">
+        <div className="rounded-xl bg-rose-500/10 border border-rose-500/20 p-3 text-xs font-semibold text-rose-400">
           {error}
         </div>
       )}
 
       {success && (
-        <div className="rounded-xl bg-emerald-50 border border-emerald-200 p-3 text-xs font-semibold text-emerald-700">
+        <div className="rounded-xl bg-emerald-500/10 border border-emerald-500/20 p-3 text-xs font-semibold text-emerald-400">
           {success}
         </div>
       )}
 
       {devVerificationUrl && (
-        <div className="rounded-xl bg-blue-50 border border-blue-200 p-4 text-xs font-semibold text-blue-700 space-y-2">
+        <div className="rounded-xl bg-blue-500/10 border border-blue-500/20 p-4 text-xs font-semibold text-blue-400 space-y-2">
           <p className="font-bold">SMTP bypassed in local dev mode. Copy or click the link below to verify instantly:</p>
           <a 
             href={devVerificationUrl}
@@ -356,7 +362,7 @@ export function AuthForm({ mode }: AuthFormProps) {
       )}
 
       <label className="block">
-        <span className="mb-2 block text-sm font-medium text-slate-700">
+        <span className="mb-2 block text-sm font-medium text-slate-300">
           Full Name
         </span>
         <Input 
@@ -369,7 +375,7 @@ export function AuthForm({ mode }: AuthFormProps) {
       </label>
 
       <label className="block">
-        <span className="mb-2 block text-sm font-medium text-slate-700">
+        <span className="mb-2 block text-sm font-medium text-slate-300">
           Workspace Name
         </span>
         <Input 
@@ -382,7 +388,7 @@ export function AuthForm({ mode }: AuthFormProps) {
       </label>
 
       <label className="block">
-        <span className="mb-2 block text-sm font-medium text-slate-700">
+        <span className="mb-2 block text-sm font-medium text-slate-300">
           Business Email
         </span>
         <Input 
@@ -396,7 +402,7 @@ export function AuthForm({ mode }: AuthFormProps) {
       </label>
 
       <label className="block">
-        <span className="mb-2 block text-sm font-medium text-slate-700">
+        <span className="mb-2 block text-sm font-medium text-slate-300">
           Password
         </span>
         <PasswordToggleInput
@@ -408,7 +414,7 @@ export function AuthForm({ mode }: AuthFormProps) {
       </label>
 
       <label className="block">
-        <span className="mb-2 block text-sm font-medium text-slate-700">
+        <span className="mb-2 block text-sm font-medium text-slate-300">
           Confirm Password
         </span>
         <PasswordToggleInput
@@ -435,8 +441,8 @@ export function AuthForm({ mode }: AuthFormProps) {
           onChange={(e) => setAcceptTerms(e.target.checked)}
           className="mt-1 rounded border-slate-300 text-blue-600 focus:ring-blue-500"
         />
-        <span className="text-xs text-slate-500 leading-normal">
-          I accept the <Link href={"/terms" as any} className="text-blue-600 underline font-medium">Terms & Conditions</Link> and the <Link href={"/privacy" as any} className="text-blue-600 underline font-medium">Privacy Policy</Link>.
+        <span className="text-xs text-slate-400 leading-normal">
+          I accept the <Link href={"/terms" as any} className="text-blue-500 underline font-semibold">Terms & Conditions</Link> and the <Link href={"/privacy" as any} className="text-blue-500 underline font-semibold">Privacy Policy</Link>.
         </span>
       </label>
 
@@ -444,11 +450,11 @@ export function AuthForm({ mode }: AuthFormProps) {
         {loading ? "Processing..." : "Create Workspace"}
       </Button>
 
-      <p className="text-sm text-slate-600">
+      <p className="text-sm text-slate-400">
         Already have an account?{" "}
         <Link
           href="/login"
-          className="font-medium text-blue-600 hover:text-blue-700"
+          className="font-semibold text-blue-500 hover:text-blue-400 transition-colors"
         >
           Sign in
         </Link>

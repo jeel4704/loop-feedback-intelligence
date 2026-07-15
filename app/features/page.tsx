@@ -75,10 +75,10 @@ export default function FeaturesPage() {
         <Badge variant="blue" className="px-3 py-1 bg-blue-50 text-blue-600 rounded-full font-bold text-xs uppercase tracking-wider">
           Capabilities
         </Badge>
-        <h1 className="mt-6 text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 leading-[1.15]">
-          A complete suite of <span className="text-blue-600">AI capabilities</span>
+        <h1 className="mt-6 text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.15]">
+          A complete suite of <span className="text-blue-500">AI capabilities</span>
         </h1>
-        <p className="mt-6 text-slate-600 text-lg sm:text-xl font-medium max-w-2xl mx-auto leading-relaxed">
+        <p className="mt-6 text-slate-400 text-lg sm:text-xl font-medium max-w-2xl mx-auto leading-relaxed">
           Engineered for scaling research speed, keeping data locked behind enterprise safeguards, and generating automated insights.
         </p>
       </section>
@@ -89,13 +89,13 @@ export default function FeaturesPage() {
           {featureList.map((feat, idx) => {
             const Icon = feat.icon;
             return (
-              <Card key={idx} className="rounded-[20px] border border-slate-200/60 bg-white p-6 shadow-sm hover:shadow-md hover:translate-y-[-2px] transition-all duration-300 flex flex-col justify-between text-left">
+              <Card key={idx} className="rounded-[20px] border border-slate-800 bg-slate-900/50 p-6 shadow-sm hover:shadow-md hover:translate-y-[-2px] transition-all duration-300 flex flex-col justify-between text-left">
                 <div>
                   <div className={`h-11 w-11 rounded-[14px] ${feat.bg} ${feat.color} flex items-center justify-center shadow-inner`}>
                     <Icon className="h-5.5 w-5.5" />
                   </div>
-                  <h3 className="font-extrabold text-sm text-slate-900 mt-5">{feat.title}</h3>
-                  <p className="mt-2.5 text-slate-500 font-semibold text-xs leading-relaxed">{feat.desc}</p>
+                  <h3 className="font-extrabold text-sm text-white mt-5">{feat.title}</h3>
+                  <p className="mt-2.5 text-slate-400 font-semibold text-xs leading-relaxed">{feat.desc}</p>
                 </div>
               </Card>
             );
@@ -105,26 +105,26 @@ export default function FeaturesPage() {
 
       {/* Security Callout */}
       <section className="mx-auto max-w-7xl px-6 py-20">
-        <div className="rounded-[32px] border border-slate-200/80 bg-white p-8 sm:p-12 shadow-sm grid gap-10 lg:grid-cols-2 lg:items-center">
+        <div className="rounded-[32px] border border-slate-800 bg-gradient-to-tr from-slate-900 to-slate-800/50 p-8 sm:p-12 shadow-2xl grid gap-10 lg:grid-cols-2 lg:items-center">
           <div className="space-y-6 text-left">
-            <Badge variant="blue" className="bg-emerald-50 text-emerald-600 rounded-full font-bold">Enterprise Guarded</Badge>
-            <h2 className="text-3xl font-extrabold text-slate-900">Workspace data security is built-in</h2>
-            <p className="text-slate-600 font-medium leading-relaxed">
+            <Badge variant="blue" className="bg-emerald-500/10 text-emerald-400 rounded-full font-bold border border-emerald-500/20">Enterprise Guarded</Badge>
+            <h2 className="text-3xl font-extrabold text-white">Workspace data security is built-in</h2>
+            <p className="text-slate-400 font-medium leading-relaxed">
               We encrypt your data both in transit and at rest. Every single workspace database partition operates behind secure tenant barriers, ensuring zero cross-tenant metadata leakage or search overlap.
             </p>
           </div>
-          <div className="bg-slate-50 rounded-[24px] p-6 border border-slate-100 flex flex-col justify-center space-y-4">
-            <div className="flex items-center gap-3 p-4 bg-white rounded-xl border border-slate-200/60 shadow-sm text-left">
-              <Lock className="h-5 w-5 text-blue-600" />
+          <div className="bg-slate-950/50 rounded-[24px] p-6 border border-slate-800/60 flex flex-col justify-center space-y-4 backdrop-blur-sm">
+            <div className="flex items-center gap-3 p-4 bg-slate-900/80 rounded-xl border border-slate-800 shadow-lg text-left">
+              <Lock className="h-5 w-5 text-blue-500" />
               <div>
-                <p className="font-bold text-xs text-slate-900">AES-256 Data Encryption</p>
+                <p className="font-bold text-xs text-white">AES-256 Data Encryption</p>
                 <p className="text-[10px] text-slate-400 font-semibold">Active for all database records</p>
               </div>
             </div>
-            <div className="flex items-center gap-3 p-4 bg-white rounded-xl border border-slate-200/60 shadow-sm text-left">
-              <Shield className="h-5 w-5 text-emerald-600" />
+            <div className="flex items-center gap-3 p-4 bg-slate-900/80 rounded-xl border border-slate-800 shadow-lg text-left">
+              <Shield className="h-5 w-5 text-emerald-500" />
               <div>
-                <p className="font-bold text-xs text-slate-900">Tenant Workspace Isolation</p>
+                <p className="font-bold text-xs text-white">Tenant Workspace Isolation</p>
                 <p className="text-[10px] text-slate-400 font-semibold">Separate schema pools</p>
               </div>
             </div>
