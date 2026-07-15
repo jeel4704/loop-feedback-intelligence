@@ -10,29 +10,26 @@ interface AuthShellProps {
 
 export function AuthShell({ title, description, children }: AuthShellProps) {
   return (
-    <main className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(99,102,241,0.14),_transparent_25%),linear-gradient(to_bottom,_#f8fbff,_#eef2ff)] px-6 py-16">
-      <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1.2fr_0.9fr]">
-        <section className="rounded-[32px] border border-slate-200 bg-slate-950 p-8 text-white shadow-[0_24px_80px_-32px_rgba(15,23,42,0.85)] sm:p-10">
+    <main className="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900 via-slate-950 to-slate-950 px-6 py-16 flex items-center justify-center">
+      <div className="mx-auto grid max-w-6xl w-full gap-10 lg:grid-cols-[1.2fr_0.9fr]">
+        {/* Left Column - Branding & Info */}
+        <section className="rounded-[32px] border border-slate-800/60 bg-slate-900/40 p-8 text-white shadow-2xl backdrop-blur-sm sm:p-10 flex flex-col justify-center">
           <div className="flex items-center gap-3 mb-6">
-            <Image 
-              src="/logo.jpg" 
-              alt="LOOP Logo" 
-              width={56}
-              height={56}
-              className="rounded-2xl border border-slate-800 bg-white p-1.5 shadow-md"
-            />
-            <span className="font-bold text-xl text-white tracking-tight">LOOP</span>
+            <div className="flex items-center justify-center h-14 w-14 rounded-2xl border border-slate-700 bg-slate-800 shadow-inner">
+              <span className="font-extrabold text-2xl text-blue-500">L</span>
+            </div>
+            <span className="font-extrabold text-2xl text-white tracking-tight">LOOP</span>
           </div>
-          <h1 className="mt-4 text-4xl font-semibold tracking-tight">
-            AI Customer Feedback Intelligence Platform
+          <h1 className="mt-4 text-4xl sm:text-5xl font-extrabold tracking-tight leading-[1.15]">
+            Customer Feedback <span className="text-blue-500">Intelligence</span>
           </h1>
-          <p className="mt-4 max-w-xl text-sm leading-6 text-slate-300">
+          <p className="mt-6 max-w-xl text-base leading-relaxed text-slate-400 font-medium">
             Ingest customer feedback, classify it with AI, monitor trends,
             and turn raw conversations into decision-ready Voice of Customer
             reporting.
           </p>
 
-          <div className="mt-8 grid gap-4 sm:grid-cols-2">
+          <div className="mt-10 grid gap-4 sm:grid-cols-2">
             {[
               "Multi-tenant workspace isolation",
               "Role-based access for Admin, Analyst, Viewer",
@@ -41,20 +38,20 @@ export function AuthShell({ title, description, children }: AuthShellProps) {
             ].map((item) => (
               <div
                 key={item}
-                className="rounded-2xl border border-white/10 bg-white/5 p-4 text-sm text-slate-200"
+                className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4 text-sm font-semibold text-slate-300 shadow-sm"
               >
                 {item}
               </div>
             ))}
           </div>
-
         </section>
 
-        <section className="rounded-[32px] border border-slate-200 bg-white p-8 shadow-sm sm:p-10">
-          <p className="text-sm font-semibold uppercase tracking-[0.24em] text-blue-600">
+        {/* Right Column - Form */}
+        <section className="rounded-[32px] border border-slate-800 bg-slate-900/60 p-8 shadow-2xl backdrop-blur-md sm:p-10 flex flex-col justify-center">
+          <p className="text-[10px] font-extrabold uppercase tracking-[0.24em] text-blue-500">
             {title}
           </p>
-          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-slate-950">
+          <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-white">
             {description}
           </h2>
           <div className="mt-8">{children}</div>

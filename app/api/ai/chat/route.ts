@@ -6,6 +6,7 @@ import { ConversationRepository } from "@/repositories/conversation.repository";
 import { rateLimit } from "@/lib/rate-limit";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
+import { IntentValidator } from "@/services/ai/intent.validator";
 
 export const maxDuration = 60; // Allow Vercel Edge longer execution time for LLMs
 // Ensure this route is dynamic and supports streaming
@@ -92,8 +93,28 @@ export async function POST(req: NextRequest) {
       await ConversationRepository.addMessage(activeConversationId, "USER", lastUserMessage);
     }
 
-    // Fetch real RAG context for this workspace
-    const workspaceContext = await ContextService.getWorkspaceContext(dbWorkspace.id);
+    // 4.5 INTENT VALIDATION LAYER
+    if (!IntentValidator.isLoopIntent(lastUserMessage)) {
+      // Off-topic: Reject without hitting LLM
+      const encoder = new TextEncoder();
+      const stream = new ReadableStream({
+        async start(controller) {
+          controller.enqueue(encoder.encode(IntentValidator.refusalMessage));
+          controller.close();
+          // Save the rejection message
+          await ConversationRepository.addMessage(activeConversationId, "ASSISTANT", IntentValidator.refusalMessage, 0);
+        }
+      });
+      
+      const response = new NextResponse(stream, { headers: { "Content-Type": "text/plain; charset=utf-8" } });
+      if (isNewConversation) {
+        response.headers.set("X-Conversation-Id", activeConversationId);
+      }
+      return response;
+    }
+
+    // Fetch real RAG context for this workspace using exact SQL aggregations
+    const workspaceContext = await ContextService.getWorkspaceContext(dbWorkspace.id, lastUserMessage);
 
     // 5. Trigger AI Stream
     const { stream, model } = await LLMService.streamChatResponse({

@@ -312,3 +312,56 @@ export async function sendInvitationEmail(email: string, inviteUrl: string, work
   return true;
 }
 
+export async function sendPasswordResetEmail(email: string, token: string, expiryMinutes = 15) {
+  const transporter = await getVerifiedTransporter();
+  const resetUrl = `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/reset-password?token=${encodeURIComponent(token)}`;
+  const subject = `Reset your password | ${APP_NAME}`;
+
+  const htmlContent = `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Reset Password | ${APP_NAME}</title>
+        <style>
+          body {font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f8fafc; margin: 0; padding: 0; -webkit-font-smoothing: antialiased;}
+          .container {max-width: 520px; margin: 40px auto; background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 40px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);}
+          .logo-container {display: flex; align-items: center; gap: 10px; margin-bottom: 30px;}
+          .logo-text {font-size: 20px; font-weight: 800; color: #0f172a; letter-spacing: -0.025em;}
+          .logo-dot {height: 8px; width: 8px; border-radius: 50%; background-color: #2563eb;}
+          .heading {font-size: 24px; font-weight: 700; color: #0f172a; margin-top: 0; margin-bottom: 16px; letter-spacing: -0.02em;}
+          .text {font-size: 14px; line-height: 24px; color: #475569; margin-bottom: 24px;}
+          .button {display: inline-block; background-color: #2563eb; color: #ffffff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600;}
+          .footer-text {font-size: 12px; line-height: 20px; color: #94a3b8;}
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="logo-container">
+            <span class="logo-text">${APP_NAME}</span>
+            <span class="logo-dot"></span>
+          </div>
+          <h1 class="heading">Reset your password</h1>
+          <p class="text">We received a request to reset your password. Click the button below to choose a new password.</p>
+          <p style="text-align:center;margin:24px 0;">
+            <a href="${resetUrl}" class="button">Reset Password</a>
+          </p>
+          <p class="text">This link is active for <strong>${expiryMinutes} minutes</strong>.</p>
+          <hr class="divider" style="border-top:1px solid #e2e8f0;margin:30px 0;"/>
+          <p class="footer-text">Sent by ${APP_NAME} Operations Hub. All rights reserved.</p>
+        </div>
+      </body>
+    </html>
+  `;
+
+  console.log(`✉️ [SMTP SEND] Attempting to deliver password reset email to ${email}...`);
+  const info = await transporter.sendMail({
+    from: EMAIL_FROM,
+    to: email,
+    subject,
+    html: htmlContent
+  });
+  console.log(`✅ [SMTP SEND] Password reset email delivered successfully. Message ID: ${info.messageId}`);
+  return true;
+}

@@ -314,19 +314,19 @@ export default function DashboardPage() {
           />
 
           {/* LATEST FEEDBACK TABLE (Full Width) */}
-          <Card className="border border-slate-200/80 shadow-sm bg-white rounded-2xl overflow-hidden mt-6">
-            <div className="p-6 border-b border-slate-100 flex items-center justify-between">
-              <h3 className="text-sm font-bold text-slate-900">Latest Feedback</h3>
+          <Card className="border border-slate-200/80 dark:border-slate-800 shadow-sm bg-white dark:bg-slate-900 rounded-2xl overflow-hidden mt-6">
+            <div className="p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+              <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">Latest Feedback</h3>
               <div className="flex items-center gap-4">
                 <input 
                   type="text"
                   placeholder="Search feedback..."
-                  className="border border-slate-200 rounded-lg text-xs px-3 py-1.5 bg-slate-50 w-56 focus:outline-none focus:border-indigo-500"
+                  className="border border-slate-200 dark:border-slate-700 rounded-lg text-xs px-3 py-1.5 bg-slate-50 dark:bg-slate-900/50 text-slate-900 dark:text-slate-100 w-56 focus:outline-none focus:border-indigo-500"
                 />
-                <button className="text-xs font-bold text-slate-500 border border-slate-200 rounded-lg px-3 py-1.5 bg-white hover:bg-slate-50">
+                <button className="text-xs font-bold text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700">
                   Columns
                 </button>
-                <button className="text-xs font-bold text-slate-500 border border-slate-200 rounded-lg px-3 py-1.5 bg-white hover:bg-slate-50">
+                <button className="text-xs font-bold text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700">
                   Export
                 </button>
               </div>
@@ -335,7 +335,7 @@ export default function DashboardPage() {
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse text-xs">
                 <thead>
-                  <tr className="bg-slate-50 border-b border-slate-100 text-slate-400 font-bold uppercase tracking-wider">
+                  <tr className="bg-slate-50 dark:bg-slate-900/50 border-b border-slate-100 dark:border-slate-800 text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider">
                     <th className="p-4 pl-6">Feedback</th>
                     <th className="p-4">Source</th>
                     <th className="p-4">Theme</th>
@@ -345,19 +345,19 @@ export default function DashboardPage() {
                     <th className="p-4 pr-6"></th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100 text-slate-700">
+                <tbody className="divide-y divide-slate-100 dark:divide-slate-800 text-slate-700 dark:text-slate-300">
                   {charts.latestFeedback.map((item) => {
                     const themeName = item.themes?.[0]?.theme?.name || "Uncategorized";
                     const excerpt = item.content.length > 100 ? item.content.substring(0, 100) + "..." : item.content;
                     
                     return (
-                      <tr key={item.id} className="hover:bg-slate-50/50 transition">
+                      <tr key={item.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/50 transition">
                         <td className="p-4 pl-6">
-                          <p className="font-bold text-slate-900">{item.customerName || "Anonymous"}</p>
-                          <p className="text-slate-500 mt-0.5 max-w-md truncate font-medium">{excerpt}</p>
+                          <p className="font-bold text-slate-900 dark:text-slate-100">{item.customerName || "Anonymous"}</p>
+                          <p className="text-slate-500 dark:text-slate-400 mt-0.5 max-w-md truncate font-medium">{excerpt}</p>
                         </td>
                         <td className="p-4">
-                          <div className="flex items-center gap-2 font-bold text-slate-600">
+                          <div className="flex items-center gap-2 font-bold text-slate-600 dark:text-slate-400">
                             {getSourceIcon(item.source)}
                             <span>{item.source}</span>
                           </div>
@@ -373,7 +373,7 @@ export default function DashboardPage() {
                         <td className="p-4">
                           {getStatusBadge(item.status)}
                         </td>
-                        <td className="p-4 text-slate-400 font-bold">
+                        <td className="p-4 text-slate-400 dark:text-slate-500 font-bold">
                           {new Date(item.createdAt).toLocaleDateString("en-US", {
                             month: "short",
                             day: "numeric",
@@ -382,7 +382,7 @@ export default function DashboardPage() {
                           })}
                         </td>
                         <td className="p-4 pr-6 text-right">
-                          <button className="text-slate-400 hover:text-slate-600 p-1.5 rounded-lg hover:bg-slate-100 transition">
+                          <button className="text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition">
                             <MoreHorizontal className="h-4.5 w-4.5" />
                           </button>
                         </td>

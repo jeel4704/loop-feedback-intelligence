@@ -3,8 +3,8 @@
 import { useState, useEffect, ReactNode } from "react";
 import NextLink from "next/link";
 import Image from "next/image";
-import { ChevronDown, ArrowRight } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
 
 // Brand Logo Component
 export function BrandLogo() {
@@ -36,7 +36,6 @@ interface MarketingLayoutProps {
 
 export function MarketingLayout({ children }: MarketingLayoutProps) {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [activeMenu, setActiveMenu] = useState<"product" | "solutions" | "resources" | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -60,7 +59,6 @@ export function MarketingLayout({ children }: MarketingLayoutProps) {
           paddingBottom: isScrolled ? "1rem" : "1.5rem"
         }}
         transition={{ duration: 0.3 }}
-        onMouseLeave={() => setActiveMenu(null)}
       >
         <div className="mx-auto max-w-7xl px-6 flex items-center justify-between">
           <NextLink href="/" className="flex items-center gap-3 group">
@@ -68,47 +66,29 @@ export function MarketingLayout({ children }: MarketingLayoutProps) {
           </NextLink>
 
           <nav className="hidden lg:flex items-center gap-8 text-sm font-bold text-slate-300">
-            <div 
-              className="relative py-2"
-              onMouseEnter={() => setActiveMenu("product")}
-            >
-              <NextLink href="/product" className="hover:text-white transition-colors flex items-center gap-1">
-                Product <ChevronDown className={`h-3.5 w-3.5 opacity-60 transition-transform duration-200 ${activeMenu === "product" ? "rotate-180" : ""}`} />
+            <div className="py-2">
+              <NextLink href="/" className="hover:text-white transition-colors">
+                Home
               </NextLink>
             </div>
-
-            <div className="py-2" onMouseEnter={() => setActiveMenu(null)}>
+            <div className="py-2">
               <NextLink href="/features" className="hover:text-white transition-colors">
                 Features
               </NextLink>
             </div>
-
-            <div 
-              className="relative py-2"
-              onMouseEnter={() => setActiveMenu("solutions")}
-            >
-              <NextLink href="/solutions" className="hover:text-white transition-colors flex items-center gap-1">
-                Solutions <ChevronDown className={`h-3.5 w-3.5 opacity-60 transition-transform duration-200 ${activeMenu === "solutions" ? "rotate-180" : ""}`} />
+            <div className="py-2">
+              <NextLink href="/solutions" className="hover:text-white transition-colors">
+                Solutions
               </NextLink>
             </div>
-
-            <div className="py-2" onMouseEnter={() => setActiveMenu(null)}>
-              <NextLink href="/pricing" className="hover:text-white transition-colors">
-                Pricing
-              </NextLink>
-            </div>
-
-            <div 
-              className="relative py-2"
-              onMouseEnter={() => setActiveMenu("resources")}
-            >
-              <NextLink href="/resources" className="hover:text-white transition-colors flex items-center gap-1">
-                Resources <ChevronDown className={`h-3.5 w-3.5 opacity-60 transition-transform duration-200 ${activeMenu === "resources" ? "rotate-180" : ""}`} />
+            <div className="py-2">
+              <NextLink href="/resources" className="hover:text-white transition-colors">
+                Resources
               </NextLink>
             </div>
           </nav>
 
-          <div className="flex items-center gap-4" onMouseEnter={() => setActiveMenu(null)}>
+          <div className="flex items-center gap-4">
             <NextLink 
               href="/login" 
               className="text-sm font-bold text-slate-300 hover:text-white transition-colors px-3 py-2"
@@ -124,156 +104,6 @@ export function MarketingLayout({ children }: MarketingLayoutProps) {
           </div>
         </div>
 
-        {/* MEGA MENU CONTAINER */}
-        <AnimatePresence>
-          {activeMenu && (
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
-              transition={{ duration: 0.15, ease: "easeOut" }}
-              className="absolute left-0 right-0 top-[76px] mx-auto max-w-4xl z-50 px-6 pointer-events-auto"
-            >
-              <div className="overflow-hidden rounded-[24px] border border-white/10 bg-slate-900/90 backdrop-blur-2xl p-8 shadow-2xl grid grid-cols-2 gap-10">
-                
-                {/* Product Mega Menu */}
-                {activeMenu === "product" && (
-                  <>
-                    <div className="space-y-4">
-                      <p className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 flex items-center gap-1.5">
-                        🚀 Core Platform
-                      </p>
-                      <ul className="space-y-3">
-                        {[
-                          { label: "Dashboard", href: "/dashboard" },
-                          { label: "Feedback Inbox", href: "/inbox" },
-                          { label: "Reports", href: "/reports" },
-                          { label: "Analytics", href: "/trends" },
-                          { label: "User Management", href: "/members" }
-                        ].map((item) => (
-                          <li key={item.label}>
-                            <NextLink href={item.href as any} className="flex items-center gap-2 group text-xs font-semibold text-slate-300 hover:text-white transition-colors">
-                              <span className="h-1.5 w-1.5 rounded-full bg-slate-300 group-hover:bg-blue-600 transition-colors" />
-                              {item.label}
-                            </NextLink>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div className="space-y-4">
-                      <p className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400">AI Features</p>
-                      <ul className="space-y-3">
-                        {[
-                          { label: "Sentiment Analysis", href: "/product" },
-                          { label: "Theme Detection", href: "/product" },
-                          { label: "Semantic Search", href: "/product" },
-                          { label: "AI Recommendations", href: "/product" },
-                          { label: "Ask LOOP Assistant", href: "/product" }
-                        ].map((item) => (
-                          <li key={item.label}>
-                            <NextLink href={item.href as any} className="flex items-center gap-2 group text-xs font-semibold text-slate-300 hover:text-white transition-colors">
-                              <span className="h-1.5 w-1.5 rounded-full bg-slate-300 group-hover:bg-blue-600 transition-colors" />
-                              {item.label}
-                            </NextLink>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </>
-                )}
-
-                {/* Solutions Mega Menu */}
-                {activeMenu === "solutions" && (
-                  <>
-                    <div className="space-y-4">
-                      <p className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400">Teams</p>
-                      <ul className="space-y-3">
-                        {[
-                          { label: "Product", href: "/solutions" },
-                          { label: "Customer Success", href: "/solutions" },
-                          { label: "Support", href: "/solutions" },
-                          { label: "Marketing", href: "/solutions" },
-                          { label: "Enterprise", href: "/solutions" }
-                        ].map((item) => (
-                          <li key={item.label}>
-                            <NextLink href={item.href as any} className="flex items-center gap-2 group text-xs font-semibold text-slate-300 hover:text-white transition-colors">
-                              <span className="h-1.5 w-1.5 rounded-full bg-slate-300 group-hover:bg-blue-600 transition-colors" />
-                              {item.label}
-                            </NextLink>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div className="space-y-4">
-                      <p className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400">Use Cases</p>
-                      <ul className="space-y-3">
-                        {[
-                          { label: "Feature Prioritization", href: "/solutions" },
-                          { label: "Voice of Customer", href: "/solutions" },
-                          { label: "Customer Experience", href: "/solutions" },
-                          { label: "Product Research", href: "/solutions" },
-                          { label: "Market Insights", href: "/solutions" }
-                        ].map((item) => (
-                          <li key={item.label}>
-                            <NextLink href={item.href as any} className="flex items-center gap-2 group text-xs font-semibold text-slate-300 hover:text-white transition-colors">
-                              <span className="h-1.5 w-1.5 rounded-full bg-slate-300 group-hover:bg-blue-600 transition-colors" />
-                              {item.label}
-                            </NextLink>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </>
-                )}
-
-                {/* Resources Mega Menu */}
-                {activeMenu === "resources" && (
-                  <>
-                    <div className="space-y-4">
-                      <p className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400">Learn</p>
-                      <ul className="space-y-3">
-                        {[
-                          { label: "Blog", href: "/resources" },
-                          { label: "Guides", href: "/resources" },
-                          { label: "Tutorials", href: "/resources" },
-                          { label: "Case Studies", href: "/resources" },
-                          { label: "Help Center", href: "/resources" }
-                        ].map((item) => (
-                          <li key={item.label}>
-                            <NextLink href={item.href as any} className="flex items-center gap-2 group text-xs font-semibold text-slate-300 hover:text-white transition-colors">
-                              <span className="h-1.5 w-1.5 rounded-full bg-slate-300 group-hover:bg-blue-600 transition-colors" />
-                              {item.label}
-                            </NextLink>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div className="space-y-4">
-                      <p className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400">Developers</p>
-                      <ul className="space-y-3">
-                        {[
-                          { label: "Documentation", href: "/resources" },
-                          { label: "API Reference", href: "/resources" },
-                          { label: "SDKs", href: "/resources" },
-                          { label: "Changelog", href: "/resources" },
-                          { label: "Status", href: "/resources" }
-                        ].map((item) => (
-                          <li key={item.label}>
-                            <NextLink href={item.href as any} className="flex items-center gap-2 group text-xs font-semibold text-slate-300 hover:text-white transition-colors">
-                              <span className="h-1.5 w-1.5 rounded-full bg-slate-300 group-hover:bg-blue-600 transition-colors" />
-                              {item.label}
-                            </NextLink>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </>
-                )}
-
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </motion.header>
 
       {/* Main Content Area */}
