@@ -1,118 +1,66 @@
 "use client";
 
-import { useState } from "react";
-import { demoConversations } from "@/data/conversations";
-import { Badge, Button, Card, CardContent, Input, SectionHeader } from "@/components/ui";
+import React from "react";
+import { Sparkles, ArrowRight } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useChatContext } from "@/contexts/ChatContext";
 
-export default function AskLoopPage() {
-  const [selectedConversation, setSelectedConversation] = useState(
-    demoConversations[0]
-  );
-  const [question, setQuestion] = useState(demoConversations[0].question);
+export default function AskLoopWelcomePage() {
+  const router = useRouter();
+  const { createNewChat, setActiveChatId } = useChatContext();
+
+  const welcomeCards = [
+    { title: "Summarize today's feedback", query: "Summarize today's customer feedback" },
+    { title: "Top negative themes this week", query: "What are the top negative themes this week?" },
+    { title: "Customer satisfaction report", query: "Generate a customer satisfaction report" },
+    { title: "Show trending complaints", query: "Show trending complaints" },
+    { title: "Compare month comparison", query: "Compare this month with last month" },
+    { title: "Actionable recommendations", query: "Give me actionable recommendations" },
+    { title: "How to connect Slack?", query: "How do I connect Slack?" },
+    { title: "Workspace permission tiers", query: "How do permissions work?" }
+  ];
+
+  const handleSend = (query: string) => {
+    const newId = createNewChat(query);
+    setActiveChatId(newId);
+    
+    // We navigate to the chat ID passing the query via search params to auto-send it
+    router.push(`/ask-loop/chat/${newId}?q=${encodeURIComponent(query)}`);
+  };
 
   return (
-    <div className="space-y-6">
-      <SectionHeader
-        eyebrow="Ask LOOP"
-        title="Ask questions about your customer feedback"
-        description="Use natural language to explore sentiment, trending themes, and emerging issues with source-backed answers."
-      />
+    <div className="flex-1 overflow-y-auto p-6 space-y-6 custom-scrollbar h-full flex flex-col justify-center">
+      <div className="max-w-2xl mx-auto py-8 space-y-8 w-full">
+        <div className="text-center space-y-2">
+          <div className="h-12 w-12 rounded-2xl bg-indigo-500/10 flex items-center justify-center mx-auto text-indigo-650 dark:text-indigo-400 shadow-sm">
+            <Sparkles className="h-7 w-7" />
+          </div>
+          <h1 className="text-xl font-black text-slate-900 dark:text-slate-50 mt-4 tracking-tight">
+            Welcome to Ask LOOP AI
+          </h1>
+          <p className="text-xs font-bold text-slate-500 dark:text-slate-400 max-w-lg mx-auto leading-relaxed">
+            Analyze customer feedback, generate insights, discover trends, summarize reports, and manage your workspace using AI.
+          </p>
+        </div>
 
-      <div className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
-        <Card>
-          <CardContent className="space-y-5 p-6">
-            <div className="rounded-3xl bg-slate-50 p-5 dark:bg-slate-900">
-              <p className="text-sm font-medium text-slate-900 dark:text-slate-100">
-                {selectedConversation.question}
-              </p>
-            </div>
-            <div className="rounded-3xl bg-blue-600 p-5 text-white">
-              <p className="text-sm leading-6">
-                {selectedConversation.answer}
-              </p>
-            </div>
-
-            <div className="space-y-3">
-              <p className="text-sm font-semibold uppercase tracking-[0.22em] text-slate-500">
-                Example questions
-              </p>
-              <div className="flex flex-wrap gap-3">
-                {demoConversations.map((conversation) => (
-                  <button
-                    key={conversation.id}
-                    type="button"
-                    onClick={() => {
-                      setSelectedConversation(conversation);
-                      setQuestion(conversation.question);
-                    }}
-                    className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm text-slate-700 transition hover:border-blue-200 hover:bg-blue-50 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-300 dark:hover:bg-slate-900"
-                  >
-                    {conversation.question}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <Input
-                placeholder="Ask LOOP a question about your feedback..."
-                className="sm:flex-1"
-                value={question}
-                onChange={(event) => setQuestion(event.target.value)}
-              />
-              <Button
-                onClick={() => {
-                  const matched =
-                    demoConversations.find((item) => item.question === question) ??
-                    demoConversations[0];
-                  setSelectedConversation(matched);
-                }}
+        <div className="space-y-3">
+          <p className="text-[9.5px] font-extrabold uppercase tracking-wider text-slate-450 dark:text-slate-500 text-center">
+            Suggested Prompts
+          </p>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {welcomeCards.map((card, idx) => (
+              <div
+                key={idx}
+                onClick={() => handleSend(card.query)}
+                className="border border-slate-200 dark:border-slate-850 bg-white dark:bg-slate-900 p-3.5 rounded-xl cursor-pointer hover:border-indigo-400 dark:hover:border-indigo-900 shadow-sm transition hover:-translate-y-0.5"
               >
-                Ask
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-
-        <div className="space-y-6">
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between gap-3">
-                <h3 className="text-lg font-semibold text-slate-950 dark:text-slate-50">
-                  Answer Card
-                </h3>
-                <Badge variant="blue">AI Demo</Badge>
+                <p className="text-xs font-extrabold text-slate-700 dark:text-slate-300 leading-normal flex items-center justify-between">
+                  <span>{card.query}</span>
+                  <ArrowRight className="h-3.5 w-3.5 text-slate-400" />
+                </p>
               </div>
-              <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
-                LOOP summarizes the selected question using the mock feedback
-                dataset and returns evidence cards below.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="p-6">
-              <h3 className="text-lg font-semibold text-slate-950 dark:text-slate-50">
-                Source Feedback
-              </h3>
-              <div className="mt-5 space-y-4">
-                {selectedConversation.sources.map((source) => (
-                  <div
-                    key={source.id}
-                    className="rounded-2xl bg-slate-50 p-4 text-sm text-slate-700 dark:bg-slate-900 dark:text-slate-300"
-                  >
-                    <div className="flex items-center justify-between gap-3">
-                      <p className="font-medium text-slate-900 dark:text-slate-100">
-                        {source.customerLabel}
-                      </p>
-                      <Badge variant="outline">{source.channel}</Badge>
-                    </div>
-                    <p className="mt-2">{source.content}</p>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+            ))}
+          </div>
         </div>
       </div>
     </div>

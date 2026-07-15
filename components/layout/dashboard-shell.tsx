@@ -1,28 +1,33 @@
 "use client";
 
+import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
-import { Bell, Building2, ChevronDown, PanelLeft, Search } from "lucide-react";
-import { AuthGuard } from "@/components/auth";
-import { Avatar, ThemeToggle } from "@/components/common";
-import { Badge, Button, Input } from "@/components/ui";
-import { demoNotifications } from "@/data/notifications";
-import { demoWorkspace } from "@/data/users";
-import { useAuth } from "@/hooks/useAuth";
+import { useSession, signOut } from "next-auth/react";
+import { 
+  LogOut, 
+  Home,
+  MessageSquare,
+  Tags,
+  LineChart,
+  FileText,
+  Sparkles,
+  Database,
+  Puzzle,
+  Users,
+  Building2,
+  Settings,
+  Menu,
+  X
+} from "lucide-react";
 import { cn } from "@/lib/utils";
-
-const navItems = [
-  { label: "Dashboard", href: "/dashboard" },
-  { label: "Inbox", href: "/inbox" },
-  { label: "Feedback", href: "/feedback" },
-  { label: "Themes", href: "/themes" },
-  { label: "Trends", href: "/trends" },
-  { label: "Ask LOOP", href: "/ask-loop" },
-  { label: "Reports", href: "/reports" },
-  { label: "Members", href: "/members" },
-  { label: "Settings", href: "/settings" }
-] as const;
+import { SearchBar } from "@/components/SearchBar";
+import { ThemeSwitcher } from "@/components/ThemeSwitcher";
+import { ProfileDropdown } from "@/components/ProfileDropdown";
+import { Tooltip } from "@/components/Tooltip";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface DashboardShellProps {
   children: ReactNode;
@@ -30,139 +35,276 @@ interface DashboardShellProps {
 
 export function DashboardShell({ children }: DashboardShellProps) {
   const pathname = usePathname();
-  const router = useRouter();
-  const { user, logout } = useAuth();
+  const { data: session } = useSession();
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  const user = session?.user as any;
+  const userRole = user?.role || "VIEWER";
+  const userName = user?.name || user?.email?.split("@")[0] || "User";
+  const workspaceName = user?.workspaceName || user?.workspaceSlug || "Workspace";
+
+  // Watch scroll to show soft shadow under navbar
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 10) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Close mobile drawer on route change
+  useEffect(() => {
+    setIsMobileOpen(false);
+  }, [pathname]);
+
+  // Generate initials
+  const initials = userName
+    .split(" ")
+    .map((n: string) => n[0])
+    .join("")
+    .toUpperCase()
+    .slice(0, 2) || "U";
+
+  // Navigation Items
+  const primaryNavItems = [
+    { label: "Overview", href: "/dashboard", icon: Home, roles: ["OWNER", "ADMIN", "ANALYST", "VIEWER"] },
+    { label: "Feedback", href: "/feedback", icon: MessageSquare, roles: ["OWNER", "ADMIN", "ANALYST"] },
+    { label: "Themes", href: "/themes", icon: Tags, roles: ["OWNER", "ADMIN", "ANALYST"] },
+    { label: "Trends", href: "/trends", icon: LineChart, roles: ["OWNER", "ADMIN", "ANALYST", "VIEWER"] },
+    { label: "Reports", href: "/reports", icon: FileText, roles: ["OWNER", "ADMIN", "ANALYST", "VIEWER"] },
+    { label: "Ask LOOP AI", href: "/ask-loop", icon: Sparkles, roles: ["OWNER", "ADMIN", "ANALYST", "VIEWER"] }
+  ];
+
+  const manageNavItems = [
+    { label: "Sources", href: "/inbox", icon: Database, roles: ["OWNER", "ADMIN", "ANALYST", "VIEWER"] },
+    { label: "Users & Roles", href: "/members", icon: Users, roles: ["OWNER", "ADMIN"] },
+    { label: "Workspaces", href: "/workspaces", icon: Building2, roles: ["OWNER", "ADMIN"] },
+    { label: "Settings", href: "/settings", icon: Settings, roles: ["OWNER", "ADMIN"] }
+  ];
+
+  const allowedPrimaryItems = primaryNavItems.filter(item => item.roles.includes(userRole));
+  const allowedManageItems = manageNavItems.filter(item => item.roles.includes(userRole));
+
+  const renderNavLinks = () => (
+    <div className="space-y-6">
+      {/* Primary Nav Section */}
+      <nav className="space-y-1" aria-label="Primary navigation">
+        {allowedPrimaryItems.map((item) => {
+          const isActive = pathname === item.href;
+          const Icon = item.icon;
+
+          return (
+            <Link
+              key={item.label}
+              href={item.href as any}
+              className={cn(
+                "flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-[13px] font-semibold transition-all duration-200 relative group overflow-hidden outline-none focus-visible:ring-2 focus-visible:ring-indigo-500",
+                isActive
+                  ? "bg-[#efeffe] dark:bg-indigo-950/60 text-[#4f46e5] dark:text-indigo-400 font-bold"
+                  : "text-slate-655 hover:bg-slate-100/80 dark:text-slate-400 dark:hover:bg-slate-900/60 dark:hover:text-slate-100"
+              )}
+            >
+              <Icon className={cn("h-4.5 w-4.5 transition-colors", isActive ? "text-[#4f46e5] dark:text-indigo-400" : "text-slate-405 group-hover:text-slate-600 dark:text-slate-500 dark:group-hover:text-slate-355")} />
+              <span>{item.label}</span>
+              {/* Subtle hover indicator dot */}
+              {!isActive && (
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-[#4f46e5]/40 opacity-0 group-hover:opacity-100 transition-opacity" />
+              )}
+            </Link>
+          );
+        })}
+      </nav>
+
+      {/* Manage Nav Section */}
+      <div className="pt-2">
+        <p className="text-[10px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 px-3.5 select-none">
+          Manage
+        </p>
+        <nav className="space-y-1" aria-label="Management navigation">
+          {allowedManageItems.map((item) => {
+            const isActive = pathname === item.href;
+            const Icon = item.icon;
+
+            return (
+              <Link
+                key={item.label}
+                href={item.href as any}
+                className={cn(
+                  "flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-[13px] font-semibold transition-all duration-200 relative group overflow-hidden outline-none focus-visible:ring-2 focus-visible:ring-indigo-500",
+                  isActive
+                    ? "bg-[#efeffe] dark:bg-indigo-950/60 text-[#4f46e5] dark:text-indigo-400 font-bold"
+                    : "text-slate-655 hover:bg-slate-100/80 dark:text-slate-400 dark:hover:bg-slate-900/60 dark:hover:text-slate-100"
+                )}
+              >
+                <Icon className={cn("h-4.5 w-4.5 transition-colors", isActive ? "text-[#4f46e5] dark:text-indigo-400" : "text-slate-405 group-hover:text-slate-600 dark:text-slate-500 dark:group-hover:text-slate-355")} />
+                <span>{item.label}</span>
+                {!isActive && (
+                  <span className="absolute right-3 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-[#4f46e5]/40 opacity-0 group-hover:opacity-100 transition-opacity" />
+                )}
+              </Link>
+            );
+          })}
+        </nav>
+      </div>
+    </div>
+  );
+
+  const renderSidebarContent = (isMobile = false) => (
+    <>
+      {/* Top sticky logo block */}
+      <div className="flex items-center justify-between pb-6 border-b border-slate-200/50 dark:border-slate-800/50 flex-shrink-0">
+        <div className="flex items-center gap-2.5">
+          <Image 
+            src="/logo.jpg" 
+            alt="LOOP Logo" 
+            width={34}
+            height={34}
+            className="rounded-xl border border-slate-200 bg-white p-0.5 shadow-sm dark:bg-slate-950 dark:border-slate-800"
+          />
+          <span className="font-extrabold text-lg text-slate-900 dark:text-slate-50 tracking-tight leading-none">
+            LOOP
+          </span>
+        </div>
+        {isMobile && (
+          <button 
+            onClick={() => setIsMobileOpen(false)}
+            className="p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-650 dark:text-slate-500 dark:hover:text-slate-250 transition-colors"
+          >
+            <X className="h-5 w-5" />
+          </button>
+        )}
+      </div>
+
+      {/* Middle scrollable nav links */}
+      <div className="flex-1 overflow-y-auto pr-1 py-4 custom-scrollbar">
+        {renderNavLinks()}
+      </div>
+
+      {/* Bottom sticky items */}
+      <div className="pt-6 border-t border-slate-200/60 dark:border-slate-850 flex-shrink-0 space-y-5 bg-[#fafbfe] dark:bg-slate-950">
+
+
+        {/* User initials & quick Sign out */}
+        <div className="flex items-center justify-between pt-1">
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-100 dark:bg-indigo-950 text-xs font-bold text-[#4f46e5] dark:text-indigo-400 border border-indigo-200/25">
+              {initials}
+            </div>
+            <div className="min-w-0">
+              <p className="text-xs font-bold text-slate-900 dark:text-slate-50 truncate">{userName}</p>
+              <p className="text-[10px] text-slate-405 dark:text-slate-550 font-bold truncate">
+                {userRole === "OWNER" ? "Workspace Owner" : userRole}
+              </p>
+            </div>
+          </div>
+          <Tooltip content="Sign Out">
+            <button 
+              onClick={() => signOut({ callbackUrl: "/" })}
+              className="text-slate-400 hover:text-rose-600 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-905 transition-colors"
+              aria-label="Sign out of loop"
+            >
+              <LogOut className="h-4 w-4" />
+            </button>
+          </Tooltip>
+        </div>
+      </div>
+    </>
+  );
 
   return (
-    <AuthGuard>
-      <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(191,219,254,0.45),_transparent_30%),linear-gradient(to_bottom,_#f8fbff,_#eef4ff)] dark:bg-[radial-gradient(circle_at_top,_rgba(37,99,235,0.18),_transparent_22%),linear-gradient(to_bottom,_#020617,_#0f172a)]">
-        <div className="mx-auto grid min-h-screen max-w-7xl gap-6 px-4 py-4 lg:grid-cols-[260px_1fr] lg:px-6">
-        <aside className="rounded-[28px] border border-white/70 bg-slate-950 px-5 py-6 text-slate-100 shadow-[0_24px_80px_-32px_rgba(15,23,42,0.75)]">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.3em] text-blue-300">
-                Workspace
-              </p>
-              <div className="mt-3 flex items-center gap-3">
-                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-500/20 text-lg font-semibold text-blue-100">
-                  L
-                </div>
-                <div>
-                  <p className="font-semibold text-white">LOOP</p>
-                  <p className="text-sm text-slate-400">{demoWorkspace.name}</p>
-                </div>
-              </div>
-            </div>
-            <Button variant="ghost" className="text-slate-300 hover:bg-white/10 hover:text-white">
-              <PanelLeft className="h-4 w-4" />
-            </Button>
-          </div>
-
-          <div className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-4">
-            <div className="flex items-center gap-3">
-              <Building2 className="h-4 w-4 text-blue-300" />
-              <p className="text-sm font-medium text-white">Multi-tenant active</p>
-            </div>
-            <p className="mt-2 text-sm text-slate-400">
-              Workspace isolation and RBAC-ready access across Admin, Analyst,
-              and Viewer roles.
-            </p>
-          </div>
-
-          <nav className="mt-8 space-y-1.5">
-            {navItems.map((item) => {
-              const isActive = pathname === item.href;
-
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={cn(
-                    "flex items-center justify-between rounded-2xl px-4 py-3 text-sm transition",
-                    isActive
-                      ? "bg-white text-slate-950 shadow-sm"
-                      : "text-slate-300 hover:bg-white/10 hover:text-white"
-                  )}
-                >
-                  <span>{item.label}</span>
-                  {isActive ? (
-                    <span className="h-2 w-2 rounded-full bg-blue-600" />
-                  ) : null}
-                </Link>
-              );
-            })}
-          </nav>
-
-          <div className="mt-8 rounded-2xl border border-blue-400/20 bg-blue-500/10 p-4">
-            <Badge variant="blue">AI Classification</Badge>
-            <p className="mt-3 text-sm text-slate-300">
-              128 feedback items are loaded with theme labels, sentiment, and
-              status metadata for the demo workspace.
-            </p>
-            <Button className="mt-4 w-full bg-white text-slate-950 hover:bg-slate-100">
-              Review Queue
-            </Button>
-          </div>
+    <div className="min-h-screen bg-[#fcfdff] dark:bg-slate-950 flex text-slate-800 dark:text-slate-100 transition-colors duration-300">
+      <div className="flex min-h-screen w-full relative">
+        {/* DESKTOP STICKY SIDEBAR */}
+        <aside className="w-[260px] h-screen sticky top-0 hidden lg:flex flex-col justify-between bg-[#fafbfe] dark:bg-slate-950 px-5 py-6 border-r border-slate-200/80 dark:border-slate-900 flex-shrink-0 z-20 overflow-hidden">
+          {renderSidebarContent(false)}
         </aside>
 
-        <div className="flex min-h-screen flex-col gap-6">
-          <header className="rounded-[28px] border border-slate-200/80 bg-white/85 p-4 shadow-sm backdrop-blur dark:border-slate-800/80 dark:bg-slate-950/80">
+        {/* MOBILE SLIDING SIDEBAR DRAWER */}
+        <AnimatePresence>
+          {isMobileOpen && (
+            <>
+              {/* Sliding backdrop */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setIsMobileOpen(false)}
+                className="fixed inset-0 z-40 bg-slate-950/60 backdrop-blur-sm lg:hidden"
+              />
+              {/* Drawer layout */}
+              <motion.aside
+                initial={{ x: "-100%" }}
+                animate={{ x: 0 }}
+                exit={{ x: "-100%" }}
+                transition={{ type: "spring", damping: 25, stiffness: 220 }}
+                className="fixed inset-y-0 left-0 z-50 w-[260px] bg-[#fafbfe] dark:bg-slate-950 border-r border-slate-200/80 dark:border-slate-800/80 flex flex-col justify-between px-5 py-6 lg:hidden overflow-hidden"
+              >
+                {renderSidebarContent(true)}
+              </motion.aside>
+            </>
+          )}
+        </AnimatePresence>
+
+        {/* Content area right */}
+        <div className="flex-1 flex flex-col min-h-screen min-w-0 bg-[#f8fafc] dark:bg-slate-900/30 overflow-hidden">
+          {/* HEADER NAV BAR */}
+          <header 
+            className={cn(
+              "sticky top-0 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md z-30 px-6 py-4 w-full transition-all duration-200 border-b border-slate-200/60 dark:border-slate-900",
+              isScrolled && "shadow-sm border-b dark:border-slate-850"
+            )}
+          >
             <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-              <div className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2 dark:border-slate-800 dark:bg-slate-900">
-                <Search className="h-4 w-4 text-slate-400 dark:text-slate-500" />
-                <Input
-                  aria-label="Search workspace"
-                  placeholder="Search feedback, themes, reports..."
-                  className="border-0 bg-transparent p-0 shadow-none focus:ring-0 dark:bg-transparent"
-                />
+              {/* Header Title Greeting / Menu Trigger */}
+              <div className="flex items-center gap-3">
+                <button 
+                  onClick={() => setIsMobileOpen(true)}
+                  className="lg:hidden p-2 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-655 dark:hover:text-slate-200 rounded-xl transition outline-none"
+                  aria-label="Open sidebar"
+                >
+                  <Menu className="h-5 w-5" />
+                </button>
+
+                <div className="min-w-0">
+                  <h1 className="text-base font-bold text-slate-900 dark:text-slate-50 truncate leading-none">
+                    Welcome back, {userName.split(" ")[0]}
+                  </h1>
+                  <p className="text-[11px] text-slate-405 dark:text-slate-500 font-semibold mt-1">
+                    Here's what's happening with your feedback today.
+                  </p>
+                </div>
               </div>
 
-              <div className="flex flex-wrap items-center gap-3">
-                <Badge variant="indigo">{demoWorkspace.name}</Badge>
-                <Badge variant="outline">{user?.role ?? "Viewer"} Mode</Badge>
-                <ThemeToggle />
-                <Button variant="secondary" className="gap-2">
-                  <Bell className="h-4 w-4" />
-                  Alerts
-                  <Badge variant="blue" className="ml-1">
-                    {demoNotifications.length}
-                  </Badge>
-                </Button>
-                <button className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-3 py-2 text-left shadow-sm dark:border-slate-800 dark:bg-slate-900">
-                  <Avatar
-                    initials={user?.avatarInitials ?? "LP"}
-                    name={user?.name ?? "LOOP User"}
-                  />
-                  <div>
-                    <p className="text-sm font-medium text-slate-900 dark:text-slate-100">
-                      {user?.name ?? "LOOP User"}
-                    </p>
-                    <p className="text-xs text-slate-500 dark:text-slate-400">
-                      {user?.role ?? "VIEWER"}
-                    </p>
-                  </div>
-                  <ChevronDown className="h-4 w-4 text-slate-400" />
-                </button>
-                <Button
-                  variant="ghost"
-                  className="dark:text-slate-300 dark:hover:bg-slate-900 dark:hover:text-white"
-                  onClick={() => {
-                    logout();
-                    router.replace("/login");
-                  }}
-                >
-                  Logout
-                </Button>
+              {/* Header Actions items */}
+              <div className="flex items-center gap-3.5 justify-end">
+                {/* Global Search Component */}
+                <SearchBar />
+
+                {/* Navbar Action Icons */}
+                <div className="flex items-center gap-1 text-slate-400">
+
+                  <Tooltip content="Toggle Theme" position="bottom">
+                    <ThemeSwitcher />
+                  </Tooltip>
+                </div>
+
+                {/* Profile Dropdown */}
+                <ProfileDropdown />
               </div>
             </div>
           </header>
 
-          <main className="flex-1 rounded-[28px] border border-slate-200/80 bg-white/90 p-5 shadow-sm backdrop-blur dark:border-slate-800/80 dark:bg-slate-950/90 sm:p-6">
+          {/* MAIN VIEW CONTENT CONTAINER */}
+          <main className="flex-1 p-6 md:p-8 w-full overflow-y-auto custom-scrollbar focus:outline-none">
             {children}
           </main>
         </div>
       </div>
-      </div>
-    </AuthGuard>
+    </div>
   );
 }

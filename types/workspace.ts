@@ -3,9 +3,8 @@ import type { Role } from "@/types/auth";
 export interface WorkspaceMember {
   id: string;
   email: string;
-  name: string;
+  name?: string | null;
   role: Role;
-  avatarInitials: string;
 }
 
 export interface WorkspaceItem {
@@ -13,3 +12,4 @@ export interface WorkspaceItem {
   name: string;
   slug: string;
 }
+

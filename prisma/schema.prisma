@@ -7,32 +7,16 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Role {
-  ADMIN
-  ANALYST
-  VIEWER
-}
-
-enum FeedbackSource {
-  CSV
-  MANUAL
-  API
-}
-
-enum ReportStatus {
-  DRAFT
-  READY
-  ARCHIVED
-}
-
 model User {
-  id          String                @id @default(cuid())
-  name        String?
-  email       String                @unique
+  id           String                @id @default(cuid())
+  name         String?
+  email        String                @unique
   passwordHash String?
-  createdAt   DateTime              @default(now())
-  updatedAt   DateTime              @updatedAt
-  memberships WorkspaceMembership[]
+  createdAt    DateTime              @default(now())
+  updatedAt    DateTime              @updatedAt
+  memberships  WorkspaceMembership[]
+  conversations Conversation[]
+  aiUsages      AIUsage[]
 }
 
 model Workspace {
@@ -41,10 +25,14 @@ model Workspace {
   slug        String                @unique
   createdAt   DateTime              @default(now())
   updatedAt   DateTime              @updatedAt
-  members     WorkspaceMembership[]
   feedback    Feedback[]
-  themes      Theme[]
+  invitations Invitation[]
   reports     Report[]
+  themes      Theme[]
+  members     WorkspaceMembership[]
+  activityLogs ActivityLog[]
+  conversations Conversation[]
+  aiUsages      AIUsage[]
 }
 
 model WorkspaceMembership {
@@ -57,21 +45,43 @@ model WorkspaceMembership {
   workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
 
   @@unique([userId, workspaceId])
+  @@index([workspaceId])
 }
 
 model Feedback {
-  id           String         @id @default(cuid())
-  workspaceId  String
-  title        String
-  content      String
-  sentiment    Float?
-  source       FeedbackSource @default(MANUAL)
-  customerName String?
-  customerEmail String?
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
-  workspace    Workspace      @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
-  themes       FeedbackTheme[]
+  id             String          @id @default(cuid())
+  workspaceId    String
+  title          String
+  content        String
+  sentiment      Float?
+  sentimentLabel String?
+  intent         String?
+  tags           String[]
+  reason         String?
+  source         String          @default("MANUAL")
+  status         String          @default("New")
+  occurrenceCount Int             @default(1)
+  lastReportedAt  DateTime        @default(now())
+  duplicateOf     String?
+  similarityScore Float?
+  customerName   String?
+  customerEmail  String?
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  embedding      Embedding?
+  workspace      Workspace       @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  themes         FeedbackTheme[]
+
+  @@index([workspaceId])
+  @@index([createdAt])
+  @@index([sentiment])
+}
+
+model Embedding {
+  id         String                 @id @default(cuid())
+  feedbackId String                 @unique
+  vector     Unsupported("vector")?
+  feedback   Feedback               @relation(fields: [feedbackId], references: [id], onDelete: Cascade)
 }
 
 model Theme {
@@ -81,8 +91,10 @@ model Theme {
   description String?
   createdAt   DateTime        @default(now())
   updatedAt   DateTime        @updatedAt
-  workspace   Workspace       @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   feedback    FeedbackTheme[]
+  workspace   Workspace       @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@index([workspaceId])
 }
 
 model FeedbackTheme {
@@ -92,6 +104,7 @@ model FeedbackTheme {
   theme      Theme    @relation(fields: [themeId], references: [id], onDelete: Cascade)
 
   @@id([feedbackId, themeId])
+  @@index([themeId])
 }
 
 model Report {
@@ -103,5 +116,151 @@ model Report {
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
   workspace   Workspace    @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@index([workspaceId])
 }
 
+model PendingWorkspace {
+  id            String   @id @default(cuid())
+  workspaceName String
+  name          String
+  email         String   @unique
+  passwordHash  String
+  code          String
+  expiresAt     DateTime
+  createdAt     DateTime @default(now())
+}
+
+// PendingUser model for magic‑link signup flow
+model PendingUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String?
+  workspaceName String?
+  passwordHash String
+  token        String   @unique
+  expiresAt    DateTime
+  usedAt       DateTime?
+  createdAt    DateTime @default(now())
+}
+
+model Invitation {
+  id          String    @id @default(cuid())
+  email       String
+  workspaceId String
+  role        Role
+  token       String    @unique
+  code        String
+  expiresAt   DateTime
+  createdAt   DateTime  @default(now())
+  acceptedAt  DateTime?
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@index([token])
+  @@index([email])
+}
+
+model OTPVerification {
+  id        String   @id
+  email     String   @unique
+  hashedOtp String
+  purpose   String
+  expiresAt DateTime
+  attempts  Int      @default(0)
+  resends   Int      @default(0)
+  verified  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+}
+
+enum Role {
+  OWNER
+  ADMIN
+  ANALYST
+  VIEWER
+}
+
+
+
+enum ReportStatus {
+  DRAFT
+  READY
+  ARCHIVED
+}
+
+model ActivityLog {
+  id          String     @id @default(cuid())
+  workspaceId String?
+  label       String
+  timeLabel   String     @default("Just now")
+  createdAt   DateTime   @default(now())
+  workspace   Workspace? @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+
+  @@index([workspaceId])
+}
+
+// ==========================================
+// ASK LOOP AI MODELS
+// ==========================================
+
+model Conversation {
+  id          String    @id @default(cuid())
+  title       String    @default("New Conversation")
+  userId      String
+  workspaceId String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  workspace   Workspace @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  messages    Message[]
+  aiUsage     AIUsage[]
+
+  @@index([userId])
+  @@index([workspaceId])
+}
+
+model Message {
+  id             String       @id @default(cuid())
+  conversationId String
+  role           MessageRole
+  content        String       @db.Text
+  tokens         Int?
+  createdAt      DateTime     @default(now())
+
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  attachments    Attachment[]
+}
+
+enum MessageRole {
+  USER
+  ASSISTANT
+  SYSTEM
+}
+
+model Attachment {
+  id         String   @id @default(cuid())
+  messageId  String
+  fileName   String
+  fileUrl    String
+  fileType   String
+  createdAt  DateTime @default(now())
+
+  message    Message  @relation(fields: [messageId], references: [id], onDelete: Cascade)
+}
+
+model AIUsage {
+  id             String       @id @default(cuid())
+  workspaceId    String
+  userId         String
+  conversationId String?
+  promptTokens   Int
+  completionTokens Int
+  totalTokens    Int
+  model          String
+  createdAt      DateTime     @default(now())
+
+  workspace      Workspace    @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  conversation   Conversation? @relation(fields: [conversationId], references: [id], onDelete: SetNull)
+}

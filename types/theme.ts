@@ -2,11 +2,6 @@ export interface ThemeItem {
   id: string;
   workspaceId: string;
   name: string;
-  description: string;
-  featureArea: string;
+  description?: string | null;
 }
 
-export interface ThemeSummary extends ThemeItem {
-  feedbackCount: number;
-  sentimentSummary: string;
-}
