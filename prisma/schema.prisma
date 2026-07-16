@@ -17,6 +17,7 @@ model User {
   memberships  WorkspaceMembership[]
   conversations Conversation[]
   aiUsages      AIUsage[]
+  imports       Import[]
 }
 
 model Workspace {
@@ -33,6 +34,7 @@ model Workspace {
   activityLogs ActivityLog[]
   conversations Conversation[]
   aiUsages      AIUsage[]
+  imports       Import[]
 }
 
 model WorkspaceMembership {
@@ -117,6 +119,25 @@ model Report {
   updatedAt   DateTime     @updatedAt
   workspace   Workspace    @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
 
+  @@index([workspaceId])
+}
+
+model Import {
+  id              String       @id @default(cuid())
+  workspaceId     String
+  fileName        String
+  importedBy      String
+  validRecords    Int          @default(0)
+  invalidRecords  Int          @default(0)
+  status          String       @default("COMPLETED")
+  fileSize        Int          @default(0)
+  duration        Int          @default(0)
+  source          String       @default("CSV")
+  createdAt       DateTime     @default(now())
+  
+  workspace       Workspace    @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
+  user            User         @relation(fields: [importedBy], references: [id], onDelete: Cascade)
+  
   @@index([workspaceId])
 }
 

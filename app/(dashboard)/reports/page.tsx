@@ -71,16 +71,23 @@ export default function ReportsPage() {
     }
   };
 
+  const downloadReport = async (report: ReportItem) => {
+    // We will build a client-side print trigger or simple hidden iframe approach
+    // For now, it will open the report with a print flag
+    const url = `/reports/${report.id}?print=true`;
+    window.open(url, "_blank");
+  };
+
   return (
     <div className="space-y-6">
       <SectionHeader
         eyebrow="Voice of Customer"
-        title="Generate and review customer insight reports"
-        description="Create polished VOC summaries with theme movement, sentiment shifts, customer quotes, and recommended product actions."
+        title="Enterprise Reports Dashboard"
+        description="View generated analytics reports. Click into a report to explore interactive charts, sentiment trends, and granular feedback filters."
         action={
           !isViewer && (
-            <Button onClick={handleGenerateReport} disabled={generating}>
-              {generating ? "Generating..." : "Generate Voice of Customer Report"}
+            <Button onClick={handleGenerateReport} disabled={generating} className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold">
+              {generating ? "Generating..." : "Generate New Report"}
             </Button>
           )
         }
@@ -93,58 +100,68 @@ export default function ReportsPage() {
       )}
 
       {loading ? (
-        <div className="text-center py-12 text-xs text-slate-400 font-semibold">
-          Loading workspace reports...
+        <div className="text-center py-12 text-xs text-slate-400 font-semibold animate-pulse">
+          Loading enterprise reports...
         </div>
       ) : reports.length === 0 ? (
-        <div className="rounded-[24px] border border-dashed border-slate-200 bg-white p-12 text-center shadow-sm">
-          <FileText className="h-10 w-10 text-slate-300 mx-auto mb-3" />
-          <h3 className="font-bold text-sm text-slate-900">No reports have been generated</h3>
-          <p className="text-xs text-slate-400 mt-1 max-w-sm mx-auto">
-            Create dynamic executive summaries detailing customer support wins and feature requests when feedback is imported.
+        <div className="rounded-[24px] border border-dashed border-slate-200 bg-white p-16 text-center shadow-sm max-w-3xl mx-auto">
+          <FileText className="h-12 w-12 text-slate-300 mx-auto mb-4" />
+          <h3 className="font-extrabold text-lg text-slate-900">No reports generated yet</h3>
+          <p className="text-sm text-slate-500 mt-2 max-w-md mx-auto font-medium">
+            Generate an enterprise Voice of Customer report to unlock actionable insights, sentiment tracking, and interactive KPI dashboards.
           </p>
+          {!isViewer && (
+            <Button onClick={handleGenerateReport} disabled={generating} className="mt-6 font-bold bg-indigo-600 hover:bg-indigo-700">
+              {generating ? "Generating..." : "Generate Your First Report"}
+            </Button>
+          )}
         </div>
       ) : (
-        <div className="grid gap-6 xl:grid-cols-[0.9fr_1.1fr]">
-          <div className="space-y-6">
-            {reports.map((report) => (
-              <Card key={report.id}>
-                <CardContent className="p-6">
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <h2 className="text-lg font-bold text-slate-950">
-                        {report.title}
-                      </h2>
-                      <p className="mt-2 text-xs text-slate-500 font-semibold">{report.date}</p>
-                    </div>
-                    <Badge variant={report.status === "Ready" ? "green" : "amber"}>
-                      {report.status}
-                    </Badge>
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {reports.map((report) => (
+            <Card key={report.id} className="flex flex-col justify-between hover:shadow-lg transition-shadow duration-300 border border-slate-200/80">
+              <CardContent className="p-6">
+                <div className="flex items-start justify-between gap-3 mb-4">
+                  <div className="bg-indigo-50 p-3 rounded-2xl">
+                    <FileText className="h-6 w-6 text-indigo-600" />
                   </div>
-                  <p className="mt-4 text-xs text-slate-600 leading-relaxed font-medium">
-                    {report.summary}
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-
-          <ReportPreview
-            topThemes={["Support speed", "Onboarding friction", "Billing clarity"]}
-            sentimentChanges={[
-              "Positive sentiment increased 11 points for support speed.",
-              "Onboarding friction became the top negative theme this week."
-            ]}
-            customerQuotes={[
-              "The support team resolved my issue in under ten minutes.",
-              "I had to repeat steps in onboarding before import finally worked."
-            ]}
-            recommendedActions={[
-              "Simplify the onboarding checklist for first-time users.",
-              "Clarify team seat pricing in upgrade and billing surfaces.",
-              "Turn support workflow wins into onboarding guidance."
-            ]}
-          />
+                  <Badge variant={report.status === "Ready" ? "green" : "amber"} className="uppercase font-extrabold tracking-wider text-[10px]">
+                    {report.status}
+                  </Badge>
+                </div>
+                
+                <h2 className="text-lg font-black text-slate-900 leading-tight">
+                  {report.title}
+                </h2>
+                <p className="mt-1.5 text-[11px] text-slate-400 font-bold uppercase tracking-wider">
+                  Generated {report.date}
+                </p>
+                
+                <p className="mt-4 text-sm text-slate-600 leading-relaxed font-medium line-clamp-3">
+                  {report.summary}
+                </p>
+              </CardContent>
+              
+              <div className="p-4 border-t border-slate-100 bg-slate-50/50 flex items-center justify-between">
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => downloadReport(report)}
+                  className="text-xs font-bold text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 border-slate-200"
+                >
+                  Download PDF
+                </Button>
+                
+                <Button 
+                  size="sm"
+                  className="bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold"
+                  onClick={() => window.location.href = `/reports/${report.id}`}
+                >
+                  View Dashboard
+                </Button>
+              </div>
+            </Card>
+          ))}
         </div>
       )}
     </div>

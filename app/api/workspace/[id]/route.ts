@@ -128,17 +128,23 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
     // Owner details
     const ownerMember = workspace.members.find(m => m.role === "OWNER");
 
-    // Connected Integrations List (mock dynamic status based on webhooks / activity indicators)
-    const integrations = [
-      { name: "Slack Linker", status: "Connected", health: "Healthy", connectedBy: ownerMember?.user?.name || "Jeel Patel", date: "Jun 12, 2024" },
-      { name: "Zapier Ingest", status: "Connected", health: "Healthy", connectedBy: ownerMember?.user?.name || "Jeel Patel", date: "Jun 14, 2024" }
-    ];
+    // Connected Integrations List (Removed)
+    const integrations: any[] = [];
 
-    // Mock recent imports history from feedback source channels
-    const imports = [
-      { filename: "customer_reviews_june.csv", rows: 142, failed: 0, status: "Success", date: "Jun 18, 2026" },
-      { filename: "nps_transcripts.csv", rows: 84, failed: 3, status: "Warning", date: "Jun 28, 2026" }
-    ];
+    // Fetch actual imports history
+    const dbImports = await prisma.import.findMany({
+      where: { workspaceId },
+      orderBy: { createdAt: "desc" },
+      take: 10,
+    });
+
+    const imports = dbImports.map((i) => ({
+      filename: i.fileName,
+      rows: i.validRecords + i.invalidRecords,
+      failed: i.invalidRecords,
+      status: i.status === "COMPLETED" ? "Success" : i.status === "FAILED" ? "Failed" : "Warning",
+      date: new Date(i.createdAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
+    }));
 
     return NextResponse.json({
       workspace: {
