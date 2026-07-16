@@ -32,6 +32,11 @@ export async function GET(req: Request) {
     const sentiment = searchParams.get("sentiment");
     const channel = searchParams.get("channel");
     const status = searchParams.get("status");
+    const page = parseInt(searchParams.get("page") || "1", 10);
+    const limit = parseInt(searchParams.get("limit") || "50", 10);
+    const search = searchParams.get("search") || "";
+
+    const skip = (page - 1) * limit;
 
     // Build filter query
     const where: any = { workspaceId };
@@ -50,14 +55,26 @@ export async function GET(req: Request) {
         mode: "insensitive"
       };
     }
+    
+    if (search) {
+      where.OR = [
+        { customerName: { contains: search, mode: "insensitive" } },
+        { content: { contains: search, mode: "insensitive" } },
+      ];
+    }
 
-    const items = await prisma.feedback.findMany({
-      where,
-      orderBy: { createdAt: "desc" },
-      include: { themes: { include: { theme: true } } }
-    });
+    const [items, total] = await prisma.$transaction([
+      prisma.feedback.findMany({
+        where,
+        orderBy: { createdAt: "desc" },
+        skip,
+        take: limit,
+        include: { themes: { include: { theme: true } } }
+      }),
+      prisma.feedback.count({ where })
+    ]);
 
-    return NextResponse.json({ items, total: items.length }, { status: 200 });
+    return NextResponse.json({ items, total }, { status: 200 });
   } catch (error) {
     console.error("Fetch feedback error:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });

@@ -97,7 +97,7 @@ export default function WorkspacesPage() {
   const [selectedWorkspaceId, setSelectedWorkspaceId] = useState<string | null>(null);
   const [details, setDetails] = useState<WorkspaceDetails | null>(null);
   const [detailsLoading, setDetailsLoading] = useState(false);
-  const [activeSubTab, setActiveSubTab] = useState<"overview" | "members" | "reports" | "activities" | "integrations" | "imports" | "danger_zone">("overview");
+  const [activeSubTab, setActiveSubTab] = useState<"overview" | "members" | "reports" | "activities" | "imports" | "danger_zone">("overview");
 
   // Modals state
   const [showCreateModal, setShowCreateModal] = useState(false);
@@ -527,7 +527,7 @@ export default function WorkspacesPage() {
 
               {/* Sub-tab view selection controller */}
               <div className="flex flex-wrap items-center gap-1.5 border-b border-slate-200 dark:border-slate-800 pb-2">
-                {(["overview", "members", "reports", "activities", "integrations", "imports", "danger_zone"] as const).map((tab) => (
+                {(["overview", "members", "reports", "activities", "imports", "danger_zone"] as const).map((tab) => (
                   <button
                     key={tab}
                     onClick={() => setActiveSubTab(tab)}
@@ -639,17 +639,7 @@ export default function WorkspacesPage() {
                         </h3>
 
                         <div className="space-y-4">
-                          <div className="space-y-1.5 text-xs font-bold">
-                            <div className="flex justify-between text-slate-500">
-                              <span>Plan Storage Used</span>
-                              <span className="text-slate-800 dark:text-slate-200">{details.workspace.storageUsed}</span>
-                            </div>
-                            <div className="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
-                              <div className="bg-indigo-650 h-full w-[2.5%] rounded-full" />
-                            </div>
-                          </div>
-
-                          <div className="space-y-1.5 text-xs font-bold pt-1 border-t border-slate-100 dark:border-slate-850">
+                          <div className="space-y-1.5 text-xs font-bold pt-1">
                             <p className="text-[10px] uppercase font-extrabold text-slate-455">Organization settings</p>
                             <form onSubmit={handleUpdateWorkspaceDetails} className="space-y-3">
                               <div className="space-y-1">

@@ -32,6 +32,7 @@ interface FeedbackItem {
 
 export default function InboxPage() {
   const [items, setItems] = useState<FeedbackItem[]>([]);
+  const [totalCount, setTotalCount] = useState(0);
   const [loading, setLoading] = useState(true);
   
   // Filters
@@ -39,6 +40,8 @@ export default function InboxPage() {
   const [channel, setChannel] = useState("all");
   const [sentiment, setSentiment] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
+  const [page, setPage] = useState(1);
+  const limit = 50;
 
   useEffect(() => {
     setLoading(true);
@@ -46,20 +49,23 @@ export default function InboxPage() {
     if (channel !== "all") query.set("channel", channel);
     if (sentiment !== "all") query.set("sentiment", sentiment);
     if (statusFilter !== "all") query.set("status", statusFilter);
+    if (search) query.set("search", search);
+    query.set("page", page.toString());
+    query.set("limit", limit.toString());
 
     fetch(`/api/feedback?${query.toString()}`)
       .then((res) => res.json())
       .then((data) => {
         setItems(data.items || []);
+        setTotalCount(data.total || 0);
         setLoading(false);
       });
-  }, [channel, sentiment, statusFilter]);
+  }, [channel, sentiment, statusFilter, search, page]);
 
-  // Client-side search match filter
-  const filteredItems = items.filter((item) => {
-    const text = (item.customerName + " " + item.content + " " + (item.themes?.[0]?.theme?.name || "")).toLowerCase();
-    return text.includes(search.toLowerCase());
-  });
+  // Reset page when filters change
+  useEffect(() => {
+    setPage(1);
+  }, [channel, sentiment, statusFilter, search]);
 
   const handleResolve = async (feedbackId: string, resolution: "MERGE" | "KEEP") => {
     try {
@@ -89,7 +95,7 @@ export default function InboxPage() {
     }
   };
 
-  const rows = filteredItems.map((item) => {
+  const rows = items.map((item) => {
     const themeName = item.themes?.[0]?.theme?.name || "Uncategorized";
     const excerpt = item.content.length > 120 ? item.content.substring(0, 120) + "..." : item.content;
 
@@ -192,7 +198,7 @@ export default function InboxPage() {
         <div className="text-center py-12 text-xs text-slate-400 font-semibold">
           Loading feedback inbox records...
         </div>
-      ) : filteredItems.length === 0 ? (
+      ) : items.length === 0 ? (
         <div className="rounded-[24px] border border-dashed border-slate-200 bg-white p-12 text-center shadow-sm">
           <p className="text-xs text-slate-400">No feedback has been collected yet.</p>
         </div>
@@ -211,8 +217,26 @@ export default function InboxPage() {
 
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <p className="text-xs text-slate-500 font-semibold">
-              Showing {filteredItems.length} of {filteredItems.length} records
+              Showing {Math.min((page - 1) * limit + 1, totalCount)}–{Math.min(page * limit, totalCount)} of {totalCount} records
             </p>
+            <div className="flex items-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setPage(p => Math.max(1, p - 1))}
+                disabled={page === 1}
+              >
+                Previous
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setPage(p => p + 1)}
+                disabled={page * limit >= totalCount}
+              >
+                Next
+              </Button>
+            </div>
           </div>
         </>
       )}
