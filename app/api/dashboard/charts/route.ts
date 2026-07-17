@@ -47,38 +47,7 @@ export async function GET() {
       }
     });
 
-    // 2. Volume trend (fetch all last 30 days feedbacks in a single query and bucket in memory)
-    const startOfTrend = new Date();
-    startOfTrend.setDate(startOfTrend.getDate() - 29);
-    startOfTrend.setHours(0, 0, 0, 0);
-
-     const feedbackTrendData = await prisma.feedback.findMany({
-       where: {
-         workspaceId,
-         createdAt: { gte: startOfTrend }
-       },
-       select: { createdAt: true, sentimentLabel: true, occurrenceCount: true }
-     });
-
-     const volumeTrend: { name: string; value: number; negativeValue: number }[] = [];
-     
-     for (let i = 29; i >= 0; i--) {
-       const targetDate = new Date();
-       targetDate.setDate(targetDate.getDate() - i);
-       
-       const dayFeedbacks = feedbackTrendData.filter((item) => {
-         const d = new Date(item.createdAt);
-         return d.toDateString() === targetDate.toDateString();
-       });
-
-       const totalCount = dayFeedbacks.reduce((acc, curr) => acc + (curr.occurrenceCount || 1), 0);
-       const negativeCount = dayFeedbacks
-         .filter(f => f.sentimentLabel === "Negative")
-         .reduce((acc, curr) => acc + (curr.occurrenceCount || 1), 0);
-       const name = targetDate.toLocaleDateString("en-US", { month: "short", day: "numeric" });
-       
-       volumeTrend.push({ name, value: totalCount, negativeValue: negativeCount });
-     }
+    // 2. Volume trend (Removed - Now handled by /api/analytics/trends dynamically)
 
     // 3. Top themes using database aggregation and parallel name lookup
     const topThemeGroups = await prisma.feedbackTheme.groupBy({
@@ -223,7 +192,6 @@ export async function GET() {
 
     return NextResponse.json({
       sentiment,
-      volumeTrend,
       topThemes,
       channelData,
       recentFeedbacks,

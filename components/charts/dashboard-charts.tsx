@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Bar,
   BarChart,
@@ -57,7 +57,6 @@ interface ActivityItem {
 }
 
 interface DashboardChartsProps {
-  volumeData: VolumeDatum[];
   sentimentData: SentimentDatum[];
   themeData: ThemeDatum[];
   channelData?: ChannelDatum[];
@@ -68,7 +67,6 @@ interface DashboardChartsProps {
 }
 
 export function DashboardCharts({
-  volumeData,
   sentimentData,
   themeData,
   channelData = [],
@@ -79,6 +77,34 @@ export function DashboardCharts({
 }: DashboardChartsProps) {
   const { resolvedTheme } = useTheme();
   const isDark = resolvedTheme === "dark";
+
+  // Trend State Management
+  const [period, setPeriod] = useState<"daily" | "weekly" | "monthly">("daily");
+  const [volumeData, setVolumeData] = useState<VolumeDatum[]>([]);
+  const [trendLoading, setTrendLoading] = useState(true);
+  const [trendError, setTrendError] = useState("");
+
+  const fetchTrendData = () => {
+    setTrendLoading(true);
+    setTrendError("");
+    fetch(`/api/analytics/trends?period=${period}`)
+      .then(async (res) => {
+        if (!res.ok) throw new Error("Failed to load trend analytics.");
+        const data = await res.json();
+        setVolumeData(data);
+      })
+      .catch((err) => {
+        console.error(err);
+        setTrendError("Unable to load feedback analytics.");
+      })
+      .finally(() => {
+        setTrendLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    fetchTrendData();
+  }, [period]);
 
   const sentimentTotal = sentimentData.reduce((acc, curr) => acc + curr.value, 0);
   const channelColors = ["#4f46e5", "#06b6d4", "#3b82f6", "#eab308", "#f43f5e"];
@@ -109,7 +135,7 @@ export function DashboardCharts({
                     <span className="h-2 w-2 rounded-full bg-[#4f46e5]" />
                     <span className="text-slate-500 dark:text-slate-400">Total Feedback</span>
                   </div>
-                  {volumeData.some(d => d.negativeValue !== undefined) && (
+                  {volumeData.some(d => d.negativeValue !== undefined && d.negativeValue > 0) && (
                     <div className="flex items-center gap-1.5">
                       <span className="h-2 w-2 rounded-full bg-[#f43f5e]" />
                       <span className="text-slate-500 dark:text-slate-400">Negative Feedback</span>
@@ -117,11 +143,34 @@ export function DashboardCharts({
                   )}
                 </div>
               </div>
-              <select className="border border-slate-200 dark:border-slate-800 rounded-lg text-[10.5px] font-bold px-2.5 py-1 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-350 outline-none">
-                <option>Daily</option>
+              <select 
+                value={period}
+                onChange={(e) => setPeriod(e.target.value as "daily" | "weekly" | "monthly")}
+                className="border border-slate-200 dark:border-slate-800 rounded-lg text-[10.5px] font-bold px-2.5 py-1 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-350 outline-none cursor-pointer hover:border-slate-300 dark:hover:border-slate-700 transition"
+              >
+                <option value="daily">Daily</option>
+                <option value="weekly">Weekly</option>
+                <option value="monthly">Monthly</option>
               </select>
             </div>
-            <div className="h-60">
+            <div className="h-60 relative">
+              {trendLoading ? (
+                <div className="absolute inset-0 flex flex-col items-center justify-center space-y-3 z-10 bg-white/60 dark:bg-slate-950/60 backdrop-blur-[1px] animate-pulse">
+                  <div className="h-4 w-4 rounded-full border-2 border-indigo-500 border-t-transparent animate-spin" />
+                  <p className="text-xs font-semibold text-slate-500 dark:text-slate-400">Loading feedback analytics...</p>
+                </div>
+              ) : trendError ? (
+                <div className="absolute inset-0 flex flex-col items-center justify-center z-10 bg-rose-50/40 dark:bg-rose-950/10 rounded-xl border border-dashed border-rose-200 dark:border-rose-900/50">
+                  <p className="text-xs font-bold text-rose-600 dark:text-rose-400 mb-2">{trendError}</p>
+                  <button 
+                    onClick={fetchTrendData}
+                    className="text-[10px] uppercase tracking-wider font-extrabold px-3 py-1.5 bg-rose-100 dark:bg-rose-900/30 text-rose-700 dark:text-rose-300 rounded hover:bg-rose-200 dark:hover:bg-rose-900/50 transition"
+                  >
+                    Retry
+                  </button>
+                </div>
+              ) : null}
+              
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={volumeData}>
                   <XAxis dataKey="name" stroke={isDark ? "#475569" : "#94a3b8"} fontSize={9.5} tickLine={false} axisLine={false} />
@@ -143,8 +192,10 @@ export function DashboardCharts({
                     stroke="#4f46e5" 
                     strokeWidth={2.5} 
                     dot={false}
+                    isAnimationActive={true}
+                    animationDuration={600}
                   />
-                  {volumeData.some(d => d.negativeValue !== undefined) && (
+                  {volumeData.some(d => d.negativeValue !== undefined && d.negativeValue > 0) && (
                     <Line 
                       type="monotone" 
                       dataKey="negativeValue" 
@@ -152,6 +203,8 @@ export function DashboardCharts({
                       strokeWidth={2} 
                       strokeDasharray="4 4" 
                       dot={false}
+                      isAnimationActive={true}
+                      animationDuration={600}
                     />
                   )}
                 </LineChart>

@@ -65,7 +65,6 @@ interface ChartsData {
     negative: number;
     neutral: number;
   };
-  volumeTrend: { name: string; value: number; negativeValue: number }[];
   topThemes: { name: string; count: number }[];
   channelData: { name: string; value: number }[];
   recentFeedbacks: { id: string; content: string; source: string; sentimentLabel: string; createdAt: string }[];
@@ -299,7 +298,6 @@ export default function DashboardPage() {
       ) : charts ? (
         <>
           <DashboardCharts
-            volumeData={charts.volumeTrend}
             sentimentData={[
               { name: "Positive", value: charts.sentiment.positive, color: "#2563eb" },
               { name: "Neutral", value: charts.sentiment.neutral, color: "#818cf8" },
