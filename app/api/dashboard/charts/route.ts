@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   try {
     const session = await auth();
@@ -145,25 +147,9 @@ export async function GET() {
     }
     recentActivity.push(...nonDuplicateActivities);
 
-    const defaultMocks = [
-      { id: "act_1", label: `New feedback imported from ${latestChannel}`, time: "Just now" },
-      { id: "act_2", label: `Theme 'App Performance' updated`, time: "10 minutes ago" },
-      { id: "act_3", label: "Report 'Executive Summary - May' generated", time: "1 hour ago" },
-      { id: "act_4", label: `User ${userName} added to workspace`, time: "2 hours ago" },
-      { id: "act_5", label: "Integration with Slack connected", time: "3 hours ago" }
-    ];
-
-    let mockIndex = 0;
-    while (recentActivity.length < 5 && mockIndex < defaultMocks.length) {
-      const mock = defaultMocks[mockIndex++];
-      if (!recentActivity.some((a) => a.label === mock.label)) {
-        recentActivity.push(mock);
-      }
-    }
-
     const finalRecentActivity = recentActivity.slice(0, 5);
 
-    // 6b. Generate dynamic AI Summary sentence with week's duplicates count
+    // 6b. Generate dynamic AI Summary sentence with true duplicates count
     const startOfWeek = new Date();
     startOfWeek.setDate(startOfWeek.getDate() - 7);
     const dupWeekCount = await prisma.activityLog.count({
@@ -173,8 +159,21 @@ export async function GET() {
         createdAt: { gte: startOfWeek }
       }
     });
-    const weekDuplicatesCount = 34 + dupWeekCount;
-    const aiSummary = `Customer sentiment is improving this week. ${weekDuplicatesCount} duplicate feedback entries were automatically merged into existing feedback this week. The most discussed themes are App Performance and UI Usability.`;
+
+    // Dynamic top theme
+    const topThemeName = topThemes.length > 0 ? topThemes[0].name : "General Queries";
+    const secondThemeName = topThemes.length > 1 ? topThemes[1].name : "Usability";
+    
+    // Dynamic sentiment trend
+    let sentimentTrend = "stable";
+    if (sentiment.positive > sentiment.negative) sentimentTrend = "improving";
+    else if (sentiment.negative > sentiment.positive) sentimentTrend = "trending negatively";
+
+    let aiSummary = `Customer sentiment is ${sentimentTrend} this week. `;
+    if (dupWeekCount > 0) {
+      aiSummary += `${dupWeekCount} duplicate feedback entries were automatically merged. `;
+    }
+    aiSummary += `The most discussed themes are ${topThemeName} and ${secondThemeName}.`;
 
     // 7. Latest feedback list (5 items with theme relations)
     const latestFeedback = await prisma.feedback.findMany({

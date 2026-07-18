@@ -5,8 +5,9 @@ import NextLink from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
+import { Logo } from "@/components/ui";
 
-// Brand Logo Component
+// BrandLogo component
 export function BrandLogo() {
   return (
     <div className="flex items-center gap-3">
@@ -14,13 +15,7 @@ export function BrandLogo() {
         whileHover={{ scale: 1.05, rotate: [0, -5, 5, 0] }}
         transition={{ duration: 0.3 }}
       >
-        <Image
-          src="/logo.jpg"
-          alt="LOOP Logo"
-          width={64}
-          height={64}
-          className="rounded-[16px] border border-slate-200 bg-white p-1.5 shadow-md"
-        />
+        <Logo variant="icon" size="xl" />
       </motion.div>
       <div className="text-left">
         <span className="font-extrabold text-xl tracking-tight text-white leading-none block">LOOP</span>

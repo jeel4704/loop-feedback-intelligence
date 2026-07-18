@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { FormField } from "@/components/forms";
-import { UploadCard } from "@/components/upload";
+import { EnterpriseImporter, ImportHistory } from "@/components/upload";
 import { Button, Card, CardContent, Input, SectionHeader, Select, Textarea } from "@/components/ui";
 import { AlertCircle } from "lucide-react";
 import Link from "next/link";
@@ -208,7 +208,8 @@ export default function FeedbackPage() {
         </Card>
 
         <div className="space-y-6">
-          <UploadCard />
+          <EnterpriseImporter />
+          <ImportHistory />
 
           {/* Ingestion Inbox Simulator Card */}
           <Card>
@@ -222,37 +223,37 @@ export default function FeedbackPage() {
                 <button
                   onClick={() => simulateIngestion("The dashboard performance is poor.", "Email")}
                   disabled={simLoading}
-                  className="w-full text-left p-3.5 bg-slate-50 border border-slate-200/80 hover:bg-slate-100/70 rounded-xl transition text-xs font-semibold flex items-center justify-between"
+                  className="w-full text-left p-3.5 bg-slate-50 dark:bg-slate-900/40 border border-slate-200/80 dark:border-slate-800/60 hover:bg-slate-100/70 dark:hover:bg-slate-800/60 rounded-xl transition text-xs font-semibold flex items-center justify-between text-slate-700 dark:text-slate-300"
                 >
                   <div>
-                    <span className="bg-slate-200 text-slate-700 px-1.5 py-0.5 rounded text-[9px] font-extrabold uppercase mr-2">Email</span>
+                    <span className="bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-400 px-1.5 py-0.5 rounded text-[9px] font-extrabold uppercase mr-2">Email</span>
                     "The dashboard performance is poor."
                   </div>
-                  <span className="text-slate-400 font-bold text-[10px]">Test Level 2 →</span>
+                  <span className="text-slate-400 dark:text-slate-500 font-bold text-[10px]">Test Level 2 →</span>
                 </button>
 
                 <button
                   onClick={() => simulateIngestion("the dashboard is slow", "Live Chat")}
                   disabled={simLoading}
-                  className="w-full text-left p-3.5 bg-slate-50 border border-slate-200/80 hover:bg-slate-100/70 rounded-xl transition text-xs font-semibold flex items-center justify-between"
+                  className="w-full text-left p-3.5 bg-slate-50 dark:bg-slate-900/40 border border-slate-200/80 dark:border-slate-800/60 hover:bg-slate-100/70 dark:hover:bg-slate-800/60 rounded-xl transition text-xs font-semibold flex items-center justify-between text-slate-700 dark:text-slate-300"
                 >
                   <div>
-                    <span className="bg-slate-200 text-slate-700 px-1.5 py-0.5 rounded text-[9px] font-extrabold uppercase mr-2">Live Chat</span>
+                    <span className="bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-400 px-1.5 py-0.5 rounded text-[9px] font-extrabold uppercase mr-2">Live Chat</span>
                     "the dashboard is slow"
                   </div>
-                  <span className="text-slate-400 font-bold text-[10px]">Test Level 1 →</span>
+                  <span className="text-slate-400 dark:text-slate-500 font-bold text-[10px]">Test Level 1 →</span>
                 </button>
 
                 <button
                   onClick={() => simulateIngestion("We need dark mode please", "Website")}
                   disabled={simLoading}
-                  className="w-full text-left p-3.5 bg-slate-50 border border-slate-200/80 hover:bg-slate-100/70 rounded-xl transition text-xs font-semibold flex items-center justify-between"
+                  className="w-full text-left p-3.5 bg-slate-50 dark:bg-slate-900/40 border border-slate-200/80 dark:border-slate-800/60 hover:bg-slate-100/70 dark:hover:bg-slate-800/60 rounded-xl transition text-xs font-semibold flex items-center justify-between text-slate-700 dark:text-slate-300"
                 >
                   <div>
-                    <span className="bg-slate-200 text-slate-700 px-1.5 py-0.5 rounded text-[9px] font-extrabold uppercase mr-2">Website</span>
+                    <span className="bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-400 px-1.5 py-0.5 rounded text-[9px] font-extrabold uppercase mr-2">Website</span>
                     "We need dark mode please"
                   </div>
-                  <span className="text-slate-400 font-bold text-[10px]">Test Unique →</span>
+                  <span className="text-slate-400 dark:text-slate-500 font-bold text-[10px]">Test Unique →</span>
                 </button>
               </div>
             </CardContent>
