@@ -43,7 +43,7 @@ export async function GET(req: Request) {
     const period = searchParams.get("period") || "daily";
 
     // Define the date range based on the period to keep graphs readable
-    const startDate = new Date();
+    let startDate = new Date();
     startDate.setHours(0, 0, 0, 0);
 
     if (period === "daily") {
@@ -53,21 +53,23 @@ export async function GET(req: Request) {
     } else if (period === "monthly") {
       startDate.setMonth(startDate.getMonth() - 12); // Last 12 months
       startDate.setDate(1);
+    } else if (period === "yearly") {
+      startDate = new Date(1970, 0, 1); // Get all time data for yearly
     }
 
-    // Fetch all feedback within the date range
+    // Fetch all feedback within the date range based on upload date
     const feedbacks = await prisma.feedback.findMany({
       where: {
         workspaceId,
-        createdAt: { gte: startDate }
+        importedAt: { gte: startDate }
       },
-      select: { createdAt: true, sentimentLabel: true, occurrenceCount: true }
+      select: { importedAt: true, sentimentLabel: true, occurrenceCount: true }
     });
 
     const groupedData = new Map<string, { value: number; negativeValue: number }>();
 
     feedbacks.forEach(f => {
-      const d = new Date(f.createdAt);
+      const d = new Date(f.importedAt);
       let groupKey = "";
       
       if (period === "daily") {
@@ -77,6 +79,8 @@ export async function GET(req: Request) {
         groupKey = `Week ${week}`;
       } else if (period === "monthly") {
         groupKey = d.toLocaleDateString("en-US", { month: "short", year: "numeric" });
+      } else if (period === "yearly") {
+        groupKey = d.getFullYear().toString();
       }
 
       if (!groupedData.has(groupKey)) {
@@ -127,6 +131,26 @@ export async function GET(req: Request) {
           name: key,
           value: groupedData.get(key)?.value || 0,
           negativeValue: groupedData.get(key)?.negativeValue || 0,
+        });
+      }
+    } else if (period === "yearly") {
+      const years = Array.from(groupedData.keys()).map(y => parseInt(y)).filter(y => !isNaN(y));
+      if (years.length > 0) {
+        const minYear = Math.min(...years, now.getFullYear() - 4); // Show at least last 5 years context if small
+        const maxYear = Math.max(...years, now.getFullYear());
+        for (let y = minYear; y <= maxYear; y++) {
+          const key = y.toString();
+          trendData.push({
+            name: key,
+            value: groupedData.get(key)?.value || 0,
+            negativeValue: groupedData.get(key)?.negativeValue || 0,
+          });
+        }
+      } else {
+        trendData.push({
+          name: now.getFullYear().toString(),
+          value: 0,
+          negativeValue: 0,
         });
       }
     }

@@ -4,7 +4,7 @@ import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { Button, Input, Badge } from "@/components/ui";
+import { Button, Input, Badge, Logo } from "@/components/ui";
 
 function InvitationForm() {
   const searchParams = useSearchParams();
@@ -199,14 +199,7 @@ export default function InvitationPage() {
       <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1.2fr_0.9fr]">
         <section className="rounded-[32px] border border-slate-200 bg-slate-950 p-8 text-white shadow-[0_24px_80px_-32px_rgba(15,23,42,0.85)] sm:p-10">
           <div className="flex items-center gap-3 mb-6">
-            <Image 
-              src="/logo.jpg" 
-              alt="LOOP Logo" 
-              width={56}
-              height={56}
-              className="rounded-2xl border border-slate-800 bg-white p-1.5 shadow-md"
-            />
-            <span className="font-bold text-xl text-white tracking-tight">LOOP</span>
+            <Logo variant="horizontal" size="lg" />
           </div>
           <h1 className="mt-4 text-4xl font-semibold tracking-tight">
             Team Workspace Invitation

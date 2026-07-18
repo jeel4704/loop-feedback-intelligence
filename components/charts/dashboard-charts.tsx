@@ -79,7 +79,7 @@ export function DashboardCharts({
   const isDark = resolvedTheme === "dark";
 
   // Trend State Management
-  const [period, setPeriod] = useState<"daily" | "weekly" | "monthly">("daily");
+  const [period, setPeriod] = useState<"daily" | "weekly" | "monthly" | "yearly">("daily");
   const [volumeData, setVolumeData] = useState<VolumeDatum[]>([]);
   const [trendLoading, setTrendLoading] = useState(true);
   const [trendError, setTrendError] = useState("");
@@ -87,7 +87,7 @@ export function DashboardCharts({
   const fetchTrendData = () => {
     setTrendLoading(true);
     setTrendError("");
-    fetch(`/api/analytics/trends?period=${period}`)
+    fetch(`/api/analytics/trends?period=${period}`, { cache: "no-store" })
       .then(async (res) => {
         if (!res.ok) throw new Error("Failed to load trend analytics.");
         const data = await res.json();
@@ -145,12 +145,13 @@ export function DashboardCharts({
               </div>
               <select 
                 value={period}
-                onChange={(e) => setPeriod(e.target.value as "daily" | "weekly" | "monthly")}
+                onChange={(e) => setPeriod(e.target.value as "daily" | "weekly" | "monthly" | "yearly")}
                 className="border border-slate-200 dark:border-slate-800 rounded-lg text-[10.5px] font-bold px-2.5 py-1 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-350 outline-none cursor-pointer hover:border-slate-300 dark:hover:border-slate-700 transition"
               >
                 <option value="daily">Daily</option>
                 <option value="weekly">Weekly</option>
                 <option value="monthly">Monthly</option>
+                <option value="yearly">Yearly</option>
               </select>
             </div>
             <div className="h-60 relative">

@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   try {
     const session = await auth();
@@ -35,8 +37,14 @@ export async function GET() {
     const negativePercentage = total > 0 ? Math.round((negativeCount / total) * 100) : 0;
     const neutralPercentage = total > 0 ? Math.round((neutralCount / total) * 100) : 0;
 
-    // Resolutions calculation: dynamic actioned metrics
-    const resolutionsCount = reportCount > 0 ? (reportCount * 4) + Math.round(total * 0.1) : Math.round(total * 0.35);
+    const resolutionsCount = await prisma.feedback.count({
+      where: {
+        workspaceId,
+        status: {
+          in: ["Resolved", "Closed", "Completed", "Done"]
+        }
+      }
+    });
 
     // Calculate duplicate feedback prevention metrics dynamically
     const now = new Date();
@@ -48,7 +56,7 @@ export async function GET() {
       prisma.activityLog.count({
         where: {
           workspaceId,
-          label: { startsWith: "Duplicate feedback removed" },
+          label: { startsWith: "Duplicate feedback" },
           createdAt: { gte: startOfToday }
         }
       }),
@@ -69,9 +77,9 @@ export async function GET() {
     ]);
 
     const duplicatesPrevented = {
-      today: 18 + dupTodayCount,
-      thisWeek: 76 + dupWeekCount,
-      thisMonth: 214 + dupMonthCount
+      today: dupTodayCount,
+      thisWeek: dupWeekCount,
+      thisMonth: dupMonthCount
     };
 
     return NextResponse.json({

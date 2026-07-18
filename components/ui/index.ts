@@ -5,3 +5,4 @@ export { EmptyState } from "@/components/ui/empty-state";
 export { Input, Textarea } from "@/components/ui/input";
 export { SectionHeader } from "@/components/ui/section-header";
 export { Select } from "@/components/ui/select";
+export { Logo } from "@/components/ui/logo";

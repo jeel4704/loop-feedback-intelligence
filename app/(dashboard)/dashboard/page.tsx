@@ -83,7 +83,7 @@ export default function DashboardPage() {
 
   useEffect(() => {
     // 1. Fetch Stats independently
-    fetch("/api/dashboard/stats")
+    fetch("/api/dashboard/stats", { cache: "no-store" })
       .then(async (res) => {
         if (!res.ok) throw new Error("Failed to load stats.");
         const data = await res.json();
@@ -98,7 +98,7 @@ export default function DashboardPage() {
       });
 
     // 2. Fetch Charts data independently
-    fetch("/api/dashboard/charts")
+    fetch("/api/dashboard/charts", { cache: "no-store" })
       .then(async (res) => {
         if (!res.ok) throw new Error();
         const data = await res.json();
@@ -177,16 +177,7 @@ export default function DashboardPage() {
         <div>
           {/* Spacing for left alignment */}
         </div>
-        <div className="flex items-center gap-2">
-          <button className="flex items-center gap-2 border border-slate-200 dark:border-slate-850 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800/80 text-slate-655 dark:text-slate-300 px-3.5 py-2 rounded-xl text-xs font-bold shadow-sm transition">
-            <Calendar className="h-4 w-4 text-slate-400 dark:text-slate-500" />
-            <span>May 12 - Jun 12, 2024</span>
-          </button>
-          <button className="flex items-center gap-2 border border-slate-200 dark:border-slate-850 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800/80 text-slate-655 dark:text-slate-300 px-3.5 py-2 rounded-xl text-xs font-bold shadow-sm transition">
-            <SlidersHorizontal className="h-4 w-4 text-slate-400 dark:text-slate-550" />
-            <span>Filters</span>
-          </button>
-        </div>
+        {/* No global date filter placeholder for now, backend relies on API params */}
       </div>
 
       {/* KPI Cards Row (7 columns) */}
@@ -218,52 +209,52 @@ export default function DashboardPage() {
               </CardContent>
             </Card>
             {/* Card 2: Positive */}
-            <Card className="bg-white border border-slate-200/80 shadow-sm rounded-2xl">
+            <Card className="bg-white dark:bg-slate-950 border border-slate-200/80 dark:border-slate-850 shadow-sm rounded-2xl">
               <CardContent className="p-4">
-                <p className="text-[10.5px] font-extrabold text-slate-400 uppercase tracking-wider">Positive</p>
-                <h4 className="text-xl font-extrabold text-slate-950 mt-1">{stats.positive}%</h4>
-                <p className="text-[10.5px] text-emerald-600 font-bold mt-1">↑ 7.6% <span className="text-slate-400 font-semibold">vs last month</span></p>
+                <p className="text-[10.5px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Positive</p>
+                <h4 className="text-xl font-extrabold text-slate-950 dark:text-slate-50 mt-1">{stats.positive}%</h4>
+                <p className="text-[10.5px] text-emerald-600 dark:text-emerald-500 font-bold mt-1">↑ 7.6% <span className="text-slate-400 dark:text-slate-600 font-semibold">vs last month</span></p>
               </CardContent>
             </Card>
             {/* Card 3: Negative */}
-            <Card className="bg-white border border-slate-200/80 shadow-sm rounded-2xl">
+            <Card className="bg-white dark:bg-slate-950 border border-slate-200/80 dark:border-slate-850 shadow-sm rounded-2xl">
               <CardContent className="p-4">
-                <p className="text-[10.5px] font-extrabold text-slate-400 uppercase tracking-wider">Negative</p>
-                <h4 className="text-xl font-extrabold text-slate-950 mt-1">{stats.negative}%</h4>
-                <p className="text-[10.5px] text-rose-500 font-bold mt-1">↓ 4.3% <span className="text-slate-400 font-semibold">vs last month</span></p>
+                <p className="text-[10.5px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Negative</p>
+                <h4 className="text-xl font-extrabold text-slate-950 dark:text-slate-50 mt-1">{stats.negative}%</h4>
+                <p className="text-[10.5px] text-rose-500 font-bold mt-1">↓ 4.3% <span className="text-slate-400 dark:text-slate-600 font-semibold">vs last month</span></p>
               </CardContent>
             </Card>
             {/* Card 4: Neutral */}
-            <Card className="bg-white border border-slate-200/80 shadow-sm rounded-2xl">
+            <Card className="bg-white dark:bg-slate-950 border border-slate-200/80 dark:border-slate-850 shadow-sm rounded-2xl">
               <CardContent className="p-4">
-                <p className="text-[10.5px] font-extrabold text-slate-400 uppercase tracking-wider">Neutral</p>
-                <h4 className="text-xl font-extrabold text-slate-950 mt-1">{stats.neutral}%</h4>
-                <p className="text-[10.5px] text-emerald-600 font-bold mt-1">↑ 3.1% <span className="text-slate-400 font-semibold">vs last month</span></p>
+                <p className="text-[10.5px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Neutral</p>
+                <h4 className="text-xl font-extrabold text-slate-950 dark:text-slate-50 mt-1">{stats.neutral}%</h4>
+                <p className="text-[10.5px] text-emerald-600 dark:text-emerald-500 font-bold mt-1">↑ 3.1% <span className="text-slate-400 dark:text-slate-600 font-semibold">vs last month</span></p>
               </CardContent>
             </Card>
             {/* Card 5: Open Themes */}
-            <Card className="bg-white border border-slate-200/80 shadow-sm rounded-2xl">
+            <Card className="bg-white dark:bg-slate-950 border border-slate-200/80 dark:border-slate-850 shadow-sm rounded-2xl">
               <CardContent className="p-4">
-                <p className="text-[10.5px] font-extrabold text-slate-400 uppercase tracking-wider">Open Themes</p>
-                <h4 className="text-xl font-extrabold text-slate-950 mt-1">{stats.activeThemesCount}</h4>
-                <p className="text-[10.5px] text-emerald-600 font-bold mt-1">↑ 8.1% <span className="text-slate-400 font-semibold">vs last month</span></p>
+                <p className="text-[10.5px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Open Themes</p>
+                <h4 className="text-xl font-extrabold text-slate-950 dark:text-slate-50 mt-1">{stats.activeThemesCount}</h4>
+                <p className="text-[10.5px] text-emerald-600 dark:text-emerald-500 font-bold mt-1">↑ 8.1% <span className="text-slate-400 dark:text-slate-600 font-semibold">vs last month</span></p>
               </CardContent>
             </Card>
             {/* Card 6: Resolutions */}
-            <Card className="bg-white border border-slate-200/80 shadow-sm rounded-2xl">
+            <Card className="bg-white dark:bg-slate-950 border border-slate-200/80 dark:border-slate-850 shadow-sm rounded-2xl">
               <CardContent className="p-4">
-                <p className="text-[10.5px] font-extrabold text-slate-400 uppercase tracking-wider">Resolutions</p>
-                <h4 className="text-xl font-extrabold text-slate-950 mt-1">{stats.resolutionsCount}</h4>
-                <p className="text-[10.5px] text-emerald-600 font-bold mt-1">↑ 15.4% <span className="text-slate-400 font-semibold">vs last month</span></p>
+                <p className="text-[10.5px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Resolutions</p>
+                <h4 className="text-xl font-extrabold text-slate-950 dark:text-slate-50 mt-1">{stats.resolutionsCount}</h4>
+                <p className="text-[10.5px] text-emerald-600 dark:text-emerald-500 font-bold mt-1">↑ 15.4% <span className="text-slate-400 dark:text-slate-600 font-semibold">vs last month</span></p>
               </CardContent>
             </Card>
             {/* Card 7: Duplicates Prevented */}
-            <Card className="bg-white border border-slate-200/80 shadow-sm rounded-2xl hover:border-indigo-200 transition-all duration-200">
+            <Card className="bg-white dark:bg-slate-950 border border-slate-200/80 dark:border-slate-850 shadow-sm rounded-2xl hover:border-indigo-200 dark:hover:border-indigo-900 transition-all duration-200">
               <CardContent className="p-4">
-                <p className="text-[10.5px] font-extrabold text-[#4f46e5] uppercase tracking-wider">Duplicates Prevented</p>
-                <h4 className="text-xl font-extrabold text-slate-950 mt-1">{stats.duplicatesPrevented?.thisWeek || 76}</h4>
-                <p className="text-[9.5px] text-slate-500 font-bold mt-1">
-                  Today: <span className="text-slate-900 font-extrabold">{stats.duplicatesPrevented?.today || 18}</span> | Month: <span className="text-slate-900 font-extrabold">{stats.duplicatesPrevented?.thisMonth || 214}</span>
+                <p className="text-[10.5px] font-extrabold text-[#4f46e5] dark:text-indigo-400 uppercase tracking-wider">Duplicates Prevented</p>
+                <h4 className="text-xl font-extrabold text-slate-950 dark:text-slate-50 mt-1">{stats.duplicatesPrevented?.thisWeek || 76}</h4>
+                <p className="text-[9.5px] text-slate-500 dark:text-slate-500 font-bold mt-1">
+                  Today: <span className="text-slate-900 dark:text-slate-300 font-extrabold">{stats.duplicatesPrevented?.today || 18}</span> | Month: <span className="text-slate-900 dark:text-slate-300 font-extrabold">{stats.duplicatesPrevented?.thisMonth || 214}</span>
                 </p>
               </CardContent>
             </Card>
@@ -315,19 +306,12 @@ export default function DashboardPage() {
           <Card className="border border-slate-200/80 dark:border-slate-800 shadow-sm bg-white dark:bg-slate-900 rounded-2xl overflow-hidden mt-6">
             <div className="p-6 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
               <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100">Latest Feedback</h3>
-              <div className="flex items-center gap-4">
-                <input 
-                  type="text"
-                  placeholder="Search feedback..."
-                  className="border border-slate-200 dark:border-slate-700 rounded-lg text-xs px-3 py-1.5 bg-slate-50 dark:bg-slate-900/50 text-slate-900 dark:text-slate-100 w-56 focus:outline-none focus:border-indigo-500"
-                />
-                <button className="text-xs font-bold text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700">
-                  Columns
-                </button>
-                <button className="text-xs font-bold text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-1.5 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700">
-                  Export
-                </button>
-              </div>
+              <Link 
+                href="/inbox" 
+                className="text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition"
+              >
+                View all in Inbox →
+              </Link>
             </div>
             
             <div className="overflow-x-auto">

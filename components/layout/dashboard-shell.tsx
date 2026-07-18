@@ -23,6 +23,7 @@ import {
   X
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Logo } from "@/components/ui";
 import { SearchBar } from "@/components/SearchBar";
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 import { ProfileDropdown } from "@/components/ProfileDropdown";
@@ -158,18 +159,9 @@ export function DashboardShell({ children }: DashboardShellProps) {
     <>
       {/* Top sticky logo block */}
       <div className="flex items-center justify-between pb-6 border-b border-slate-200/50 dark:border-slate-800/50 flex-shrink-0">
-        <div className="flex items-center gap-2.5">
-          <Image 
-            src="/logo.jpg" 
-            alt="LOOP Logo" 
-            width={34}
-            height={34}
-            className="rounded-xl border border-slate-200 bg-white p-0.5 shadow-sm dark:bg-slate-950 dark:border-slate-800"
-          />
-          <span className="font-extrabold text-lg text-slate-900 dark:text-slate-50 tracking-tight leading-none">
-            LOOP
-          </span>
-        </div>
+        <Link href="/dashboard" className="transition-opacity hover:opacity-80">
+          <Logo variant="horizontal" size="md" />
+        </Link>
         {isMobile && (
           <button 
             onClick={() => setIsMobileOpen(false)}

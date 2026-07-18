@@ -19,6 +19,7 @@ import {
   CheckCircle2,
   AlertCircle
 } from "lucide-react";
+import { Logo } from "@/components/ui";
 import { Button } from "@/components/ui";
 
 // Mock data definitions for isolation
@@ -173,13 +174,7 @@ export default function DemoPage() {
         <aside className="w-64 border-r border-slate-200 bg-white p-4 space-y-6 flex flex-col justify-between hidden md:flex">
           <div className="space-y-6">
             <div className="flex items-center gap-2 px-2 py-1">
-              <Image 
-                src="/logo.jpg" 
-                alt="LOOP Logo" 
-                width={36} 
-                height={36} 
-                className="rounded-lg border border-slate-200" 
-              />
+              <Logo variant="icon" size="md" />
               <div>
                 <span className="font-extrabold text-sm text-slate-900 block leading-none">Northstar Labs</span>
                 <span className="text-[10px] text-slate-400">Demo Workspace</span>
