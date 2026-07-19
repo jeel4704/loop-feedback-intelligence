@@ -61,7 +61,7 @@ export function Tooltip({ content, children, delay = 0.1, position = "top" }: To
             animate={selectedAnimation.animate}
             exit={selectedAnimation.exit}
             transition={{ duration: 0.12, delay }}
-            className={`absolute z-50 whitespace-nowrap rounded-lg bg-slate-950 px-2.5 py-1.5 text-[10px] font-bold text-slate-50 border border-slate-800/80 shadow-xl dark:bg-slate-800 dark:text-slate-100 dark:border-slate-700/60 pointer-events-none ${positionClasses[position]}`}
+            className={`absolute z-50 whitespace-nowrap rounded-lg bg-slate-950 px-2.5 py-1.5 text-[10px] font-bold text-slate-50 border border-slate-800/80 shadow-xl dark:bg-dark-elevated dark:text-slate-100 dark:border-dark-border/60 pointer-events-none ${positionClasses[position]}`}
           >
             {content}
           </motion.div>

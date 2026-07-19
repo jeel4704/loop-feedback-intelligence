@@ -11,9 +11,9 @@ const buttonVariants: Record<NonNullable<ButtonProps["variant"]>, string> = {
   primary:
     "bg-blue-600 text-white shadow-sm hover:bg-blue-700 focus-visible:outline-blue-600 dark:bg-blue-500 dark:hover:bg-blue-600",
   secondary:
-    "bg-white text-slate-900 ring-1 ring-inset ring-slate-200 hover:bg-slate-50 focus-visible:outline-slate-400 dark:bg-slate-900 dark:text-slate-100 dark:ring-slate-800 dark:hover:bg-slate-800",
+    "bg-white text-slate-900 ring-1 ring-inset ring-slate-200 hover:bg-slate-50 focus-visible:outline-slate-400 dark:bg-dark-card dark:text-slate-100 dark:ring-slate-800 dark:hover:bg-dark-hover",
   ghost:
-    "bg-transparent text-slate-600 hover:bg-slate-100 hover:text-slate-900 focus-visible:outline-slate-400 dark:text-slate-400 dark:hover:bg-slate-900 dark:hover:text-slate-100",
+    "bg-transparent text-slate-600 hover:bg-slate-100 hover:text-slate-900 focus-visible:outline-slate-400 dark:text-dark-muted dark:hover:bg-dark-elevated dark:hover:text-slate-100",
   danger:
     "bg-rose-600 text-white shadow-sm hover:bg-rose-700 focus-visible:outline-rose-600 dark:bg-rose-500 dark:hover:bg-rose-600"
 };

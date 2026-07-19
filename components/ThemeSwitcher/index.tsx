@@ -15,7 +15,7 @@ export function ThemeSwitcher() {
 
   if (!mounted) {
     return (
-      <div className="h-[38px] w-[38px] rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 animate-pulse" />
+      <div className="h-[38px] w-[38px] rounded-xl border border-slate-200 dark:border-dark-border bg-slate-50 dark:bg-dark-card animate-pulse" />
     );
   }
 
@@ -24,7 +24,7 @@ export function ThemeSwitcher() {
   return (
     <button
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="p-2 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800/80 text-slate-500 hover:text-slate-750 dark:text-slate-400 dark:hover:text-slate-200 rounded-xl shadow-sm transition-all duration-200 outline-none focus:ring-2 focus:ring-indigo-500/20"
+      className="p-2 border border-slate-200 dark:border-dark-border bg-white dark:bg-dark-card hover:bg-slate-50 dark:hover:bg-dark-hover/80 text-slate-500 hover:text-slate-750 dark:text-dark-muted dark:hover:text-slate-200 rounded-xl shadow-sm transition-all duration-200 outline-none focus:ring-2 focus:ring-indigo-500/20"
       title={`Switch to ${isDark ? "light" : "dark"} theme`}
       aria-label="Toggle visual theme"
     >

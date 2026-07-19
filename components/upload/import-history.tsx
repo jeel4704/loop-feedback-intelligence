@@ -40,7 +40,7 @@ export function ImportHistory() {
   }
 
   if (history.length === 0) {
-    return <div className="p-6 text-center text-xs text-slate-500 font-semibold bg-slate-50 dark:bg-slate-900/40 rounded-2xl border border-slate-100 dark:border-slate-800">No import history found.</div>;
+    return <div className="p-6 text-center text-xs text-slate-500 font-semibold bg-slate-50 dark:bg-dark-card/40 rounded-2xl border border-slate-100 dark:border-dark-border">No import history found.</div>;
   }
 
   return (
@@ -48,7 +48,7 @@ export function ImportHistory() {
       <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 px-2">Recent Imports Log</h3>
       <div className="space-y-3">
         {history.map((record) => (
-          <Card key={record.id} className="border border-slate-200/80 dark:border-slate-800 shadow-sm rounded-2xl bg-white dark:bg-slate-950 overflow-hidden">
+          <Card key={record.id} className="border border-slate-200/80 dark:border-dark-border shadow-sm rounded-2xl bg-white dark:bg-dark-bg overflow-hidden">
             <CardContent className="p-4">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
@@ -58,12 +58,12 @@ export function ImportHistory() {
                   <div>
                     <p className="text-xs font-bold text-slate-900 dark:text-slate-100">{record.fileName}</p>
                     <div className="flex items-center gap-2 mt-1">
-                      <p className="text-[10px] font-semibold text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                      <p className="text-[10px] font-semibold text-slate-500 dark:text-dark-muted flex items-center gap-1">
                         <Clock className="h-3 w-3" />
                         {timeAgo(record.createdAt)} ago
                       </p>
                       <span className="text-[10px] text-slate-300 dark:text-slate-600">•</span>
-                      <p className="text-[10px] font-semibold text-slate-500 dark:text-slate-400">By {record.user?.name || record.user?.email || "User"}</p>
+                      <p className="text-[10px] font-semibold text-slate-500 dark:text-dark-muted">By {record.user?.name || record.user?.email || "User"}</p>
                     </div>
                   </div>
                 </div>

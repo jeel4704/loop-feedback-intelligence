@@ -56,7 +56,7 @@ export function ProfileDropdown() {
       {/* Clickable Header Trigger */}
       <button
         onClick={toggle}
-        className="flex items-center gap-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-2.5 py-1.5 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-800/80 transition-colors outline-none focus:ring-2 focus:ring-blue-500/20"
+        className="flex items-center gap-2 rounded-xl border border-slate-200 dark:border-dark-border bg-white dark:bg-dark-card px-2.5 py-1.5 shadow-sm hover:bg-slate-50 dark:hover:bg-dark-hover/80 transition-colors outline-none focus:ring-2 focus:ring-blue-500/20"
         aria-label="Profile dropdown menu"
       >
         <div className="flex h-7.5 w-7.5 items-center justify-center rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-[10px] font-bold text-[#4f46e5] dark:text-indigo-400 border border-indigo-100/50 dark:border-indigo-900/60">
@@ -67,7 +67,7 @@ export function ProfileDropdown() {
             {userName}
           </p>
         </div>
-        <ChevronDown className="h-3.5 w-3.5 text-slate-400 dark:text-slate-500" />
+        <ChevronDown className="h-3.5 w-3.5 text-slate-400 dark:text-dark-muted" />
       </button>
 
       {/* Menu dropdown panel container */}
@@ -78,14 +78,14 @@ export function ProfileDropdown() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: 8 }}
             transition={{ duration: 0.15 }}
-            className="absolute right-0 mt-2 w-56 overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl z-50 flex flex-col"
+            className="absolute right-0 mt-2 w-56 overflow-hidden rounded-2xl border border-slate-200 dark:border-dark-border bg-white dark:bg-dark-card shadow-2xl z-50 flex flex-col"
           >
             {/* Header info */}
-            <div className="px-4.5 py-3.5 border-b border-slate-200/80 dark:border-slate-800/80 bg-slate-50/50 dark:bg-slate-900/50 flex flex-col select-none">
+            <div className="px-4.5 py-3.5 border-b border-slate-200/80 dark:border-dark-border/80 bg-slate-50/50 dark:bg-dark-card/50 flex flex-col select-none">
               <span className="text-[10.5px] font-extrabold text-slate-900 dark:text-slate-50 truncate">
                 {userName}
               </span>
-              <span className="text-[9.5px] text-slate-400 dark:text-slate-500 font-semibold truncate leading-none mt-0.5">
+              <span className="text-[9.5px] text-slate-400 dark:text-dark-muted font-semibold truncate leading-none mt-0.5">
                 {userEmail}
               </span>
               <span className="text-[8.5px] font-extrabold uppercase px-1.5 py-0.5 rounded tracking-widest text-[#4f46e5] dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-100/20 dark:border-indigo-900/40 w-fit mt-2">
@@ -103,9 +103,9 @@ export function ProfileDropdown() {
                       key={idx}
                       href={(item.href || "#") as any}
                       onClick={close}
-                      className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-[11px] font-bold text-slate-650 hover:text-slate-900 hover:bg-slate-50 dark:text-slate-350 dark:hover:text-slate-100 dark:hover:bg-slate-800/40 transition-colors"
+                      className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-[11px] font-bold text-slate-650 hover:text-slate-900 hover:bg-slate-50 dark:text-slate-350 dark:hover:text-slate-100 dark:hover:bg-dark-hover/40 transition-colors"
                     >
-                      <Icon className="h-4 w-4 text-slate-400 dark:text-slate-500 group-hover:text-slate-655" />
+                      <Icon className="h-4 w-4 text-slate-400 dark:text-dark-muted group-hover:text-slate-655" />
                       <span>{item.label}</span>
                     </Link>
                   );

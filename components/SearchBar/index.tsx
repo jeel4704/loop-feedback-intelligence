@@ -141,13 +141,13 @@ export function SearchBar() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.97, y: -8 }}
             transition={{ duration: 0.15 }}
-            className="relative w-full max-w-lg overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl flex flex-col max-h-[460px] outline-none"
+            className="relative w-full max-w-lg overflow-hidden rounded-2xl border border-slate-200 dark:border-dark-border bg-white dark:bg-dark-card shadow-2xl flex flex-col max-h-[460px] outline-none"
             ref={containerRef}
             onKeyDown={handleKeyDown}
           >
             {/* Search input header */}
-            <div className="flex items-center gap-3 border-b border-slate-200/80 dark:border-slate-800/80 px-4 py-3.5">
-              <Search className="h-4.5 w-4.5 text-slate-400 dark:text-slate-500" />
+            <div className="flex items-center gap-3 border-b border-slate-200/80 dark:border-dark-border/80 px-4 py-3.5">
+              <Search className="h-4.5 w-4.5 text-slate-400 dark:text-dark-muted" />
               <input
                 ref={inputRef}
                 type="text"
@@ -160,12 +160,12 @@ export function SearchBar() {
                 className="flex-1 border-0 bg-transparent p-0 text-sm font-semibold text-slate-900 dark:text-slate-50 placeholder-slate-400 outline-none focus:ring-0 focus:outline-none caret-blue-600 dark:caret-blue-400"
               />
               <div className="flex items-center gap-2">
-                <kbd className="hidden sm:inline-flex items-center text-[9px] font-extrabold bg-slate-50 dark:bg-slate-800 text-slate-400 dark:text-slate-500 px-1.5 py-0.5 rounded border border-slate-200 dark:border-slate-700 shadow-sm">
+                <kbd className="hidden sm:inline-flex items-center text-[9px] font-extrabold bg-slate-50 dark:bg-dark-elevated text-slate-400 dark:text-dark-muted px-1.5 py-0.5 rounded border border-slate-200 dark:border-dark-border shadow-sm">
                   esc
                 </kbd>
                 <button 
                   onClick={() => setIsOpen(false)}
-                  className="text-xs font-extrabold text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 px-2.5 py-1.5 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                  className="text-xs font-extrabold text-slate-500 hover:text-slate-700 dark:text-dark-muted dark:hover:text-slate-200 px-2.5 py-1.5 rounded-lg hover:bg-slate-50 dark:hover:bg-dark-hover transition-colors"
                 >
                   Cancel
                 </button>
@@ -194,17 +194,17 @@ export function SearchBar() {
                         className={`flex items-center justify-between gap-3 px-3 py-2 rounded-xl cursor-pointer transition-colors duration-150 ${
                           isSelected
                             ? "bg-[#efeffe] text-[#4f46e5] dark:bg-indigo-950/70 dark:text-indigo-300"
-                            : "text-slate-700 dark:text-slate-350 hover:bg-slate-50 dark:hover:bg-slate-800/40"
+                            : "text-slate-700 dark:text-slate-350 hover:bg-slate-50 dark:hover:bg-dark-hover/40"
                         }`}
                       >
                         <div className="flex items-center gap-2.5 min-w-0">
-                          <Icon className={`h-4 w-4 ${isSelected ? "text-[#4f46e5] dark:text-indigo-400" : "text-slate-400 dark:text-slate-500"}`} />
+                          <Icon className={`h-4 w-4 ${isSelected ? "text-[#4f46e5] dark:text-indigo-400" : "text-slate-400 dark:text-dark-muted"}`} />
                           <div className="min-w-0">
                             <p className="text-xs font-semibold truncate leading-normal">
                               {item.title}
                             </p>
                             {item.subtitle && (
-                              <p className={`text-[10px] font-bold truncate leading-none mt-0.5 ${isSelected ? "text-indigo-400/80" : "text-slate-400 dark:text-slate-500"}`}>
+                              <p className={`text-[10px] font-bold truncate leading-none mt-0.5 ${isSelected ? "text-indigo-400/80" : "text-slate-400 dark:text-dark-muted"}`}>
                                 {item.subtitle}
                               </p>
                             )}
@@ -215,7 +215,7 @@ export function SearchBar() {
                           <span className={`text-[8.5px] font-extrabold uppercase px-1.5 py-0.5 rounded tracking-widest ${
                             isSelected 
                               ? "bg-indigo-200/50 text-[#4f46e5] dark:bg-indigo-900/60 dark:text-indigo-300" 
-                              : "bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400"
+                              : "bg-slate-100 dark:bg-dark-elevated text-slate-500 dark:text-dark-muted"
                           }`}>
                             {item.category}
                           </span>
@@ -231,7 +231,7 @@ export function SearchBar() {
             </div>
 
             {/* Command Palette footer helper */}
-            <div className="border-t border-slate-100 dark:border-slate-800/80 bg-slate-50/50 dark:bg-slate-900/50 px-4 py-2 flex items-center justify-between text-[9px] font-bold text-slate-400 dark:text-slate-500 select-none">
+            <div className="border-t border-slate-100 dark:border-dark-border/80 bg-slate-50/50 dark:bg-dark-card/50 px-4 py-2 flex items-center justify-between text-[9px] font-bold text-slate-400 dark:text-dark-muted select-none">
               <div className="flex items-center gap-3">
                 <span className="flex items-center gap-1">↑↓ Navigation</span>
                 <span className="flex items-center gap-1">↵ Select</span>
@@ -249,13 +249,13 @@ export function SearchBar() {
       {/* Outer Clickable Search Trigger in Navbar */}
       <div 
         onClick={() => setIsOpen(true)}
-        className="flex items-center gap-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3.5 py-1.5 w-52 lg:w-64 cursor-pointer shadow-sm hover:border-slate-300 dark:hover:border-slate-700 transition-all duration-200 group"
+        className="flex items-center gap-2.5 rounded-xl border border-slate-200 dark:border-dark-border bg-white dark:bg-dark-card px-3.5 py-1.5 w-52 lg:w-64 cursor-pointer shadow-sm hover:border-slate-300 dark:hover:border-slate-700 transition-all duration-200 group"
       >
-        <Search className="h-3.5 w-3.5 text-slate-500 dark:text-slate-400 group-hover:text-slate-750 dark:group-hover:text-slate-200 transition-colors" />
-        <span className="text-[11.5px] font-bold text-slate-500 dark:text-slate-400 select-none group-hover:text-slate-700 dark:group-hover:text-slate-200 flex-1">
+        <Search className="h-3.5 w-3.5 text-slate-500 dark:text-dark-muted group-hover:text-slate-750 dark:group-hover:text-slate-200 transition-colors" />
+        <span className="text-[11.5px] font-bold text-slate-500 dark:text-dark-muted select-none group-hover:text-slate-700 dark:group-hover:text-slate-200 flex-1">
           Search workspace...
         </span>
-        <kbd className="hidden sm:inline-flex items-center gap-0.5 text-[9px] font-extrabold bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400 px-1.5 py-0.5 rounded-lg shadow-sm">
+        <kbd className="hidden sm:inline-flex items-center gap-0.5 text-[9px] font-extrabold bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-dark-border text-slate-500 dark:text-dark-muted px-1.5 py-0.5 rounded-lg shadow-sm">
           <span>ctrl</span><span>k</span>
         </kbd>
       </div>
