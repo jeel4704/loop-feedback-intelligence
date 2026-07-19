@@ -104,6 +104,7 @@ export function DashboardCharts({
 
   useEffect(() => {
     fetchTrendData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [period]);
 
   const sentimentTotal = sentimentData.reduce((acc, curr) => acc + curr.value, 0);

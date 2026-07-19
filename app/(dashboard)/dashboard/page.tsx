@@ -40,11 +40,8 @@ interface StatsData {
   neutral: number;
   activeThemesCount: number;
   resolutionsCount: number;
-  duplicatesPrevented?: {
-    today: number;
-    thisWeek: number;
-    thisMonth: number;
-  };
+  duplicatesCount?: number;
+  duplicateRate?: number;
 }
 
 interface FeedbackItem {
@@ -251,9 +248,15 @@ export default function DashboardPage() {
             {/* Card 7: Duplicates Prevented */}
             <Card className="bg-white dark:bg-dark-bg border border-slate-200/80 dark:border-dark-border shadow-sm rounded-2xl hover:border-indigo-200 dark:hover:border-indigo-900 transition-all duration-200">
               <CardContent className="p-4">
-                <p className="text-[10.5px] font-extrabold text-[#4f46e5] dark:text-indigo-400 uppercase tracking-wider">Duplicates</p>
-                <h4 className="text-xl font-extrabold text-slate-950 dark:text-slate-50 mt-1">{stats.duplicatesPrevented?.thisWeek || 0}</h4>
-                <p className="text-[9.5px] text-slate-400 dark:text-dark-muted font-semibold mt-1">Tracked automatically</p>
+                <p className="text-[10.5px] font-extrabold text-[#4f46e5] dark:text-indigo-400 uppercase tracking-wider">Duplicates Prevented</p>
+                <h4 className="text-xl font-extrabold text-slate-950 dark:text-slate-50 mt-1">
+                  {stats.duplicatesCount !== undefined ? stats.duplicatesCount : 0}
+                </h4>
+                <p className="text-[9.5px] text-slate-400 dark:text-dark-muted font-semibold mt-1">
+                  {stats.duplicatesCount === 0 
+                    ? "No duplicate feedback detected" 
+                    : `${stats.duplicateRate}% duplicate rate`}
+                </p>
               </CardContent>
             </Card>
           </>

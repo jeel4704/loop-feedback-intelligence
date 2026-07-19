@@ -46,41 +46,31 @@ export async function GET() {
       }
     });
 
-    // Calculate duplicate feedback prevention metrics dynamically
-    const now = new Date();
-    const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    const startOfWeek = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    // Calculate real duplicates directly from the database
+    // duplicates = (total occurrences) - (unique feedback rows)
+    const feedbackAgg = await prisma.feedback.aggregate({
+      _sum: {
+        occurrenceCount: true
+      },
+      _count: {
+        _all: true
+      },
+      where: { workspaceId }
+    });
 
-    const [dupTodayCount, dupWeekCount, dupMonthCount] = await Promise.all([
-      prisma.activityLog.count({
-        where: {
-          workspaceId,
-          label: { startsWith: "Duplicate feedback" },
-          createdAt: { gte: startOfToday }
-        }
-      }),
-      prisma.activityLog.count({
-        where: {
-          workspaceId,
-          label: { startsWith: "Duplicate feedback" },
-          createdAt: { gte: startOfWeek }
-        }
-      }),
-      prisma.activityLog.count({
-        where: {
-          workspaceId,
-          label: { startsWith: "Duplicate feedback" },
-          createdAt: { gte: startOfMonth }
-        }
-      })
-    ]);
+    const totalOccurrences = feedbackAgg._sum.occurrenceCount || 0;
+    const uniqueRows = feedbackAgg._count._all || 0;
+    let trueDuplicates = totalOccurrences > uniqueRows ? totalOccurrences - uniqueRows : 0;
 
-    const duplicatesPrevented = {
-      today: dupTodayCount,
-      thisWeek: dupWeekCount,
-      thisMonth: dupMonthCount
-    };
+    // VALIDATION: Duplicate count can NEVER exceed total unique feedback count (as per rules)
+    if (trueDuplicates > total) {
+      console.error(`Validation Error: Duplicates (${trueDuplicates}) exceeded Total Feedback (${total}). Returning 0.`);
+      trueDuplicates = 0;
+    }
+
+    const duplicateRate = (total + trueDuplicates) > 0 
+      ? Number(((trueDuplicates / (total + trueDuplicates)) * 100).toFixed(1)) 
+      : 0;
 
     return NextResponse.json({
       feedbackCount: total,
@@ -89,7 +79,8 @@ export async function GET() {
       neutral: neutralPercentage,
       activeThemesCount,
       resolutionsCount,
-      duplicatesPrevented
+      duplicatesCount: trueDuplicates,
+      duplicateRate
     }, { status: 200 });
   } catch (error) {
     console.error("Dashboard stats API error:", error);
