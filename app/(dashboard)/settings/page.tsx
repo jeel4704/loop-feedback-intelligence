@@ -58,7 +58,7 @@ export default function SettingsPage() {
           });
       }
     }
-  }, [session]);
+  }, [user]);
 
   const handleUpdateWorkspace = async (e: React.FormEvent) => {
     e.preventDefault();

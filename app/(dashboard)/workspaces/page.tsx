@@ -168,6 +168,7 @@ export default function WorkspacesPage() {
     } else {
       setDetails(null);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedWorkspaceId]);
 
   // Create Workspace POST API

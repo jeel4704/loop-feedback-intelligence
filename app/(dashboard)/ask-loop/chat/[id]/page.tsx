@@ -10,7 +10,14 @@ import { useChatContext } from "@/contexts/ChatContext";
 import { useKeyboardShortcut } from "@/hooks/useKeyboardShortcut";
 import { useSearchParams } from "next/navigation";
 
-export default function ChatPage({ params }: { params: { id: string } }) {
+const loadingSteps = [
+  "Analyzing customer feedback...",
+  "Extracting emerging themes...",
+  "Generating product insights...",
+  "Preparing recommendations..."
+];
+
+function ChatPageContent({ params }: { params: { id: string } }) {
   const { id } = params;
   const { messages, isLoading, error, sendMessage, chatEndRef } = useAIChat(id);
   const { conversations, setConversations } = useChatContext();
@@ -25,12 +32,6 @@ export default function ChatPage({ params }: { params: { id: string } }) {
 
   // Loading animation keys
   const [loadingStep, setLoadingStep] = useState(0);
-  const loadingSteps = [
-    "Analyzing customer feedback...",
-    "Extracting emerging themes...",
-    "Generating product insights...",
-    "Preparing recommendations..."
-  ];
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -319,5 +320,13 @@ export default function ChatPage({ params }: { params: { id: string } }) {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function ChatPage({ params }: { params: { id: string } }) {
+  return (
+    <React.Suspense fallback={<div className="p-8 flex justify-center"><Loader2 className="h-8 w-8 animate-spin text-indigo-500" /></div>}>
+      <ChatPageContent params={params} />
+    </React.Suspense>
   );
 }
