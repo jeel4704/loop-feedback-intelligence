@@ -221,16 +221,14 @@ export default function InboxPage() {
             </p>
             <div className="flex items-center gap-2">
               <Button
-                variant="outline"
-                size="sm"
+                variant="secondary"
                 onClick={() => setPage(p => Math.max(1, p - 1))}
                 disabled={page === 1}
               >
                 Previous
               </Button>
               <Button
-                variant="outline"
-                size="sm"
+                variant="secondary"
                 onClick={() => setPage(p => p + 1)}
                 disabled={page * limit >= totalCount}
               >

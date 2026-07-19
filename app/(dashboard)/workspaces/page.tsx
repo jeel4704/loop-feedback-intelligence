@@ -97,7 +97,7 @@ export default function WorkspacesPage() {
   const [selectedWorkspaceId, setSelectedWorkspaceId] = useState<string | null>(null);
   const [details, setDetails] = useState<WorkspaceDetails | null>(null);
   const [detailsLoading, setDetailsLoading] = useState(false);
-  const [activeSubTab, setActiveSubTab] = useState<"overview" | "members" | "reports" | "activities" | "imports" | "danger_zone">("overview");
+  const [activeSubTab, setActiveSubTab] = useState<"overview" | "members" | "reports" | "activities" | "imports" | "danger_zone" | "integrations">("overview");
 
   // Modals state
   const [showCreateModal, setShowCreateModal] = useState(false);

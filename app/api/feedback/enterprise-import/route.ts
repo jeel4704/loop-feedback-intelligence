@@ -291,7 +291,7 @@ export async function POST(req: Request) {
         workspaceId,
         fileName: fileName || "CSV_Upload",
         fileSize: fileSize || 0,
-        importedBy: session.user.id,
+        importedBy: session.user.id || "system",
         validRecords: importedItems.length,
         invalidRecords: errors.length + duplicateReports.length, // duplicates count as invalid/skipped
         duration,

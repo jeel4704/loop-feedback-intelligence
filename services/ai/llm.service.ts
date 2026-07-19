@@ -1,9 +1,9 @@
 import { groq } from "@ai-sdk/groq";
-import { generateText, streamText, CoreMessage } from "ai";
+import { generateText, streamText } from "ai";
 import { PromptBuilder } from "./prompt.builder";
 
 interface ChatRequest {
-  messages: CoreMessage[];
+  messages: any[];
   systemContext: {
     user: any;
     workspace: any;
@@ -35,12 +35,14 @@ export class LLMService {
       temperature: 0.2, // Keep responses analytical and grounded
     });
 
+    const anyUsage = usage as any;
+
     return {
       text,
       usage: {
-        promptTokens: usage.promptTokens,
-        completionTokens: usage.completionTokens,
-        totalTokens: usage.totalTokens,
+        promptTokens: anyUsage?.promptTokens || 0,
+        completionTokens: anyUsage?.completionTokens || 0,
+        totalTokens: anyUsage?.totalTokens || 0,
         model: modelId
       }
     };

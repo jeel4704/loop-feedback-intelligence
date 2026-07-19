@@ -144,8 +144,7 @@ export default function ReportsPage() {
               
               <div className="p-4 border-t border-slate-100 bg-slate-50/50 flex items-center justify-between">
                 <Button 
-                  variant="outline" 
-                  size="sm"
+                  variant="secondary"
                   onClick={() => downloadReport(report)}
                   className="text-xs font-bold text-slate-600 hover:text-indigo-600 hover:bg-indigo-50 border-slate-200"
                 >
@@ -153,7 +152,6 @@ export default function ReportsPage() {
                 </Button>
                 
                 <Button 
-                  size="sm"
                   className="bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold"
                   onClick={() => window.location.href = `/reports/${report.id}`}
                 >

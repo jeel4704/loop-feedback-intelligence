@@ -229,10 +229,10 @@ export function EnterpriseImporter() {
                     <span className="text-sm font-semibold text-rose-700 dark:text-rose-400">{errorMessage}</span>
                   </div>
                   <div className="flex gap-2 shrink-0">
-                    <Button onClick={handleDownloadTemplate} variant="secondary" size="sm" className="bg-white dark:bg-slate-800 text-xs text-rose-700 dark:text-rose-400 hover:bg-rose-100 dark:hover:bg-rose-900/40 border-rose-200 dark:border-rose-900/60 font-bold">
+                    <Button onClick={handleDownloadTemplate} variant="secondary" className="bg-white dark:bg-slate-800 text-xs text-rose-700 dark:text-rose-400 hover:bg-rose-100 dark:hover:bg-rose-900/40 border-rose-200 dark:border-rose-900/60 font-bold">
                       Download Template
                     </Button>
-                    <Button onClick={() => fileInputRef.current?.click()} size="sm" className="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold shadow-sm">
+                    <Button onClick={() => fileInputRef.current?.click()} className="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold shadow-sm">
                       Choose Another File
                     </Button>
                   </div>

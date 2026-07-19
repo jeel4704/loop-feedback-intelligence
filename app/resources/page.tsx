@@ -86,7 +86,7 @@ export default function ResourcesPage() {
                   <h3 className="text-xl font-extrabold text-white">{res.title}</h3>
                   <p className="text-slate-400 font-medium text-sm leading-relaxed">{res.desc}</p>
                 </div>
-                <NextLink href={res.link} className="mt-8 border-t border-slate-800/60 pt-5 flex items-center justify-between text-blue-500 font-bold text-sm cursor-pointer group">
+                <NextLink href={res.link as any} className="mt-8 border-t border-slate-800/60 pt-5 flex items-center justify-between text-blue-500 font-bold text-sm cursor-pointer group">
                   <span>Read Guide</span>
                   <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </NextLink>

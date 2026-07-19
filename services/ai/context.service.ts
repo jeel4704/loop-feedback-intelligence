@@ -62,7 +62,7 @@ export class ContextService {
       });
 
       // 7. Dynamic Intent Search
-      let recentFeedback = [];
+      let recentFeedback: any[] = [];
       let searchKeyword = null;
       let searchCount = 0;
       
