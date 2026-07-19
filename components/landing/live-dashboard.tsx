@@ -4,6 +4,24 @@ import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { BarChart3, TrendingUp, Users, Inbox, Sparkles, MessageSquare } from "lucide-react";
 
+function ChartBar() {
+  const [height, setHeight] = useState(0);
+  
+  useEffect(() => {
+    setHeight(Math.random() * 100);
+    const int = setInterval(() => setHeight(Math.random() * 100), 1000 + Math.random() * 2000);
+    return () => clearInterval(int);
+  }, []);
+
+  return (
+    <motion.div 
+      className="w-full bg-blue-500/50 rounded-t-sm"
+      animate={{ height: `${height}%` }}
+      transition={{ type: "spring", stiffness: 100, damping: 20 }}
+    />
+  );
+}
+
 export function LiveDashboard() {
   const [feedbackCount, setFeedbackCount] = useState(14800);
   const [sentiment, setSentiment] = useState(82);
@@ -113,23 +131,9 @@ export function LiveDashboard() {
               <span className="text-slate-400 text-xs font-semibold">Real-Time Processing</span>
               
               <div className="w-full h-40 flex items-end justify-between gap-1 mt-4">
-                {Array.from({ length: 40 }).map((_, i) => {
-                  const [height, setHeight] = useState(Math.random() * 100);
-                  
-                  useEffect(() => {
-                    const int = setInterval(() => setHeight(Math.random() * 100), 1000 + Math.random() * 2000);
-                    return () => clearInterval(int);
-                  }, []);
-
-                  return (
-                    <motion.div 
-                      key={i} 
-                      className="w-full bg-blue-500/50 rounded-t-sm"
-                      animate={{ height: `${height}%` }}
-                      transition={{ type: "spring", stiffness: 100, damping: 20 }}
-                    />
-                  );
-                })}
+                {Array.from({ length: 40 }).map((_, i) => (
+                  <ChartBar key={i} />
+                ))}
               </div>
             </div>
 

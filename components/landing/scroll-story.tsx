@@ -32,6 +32,47 @@ const aiOutputs = [
   { icon: TrendingUp, title: "Trend Detected", color: "text-indigo-400", border: "border-indigo-500/30", delay: 0.9 }
 ];
 
+function FeedbackCard({ item, scrollYProgress }: { item: typeof feedbackInputs[0], i: number, scrollYProgress: any }) {
+  const startIn = 0.05 + item.delayOffset * 0.1;
+  const peak = 0.25 + item.delayOffset * 0.1;
+  const enterCore = 0.45 + item.delayOffset * 0.1;
+
+  const opacity = useTransform(scrollYProgress, [startIn, peak, enterCore], [0, 1, 0]);
+  const x = useTransform(scrollYProgress, [startIn, peak, enterCore], [-100, 0, 350]);
+  const y = useTransform(scrollYProgress, [startIn, peak, enterCore], [item.yOffset, item.yOffset, 0]);
+  const scale = useTransform(scrollYProgress, [startIn, peak, enterCore], [0.8, 1, 0.2]);
+
+  return (
+    <motion.div
+      className="absolute left-0 w-64 rounded-xl border border-white/10 bg-slate-900/80 backdrop-blur-md p-4 shadow-xl flex items-start gap-3"
+      style={{ opacity, x, y, scale, top: "50%", marginTop: "-40px" }}
+    >
+      <MessageSquare className="h-5 w-5 text-slate-500 mt-0.5 shrink-0" />
+      <p className="text-sm font-medium text-slate-300 leading-snug">{item.text}</p>
+    </motion.div>
+  );
+}
+
+function OutputCard({ item, i, scrollYProgress }: { item: typeof aiOutputs[0], i: number, scrollYProgress: any }) {
+  const trigger = item.delay;
+  const opacity = useTransform(scrollYProgress, [trigger - 0.1, trigger], [0, 1]);
+  const x = useTransform(scrollYProgress, [trigger - 0.1, trigger], [-350, 0]);
+  const yOffset = -120 + i * 60;
+  const y = useTransform(scrollYProgress, [trigger - 0.1, trigger], [0, yOffset]);
+  const scale = useTransform(scrollYProgress, [trigger - 0.1, trigger], [0.2, 1]);
+
+  return (
+    <motion.div
+      className={`absolute right-0 w-64 rounded-lg border bg-slate-900/90 backdrop-blur-md p-3 shadow-2xl flex items-center gap-3 ${item.border}`}
+      style={{ opacity, x, y, scale, top: "50%", marginTop: "-24px" }}
+    >
+      <item.icon className={`h-5 w-5 shrink-0 ${item.color}`} />
+      <span className="text-xs font-bold text-white tracking-wide">{item.title}</span>
+    </motion.div>
+  );
+}
+
+
 export function ScrollStory() {
   const containerRef = useRef<HTMLDivElement>(null);
   
@@ -75,28 +116,9 @@ export function ScrollStory() {
           
           {/* LEFT: Raw Feedback Input */}
           <div className="hidden md:block w-1/3 h-full relative">
-            {feedbackInputs.map((item, i) => {
-              // Feedback cards fly in from the left, pause, then zoom into the core
-              const startIn = 0.05 + item.delayOffset * 0.1;
-              const peak = 0.25 + item.delayOffset * 0.1;
-              const enterCore = 0.45 + item.delayOffset * 0.1;
-
-              const opacity = useTransform(scrollYProgress, [startIn, peak, enterCore], [0, 1, 0]);
-              const x = useTransform(scrollYProgress, [startIn, peak, enterCore], [-100, 0, 350]);
-              const y = useTransform(scrollYProgress, [startIn, peak, enterCore], [item.yOffset, item.yOffset, 0]);
-              const scale = useTransform(scrollYProgress, [startIn, peak, enterCore], [0.8, 1, 0.2]);
-
-              return (
-                <motion.div
-                  key={i}
-                  className="absolute left-0 w-64 rounded-xl border border-white/10 bg-slate-900/80 backdrop-blur-md p-4 shadow-xl flex items-start gap-3"
-                  style={{ opacity, x, y, scale, top: "50%", marginTop: "-40px" }}
-                >
-                  <MessageSquare className="h-5 w-5 text-slate-500 mt-0.5 shrink-0" />
-                  <p className="text-sm font-medium text-slate-300 leading-snug">{item.text}</p>
-                </motion.div>
-              );
-            })}
+            {feedbackInputs.map((item, i) => (
+              <FeedbackCard key={i} item={item} i={i} scrollYProgress={scrollYProgress} />
+            ))}
           </div>
 
           {/* CENTER: AI Core */}
@@ -151,26 +173,9 @@ export function ScrollStory() {
 
           {/* RIGHT: Output Dashboard */}
           <div className="hidden md:block w-1/3 h-full relative">
-            {aiOutputs.map((item, i) => {
-              // Outputs spring out from the core
-              const trigger = item.delay;
-              const opacity = useTransform(scrollYProgress, [trigger - 0.1, trigger], [0, 1]);
-              const x = useTransform(scrollYProgress, [trigger - 0.1, trigger], [-350, 0]);
-              const yOffset = -120 + i * 60;
-              const y = useTransform(scrollYProgress, [trigger - 0.1, trigger], [0, yOffset]);
-              const scale = useTransform(scrollYProgress, [trigger - 0.1, trigger], [0.2, 1]);
-
-              return (
-                <motion.div
-                  key={i}
-                  className={`absolute right-0 w-64 rounded-lg border bg-slate-900/90 backdrop-blur-md p-3 shadow-2xl flex items-center gap-3 ${item.border}`}
-                  style={{ opacity, x, y, scale, top: "50%", marginTop: "-24px" }}
-                >
-                  <item.icon className={`h-5 w-5 shrink-0 ${item.color}`} />
-                  <span className="text-xs font-bold text-white tracking-wide">{item.title}</span>
-                </motion.div>
-              );
-            })}
+            {aiOutputs.map((item, i) => (
+              <OutputCard key={i} item={item} i={i} scrollYProgress={scrollYProgress} />
+            ))}
           </div>
 
         </div>
