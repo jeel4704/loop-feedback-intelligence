@@ -8,7 +8,7 @@ export function AppThemeProvider({
   children
 }: Readonly<{ children: ReactNode }>) {
   return (
-    <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
       {children}
     </ThemeProvider>
   );
