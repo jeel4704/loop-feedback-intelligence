@@ -58,6 +58,18 @@ export async function GET() {
       }
     });
 
+    const resolvedCount = await prisma.feedback.count({
+      where: { workspaceId, status: { in: ["Resolved", "Closed"] } }
+    });
+
+    const openCount = await prisma.feedback.count({
+      where: { workspaceId, status: { notIn: ["Resolved", "Closed", "Duplicate", "Spam"] } }
+    });
+
+    const duplicateCount = await prisma.feedback.count({
+      where: { workspaceId, status: "Duplicate" }
+    });
+
     // 4. Generate Volume Trend for the last 7 days
     const volumeTrend: { name: string; value: number }[] = [];
     const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -109,6 +121,9 @@ export async function GET() {
         negative: negativeCount,
         neutral: neutralCount
       },
+      resolutionsCount: resolvedCount,
+      openCount: openCount,
+      duplicateCount: duplicateCount,
       volumeTrend,
       topThemes
     }, { status: 200 });
