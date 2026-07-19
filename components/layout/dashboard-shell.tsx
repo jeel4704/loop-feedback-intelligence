@@ -106,11 +106,11 @@ export function DashboardShell({ children }: DashboardShellProps) {
               className={cn(
                 "flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-[13px] font-semibold transition-all duration-200 relative group overflow-hidden outline-none focus-visible:ring-2 focus-visible:ring-indigo-500",
                 isActive
-                  ? "bg-[#efeffe] dark:bg-indigo-950/60 text-[#4f46e5] dark:text-indigo-400 font-bold"
-                  : "text-slate-655 hover:bg-slate-100/80 dark:text-slate-400 dark:hover:bg-slate-900/60 dark:hover:text-slate-100"
+                  ? "bg-[#efeffe] dark:bg-brand-glow/30 text-[#4f46e5] dark:text-brand font-bold"
+                  : "text-slate-655 hover:bg-slate-100/80 dark:text-dark-muted dark:hover:bg-dark-hover dark:hover:text-slate-100"
               )}
             >
-              <Icon className={cn("h-4.5 w-4.5 transition-colors", isActive ? "text-[#4f46e5] dark:text-indigo-400" : "text-slate-405 group-hover:text-slate-600 dark:text-slate-500 dark:group-hover:text-slate-355")} />
+              <Icon className={cn("h-4.5 w-4.5 transition-colors", isActive ? "text-[#4f46e5] dark:text-brand" : "text-slate-405 group-hover:text-slate-600 dark:text-dark-muted dark:group-hover:text-slate-100")} />
               <span>{item.label}</span>
               {/* Subtle hover indicator dot */}
               {!isActive && (
@@ -123,7 +123,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
 
       {/* Manage Nav Section */}
       <div className="pt-2">
-        <p className="text-[10px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 px-3.5 select-none">
+        <p className="text-[10px] font-extrabold text-slate-400 dark:text-dark-muted uppercase tracking-widest mb-2 px-3.5 select-none">
           Manage
         </p>
         <nav className="space-y-1" aria-label="Management navigation">
@@ -138,11 +138,11 @@ export function DashboardShell({ children }: DashboardShellProps) {
                 className={cn(
                   "flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-[13px] font-semibold transition-all duration-200 relative group overflow-hidden outline-none focus-visible:ring-2 focus-visible:ring-indigo-500",
                   isActive
-                    ? "bg-[#efeffe] dark:bg-indigo-950/60 text-[#4f46e5] dark:text-indigo-400 font-bold"
-                    : "text-slate-655 hover:bg-slate-100/80 dark:text-slate-400 dark:hover:bg-slate-900/60 dark:hover:text-slate-100"
+                    ? "bg-[#efeffe] dark:bg-brand-glow/30 text-[#4f46e5] dark:text-brand font-bold"
+                    : "text-slate-655 hover:bg-slate-100/80 dark:text-dark-muted dark:hover:bg-dark-hover dark:hover:text-slate-100"
                 )}
               >
-                <Icon className={cn("h-4.5 w-4.5 transition-colors", isActive ? "text-[#4f46e5] dark:text-indigo-400" : "text-slate-405 group-hover:text-slate-600 dark:text-slate-500 dark:group-hover:text-slate-355")} />
+                <Icon className={cn("h-4.5 w-4.5 transition-colors", isActive ? "text-[#4f46e5] dark:text-brand" : "text-slate-405 group-hover:text-slate-600 dark:text-dark-muted dark:group-hover:text-slate-100")} />
                 <span>{item.label}</span>
                 {!isActive && (
                   <span className="absolute right-3 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-[#4f46e5]/40 opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -158,14 +158,14 @@ export function DashboardShell({ children }: DashboardShellProps) {
   const renderSidebarContent = (isMobile = false) => (
     <>
       {/* Top sticky logo block */}
-      <div className="flex items-center justify-between pb-6 border-b border-slate-200/50 dark:border-slate-800/50 flex-shrink-0">
+      <div className="flex items-center justify-between pb-6 border-b border-slate-200/50 dark:border-dark-border/50 flex-shrink-0">
         <Link href="/dashboard" className="transition-opacity hover:opacity-80">
           <Logo variant="horizontal" size="md" />
         </Link>
         {isMobile && (
           <button 
             onClick={() => setIsMobileOpen(false)}
-            className="p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-650 dark:text-slate-500 dark:hover:text-slate-250 transition-colors"
+            className="p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-dark-hover text-slate-400 hover:text-slate-650 dark:text-dark-muted dark:hover:text-slate-250 transition-colors"
           >
             <X className="h-5 w-5" />
           </button>
@@ -178,7 +178,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
       </div>
 
       {/* Bottom sticky items */}
-      <div className="pt-6 border-t border-slate-200/60 dark:border-slate-850 flex-shrink-0 space-y-5 bg-[#fafbfe] dark:bg-slate-950">
+      <div className="pt-6 border-t border-slate-200/60 dark:border-dark-border flex-shrink-0 space-y-5 bg-[#fafbfe] dark:bg-dark-sidebar">
 
 
         {/* User initials & quick Sign out */}
@@ -209,10 +209,10 @@ export function DashboardShell({ children }: DashboardShellProps) {
   );
 
   return (
-    <div className="min-h-screen bg-[#fcfdff] dark:bg-slate-950 flex text-slate-800 dark:text-slate-100 transition-colors duration-300">
+    <div className="min-h-screen bg-[#fcfdff] dark:bg-dark-bg flex text-slate-800 dark:text-slate-100 transition-colors duration-300">
       <div className="flex min-h-screen w-full relative">
         {/* DESKTOP STICKY SIDEBAR */}
-        <aside className="w-[260px] h-screen sticky top-0 hidden lg:flex flex-col justify-between bg-[#fafbfe] dark:bg-slate-950 px-5 py-6 border-r border-slate-200/80 dark:border-slate-900 flex-shrink-0 z-20 overflow-hidden">
+        <aside className="w-[260px] h-screen sticky top-0 hidden lg:flex flex-col justify-between bg-[#fafbfe] dark:bg-dark-sidebar px-5 py-6 border-r border-slate-200/80 dark:border-dark-border flex-shrink-0 z-20 overflow-hidden">
           {renderSidebarContent(false)}
         </aside>
 
@@ -234,7 +234,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
                 animate={{ x: 0 }}
                 exit={{ x: "-100%" }}
                 transition={{ type: "spring", damping: 25, stiffness: 220 }}
-                className="fixed inset-y-0 left-0 z-50 w-[260px] bg-[#fafbfe] dark:bg-slate-950 border-r border-slate-200/80 dark:border-slate-800/80 flex flex-col justify-between px-5 py-6 lg:hidden overflow-hidden"
+                className="fixed inset-y-0 left-0 z-50 w-[260px] bg-[#fafbfe] dark:bg-dark-sidebar border-r border-slate-200/80 dark:border-dark-border/80 flex flex-col justify-between px-5 py-6 lg:hidden overflow-hidden"
               >
                 {renderSidebarContent(true)}
               </motion.aside>
@@ -243,12 +243,12 @@ export function DashboardShell({ children }: DashboardShellProps) {
         </AnimatePresence>
 
         {/* Content area right */}
-        <div className="flex-1 flex flex-col min-h-screen min-w-0 bg-[#f8fafc] dark:bg-slate-900/30 overflow-hidden">
+        <div className="flex-1 flex flex-col min-h-screen min-w-0 bg-[#f8fafc] dark:bg-dark-card/30 overflow-hidden">
           {/* HEADER NAV BAR */}
           <header 
             className={cn(
-              "sticky top-0 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md z-30 px-6 py-4 w-full transition-all duration-200 border-b border-slate-200/60 dark:border-slate-900",
-              isScrolled && "shadow-sm border-b dark:border-slate-850"
+              "sticky top-0 bg-white/80 dark:bg-dark-navbar/80 backdrop-blur-md z-30 px-6 py-4 w-full transition-all duration-200 border-b border-slate-200/60 dark:border-dark-border",
+              isScrolled && "shadow-sm border-b dark:border-dark-border"
             )}
           >
             <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
@@ -256,7 +256,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
               <div className="flex items-center gap-3">
                 <button 
                   onClick={() => setIsMobileOpen(true)}
-                  className="lg:hidden p-2 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-655 dark:hover:text-slate-200 rounded-xl transition outline-none"
+                  className="lg:hidden p-2 hover:bg-slate-100 dark:hover:bg-dark-hover text-slate-400 hover:text-slate-655 dark:hover:text-slate-200 rounded-xl transition outline-none"
                   aria-label="Open sidebar"
                 >
                   <Menu className="h-5 w-5" />
@@ -266,7 +266,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
                   <h1 className="text-base font-bold text-slate-900 dark:text-slate-50 truncate leading-none">
                     Welcome back, {userName.split(" ")[0]}
                   </h1>
-                  <p className="text-[11px] text-slate-405 dark:text-slate-500 font-semibold mt-1">
+                  <p className="text-[11px] text-slate-405 dark:text-dark-muted font-semibold mt-1">
                     Here's what's happening with your feedback today.
                   </p>
                 </div>

@@ -188,7 +188,7 @@ export function UploadCard() {
           </div>
           <div className="flex-1">
             <h3 className="text-lg font-semibold text-slate-950 dark:text-slate-50">CSV Upload</h3>
-            <p className="mt-2 text-sm text-slate-600 dark:text-slate-400">
+            <p className="mt-2 text-sm text-slate-600 dark:text-dark-muted">
               Upload a historical spreadsheet export to bootstrap your
               feedback inbox for analysis.
             </p>
@@ -229,7 +229,7 @@ export function UploadCard() {
                     variant="secondary"
                     type="button"
                     onClick={() => setShowReportList(!showReportList)}
-                    className="w-full text-xs font-bold bg-white dark:bg-slate-900 text-emerald-900 dark:text-emerald-100 border border-emerald-200 dark:border-emerald-800 hover:bg-emerald-100 dark:hover:bg-slate-800"
+                    className="w-full text-xs font-bold bg-white dark:bg-dark-card text-emerald-900 dark:text-emerald-100 border border-emerald-200 dark:border-emerald-800 hover:bg-emerald-100 dark:hover:bg-dark-hover"
                   >
                     {showReportList ? "Hide Import Report" : "View Import Report"}
                   </Button>
@@ -289,16 +289,16 @@ export function UploadCard() {
                 </div>
 
                 {showReportList && importSummary.report.length > 0 && (
-                  <div className="mt-3 p-3 bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-2xl max-h-60 overflow-y-auto space-y-2 text-slate-700 dark:text-slate-300">
-                    <span className="text-[10px] font-extrabold uppercase text-slate-400 dark:text-slate-500 tracking-wider block">Skipped Duplicates Log</span>
+                  <div className="mt-3 p-3 bg-white dark:bg-dark-card/50 border border-slate-200 dark:border-dark-border rounded-2xl max-h-60 overflow-y-auto space-y-2 text-slate-700 dark:text-dark-secondaryText">
+                    <span className="text-[10px] font-extrabold uppercase text-slate-400 dark:text-dark-muted tracking-wider block">Skipped Duplicates Log</span>
                     {importSummary.report.map((r: any, idx: number) => (
-                      <div key={idx} className="p-2 border border-slate-100 dark:border-slate-800/80 rounded-xl bg-slate-50 dark:bg-slate-900/80 space-y-1 text-[11px] leading-relaxed">
+                      <div key={idx} className="p-2 border border-slate-100 dark:border-dark-border/80 rounded-xl bg-slate-50 dark:bg-dark-card/80 space-y-1 text-[11px] leading-relaxed">
                         <div><span className="font-bold text-slate-900 dark:text-slate-100">Feedback:</span> "{r.feedback}"</div>
-                        <div className="grid grid-cols-2 gap-1 text-[10px] text-slate-500 dark:text-slate-400 font-semibold mt-1">
-                          <div>Matched ID: <span className="text-slate-700 dark:text-slate-300">#{r.matchedFeedbackId.substring(0, 8)}</span></div>
-                          <div>Customer: <span className="text-slate-700 dark:text-slate-300">{r.customer}</span></div>
-                          <div>Theme: <span className="text-slate-700 dark:text-slate-300">{r.theme}</span></div>
-                          <div>Reason: <span className="text-slate-700 dark:text-slate-300">{r.skippedReason}</span></div>
+                        <div className="grid grid-cols-2 gap-1 text-[10px] text-slate-500 dark:text-dark-muted font-semibold mt-1">
+                          <div>Matched ID: <span className="text-slate-700 dark:text-dark-secondaryText">#{r.matchedFeedbackId.substring(0, 8)}</span></div>
+                          <div>Customer: <span className="text-slate-700 dark:text-dark-secondaryText">{r.customer}</span></div>
+                          <div>Theme: <span className="text-slate-700 dark:text-dark-secondaryText">{r.theme}</span></div>
+                          <div>Reason: <span className="text-slate-700 dark:text-dark-secondaryText">{r.skippedReason}</span></div>
                         </div>
                       </div>
                     ))}
@@ -314,7 +314,7 @@ export function UploadCard() {
               </div>
             )}
 
-            <div className="mt-5 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/40 p-6 text-center">
+            <div className="mt-5 rounded-2xl border border-dashed border-slate-300 dark:border-dark-border bg-slate-50 dark:bg-dark-card/40 p-6 text-center">
               <input
                 type="file"
                 ref={fileInputRef}
@@ -322,7 +322,7 @@ export function UploadCard() {
                 accept=".csv"
                 onChange={handleFileChange}
               />
-              <p className="text-sm text-slate-600 dark:text-slate-400">
+              <p className="text-sm text-slate-600 dark:text-dark-muted">
                 Choose a local .csv file to import
               </p>
               <Button

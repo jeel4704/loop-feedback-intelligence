@@ -14,7 +14,7 @@ export default function AppearanceSettingsPage() {
     <div className="space-y-6 max-w-3xl">
       <div>
         <h1 className="text-2xl font-black text-slate-900 dark:text-slate-50 tracking-tight">Theme & Appearance</h1>
-        <p className="text-xs font-bold text-slate-550 dark:text-slate-400 mt-1">
+        <p className="text-xs font-bold text-slate-550 dark:text-dark-muted mt-1">
           Personalize the look, light/dark theme preference, and typography scaling of LOOP.
         </p>
       </div>
@@ -25,8 +25,8 @@ export default function AppearanceSettingsPage() {
         {/* Light */}
         <Card 
           onClick={() => setTheme("light")}
-          className={`cursor-pointer bg-white dark:bg-slate-900 border transition-all hover:shadow-sm rounded-2xl flex flex-col justify-between overflow-hidden ${
-            theme === "light" ? "border-indigo-500 ring-2 ring-indigo-500/10" : "border-slate-200/80 dark:border-slate-850"
+          className={`cursor-pointer bg-white dark:bg-dark-card border transition-all hover:shadow-sm rounded-2xl flex flex-col justify-between overflow-hidden ${
+            theme === "light" ? "border-indigo-500 ring-2 ring-indigo-500/10" : "border-slate-200/80 dark:border-dark-border"
           }`}
         >
           <CardContent className="p-4 flex flex-col gap-6 h-full justify-between">
@@ -48,8 +48,8 @@ export default function AppearanceSettingsPage() {
         {/* Dark */}
         <Card 
           onClick={() => setTheme("dark")}
-          className={`cursor-pointer bg-white dark:bg-slate-900 border transition-all hover:shadow-sm rounded-2xl flex flex-col justify-between overflow-hidden ${
-            theme === "dark" ? "border-indigo-500 ring-2 ring-indigo-500/10" : "border-slate-200/80 dark:border-slate-850"
+          className={`cursor-pointer bg-white dark:bg-dark-card border transition-all hover:shadow-sm rounded-2xl flex flex-col justify-between overflow-hidden ${
+            theme === "dark" ? "border-indigo-500 ring-2 ring-indigo-500/10" : "border-slate-200/80 dark:border-dark-border"
           }`}
         >
           <CardContent className="p-4 flex flex-col gap-6 h-full justify-between">
@@ -71,8 +71,8 @@ export default function AppearanceSettingsPage() {
         {/* System */}
         <Card 
           onClick={() => setTheme("system")}
-          className={`cursor-pointer bg-white dark:bg-slate-900 border transition-all hover:shadow-sm rounded-2xl flex flex-col justify-between overflow-hidden ${
-            theme === "system" ? "border-indigo-500 ring-2 ring-indigo-500/10" : "border-slate-200/80 dark:border-slate-850"
+          className={`cursor-pointer bg-white dark:bg-dark-card border transition-all hover:shadow-sm rounded-2xl flex flex-col justify-between overflow-hidden ${
+            theme === "system" ? "border-indigo-500 ring-2 ring-indigo-500/10" : "border-slate-200/80 dark:border-dark-border"
           }`}
         >
           <CardContent className="p-4 flex flex-col gap-6 h-full justify-between">
@@ -94,7 +94,7 @@ export default function AppearanceSettingsPage() {
       </div>
 
       {/* Adjust visual density spacing checkboxes */}
-      <Card className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-850 rounded-2xl shadow-sm">
+      <Card className="bg-white dark:bg-dark-card border border-slate-200/80 dark:border-dark-border rounded-2xl shadow-sm">
         <CardContent className="p-6 space-y-4">
           <h3 className="text-xs font-extrabold text-slate-950 dark:text-slate-50 uppercase tracking-widest">Interface Spacing & Motion</h3>
           
@@ -109,7 +109,7 @@ export default function AppearanceSettingsPage() {
               <span>Enable Compact Mode (reduces margins and list row paddings)</span>
             </label>
 
-            <label className="flex items-center gap-2.5 select-none cursor-pointer pt-3 border-t border-slate-100 dark:border-slate-850">
+            <label className="flex items-center gap-2.5 select-none cursor-pointer pt-3 border-t border-slate-100 dark:border-dark-border">
               <input 
                 type="checkbox" 
                 checked={animationsEnabled}

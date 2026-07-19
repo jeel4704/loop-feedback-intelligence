@@ -190,7 +190,7 @@ export default function SettingsPage() {
       {/* Title Header */}
       <div>
         <h1 className="text-2xl font-black text-slate-900 dark:text-slate-50 tracking-tight">Settings</h1>
-        <p className="text-xs font-bold text-slate-500 dark:text-slate-400 mt-1">
+        <p className="text-xs font-bold text-slate-500 dark:text-dark-muted mt-1">
           Configure application variables, profiles, subscriptions, AI engines, and credentials.
         </p>
       </div>
@@ -206,7 +206,7 @@ export default function SettingsPage() {
       <div className="grid gap-6 md:grid-cols-[220px_1fr]">
         
         {/* Settings Left sub-navigation tab list */}
-        <div className="flex flex-row md:flex-col overflow-x-auto md:overflow-x-visible pb-2 md:pb-0 gap-1 border-b md:border-b-0 md:border-r border-slate-200 dark:border-slate-850 pr-0 md:pr-4 h-fit scrollbar-none">
+        <div className="flex flex-row md:flex-col overflow-x-auto md:overflow-x-visible pb-2 md:pb-0 gap-1 border-b md:border-b-0 md:border-r border-slate-200 dark:border-dark-border pr-0 md:pr-4 h-fit scrollbar-none">
           {sidebarItems.map((item) => {
             const Icon = item.icon;
             const isTabActive = activeTab === item.value;
@@ -217,7 +217,7 @@ export default function SettingsPage() {
                 className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-left text-xs font-extrabold transition-all whitespace-nowrap ${
                   isTabActive
                     ? "bg-[#efeffe] dark:bg-indigo-950/60 text-[#4f46e5] dark:text-indigo-400 font-black shadow-sm"
-                    : "text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100/50 dark:hover:bg-slate-900/60"
+                    : "text-slate-500 hover:text-slate-700 dark:text-dark-muted dark:hover:text-slate-200 hover:bg-slate-100/50 dark:hover:bg-dark-elevated/60"
                 }`}
               >
                 <Icon className="h-4 w-4" />
@@ -232,7 +232,7 @@ export default function SettingsPage() {
 
           {/* TAB: GENERAL */}
           {activeTab === "general" && (
-            <Card className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-850 rounded-2xl shadow-sm">
+            <Card className="bg-white dark:bg-dark-card border border-slate-200/80 dark:border-dark-border rounded-2xl shadow-sm">
               <CardContent className="p-6 space-y-6">
                 <div>
                   <h3 className="text-sm font-extrabold text-slate-900 dark:text-slate-50">General Workspace settings</h3>
@@ -256,7 +256,7 @@ export default function SettingsPage() {
                   
                   <FormField label="Workspace URL Slug">
                     <div className="flex items-center">
-                      <span className="bg-slate-100 dark:bg-slate-950 border border-r-0 border-slate-200 dark:border-slate-800 rounded-l-xl px-3 py-2 text-xs font-bold text-slate-400">
+                      <span className="bg-slate-100 dark:bg-dark-bg border border-r-0 border-slate-200 dark:border-dark-border rounded-l-xl px-3 py-2 text-xs font-bold text-slate-400">
                         loopai.dev/
                       </span>
                       <Input 
@@ -277,7 +277,7 @@ export default function SettingsPage() {
 
           {/* TAB: PROFILE */}
           {activeTab === "profile" && (
-            <Card className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-850 rounded-2xl shadow-sm">
+            <Card className="bg-white dark:bg-dark-card border border-slate-200/80 dark:border-dark-border rounded-2xl shadow-sm">
               <CardContent className="p-6 space-y-6">
                 <div>
                   <h3 className="text-sm font-extrabold text-slate-900 dark:text-slate-50">User Profile Settings</h3>
@@ -303,7 +303,7 @@ export default function SettingsPage() {
                     <Input 
                       disabled 
                       value={email} 
-                      className="bg-slate-100 border-slate-250 text-slate-400 font-semibold text-xs dark:bg-slate-950 dark:border-slate-800"
+                      className="bg-slate-100 border-slate-250 text-slate-400 font-semibold text-xs dark:bg-dark-bg dark:border-dark-border"
                     />
                   </FormField>
 
@@ -317,7 +317,7 @@ export default function SettingsPage() {
 
           {/* TAB: APPEARANCE */}
           {activeTab === "appearance" && (
-            <Card className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-850 rounded-2xl shadow-sm">
+            <Card className="bg-white dark:bg-dark-card border border-slate-200/80 dark:border-dark-border rounded-2xl shadow-sm">
               <CardContent className="p-6 space-y-6">
                 <div>
                   <h3 className="text-sm font-extrabold text-slate-900 dark:text-slate-50">Theme & Appearance</h3>
@@ -328,16 +328,16 @@ export default function SettingsPage() {
                   <div className="space-y-2">
                     <p className="text-[10px] font-extrabold text-slate-450 uppercase">Application Theme</p>
                     <div className="flex gap-3">
-                      <button className="flex-1 p-3 rounded-xl border border-slate-200 dark:border-slate-800 text-center bg-white dark:bg-slate-900">
+                      <button className="flex-1 p-3 rounded-xl border border-slate-200 dark:border-dark-border text-center bg-white dark:bg-dark-card">
                         ☀️ Light Theme
                       </button>
-                      <button className="flex-1 p-3 rounded-xl border border-slate-200 dark:border-slate-800 text-center bg-white dark:bg-slate-900">
+                      <button className="flex-1 p-3 rounded-xl border border-slate-200 dark:border-dark-border text-center bg-white dark:bg-dark-card">
                         🌙 Dark Theme
                       </button>
                     </div>
                   </div>
 
-                  <div className="space-y-2 pt-2 border-t border-slate-100 dark:border-slate-800">
+                  <div className="space-y-2 pt-2 border-t border-slate-100 dark:border-dark-border">
                     <label className="flex items-center gap-2">
                       <input type="checkbox" className="rounded text-indigo-650 accent-indigo-650" />
                       <span>Compact mode (tight layout sizing)</span>
@@ -354,14 +354,14 @@ export default function SettingsPage() {
 
           {/* TAB: NOTIFICATIONS */}
           {activeTab === "notifications" && (
-            <Card className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-850 rounded-2xl shadow-sm">
+            <Card className="bg-white dark:bg-dark-card border border-slate-200/80 dark:border-dark-border rounded-2xl shadow-sm">
               <CardContent className="p-6 space-y-6">
                 <div>
                   <h3 className="text-sm font-extrabold text-slate-900 dark:text-slate-50">Notifications Rules</h3>
                   <p className="text-[11px] text-slate-450 mt-0.5">Control where and when you receive weekly insight reports or alert hooks.</p>
                 </div>
 
-                <div className="space-y-3.5 text-xs font-bold text-slate-700 dark:text-slate-300">
+                <div className="space-y-3.5 text-xs font-bold text-slate-700 dark:text-dark-secondaryText">
                   <label className="flex items-center gap-2.5">
                     <input type="checkbox" defaultChecked className="rounded text-indigo-650 accent-indigo-650" />
                     <span>Email me weekly digest summaries of feedback sentiment</span>
@@ -381,7 +381,7 @@ export default function SettingsPage() {
 
           {/* TAB: SECURITY */}
           {activeTab === "security" && (
-            <Card className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-850 rounded-2xl shadow-sm">
+            <Card className="bg-white dark:bg-dark-card border border-slate-200/80 dark:border-dark-border rounded-2xl shadow-sm">
               <CardContent className="p-6 space-y-6">
                 <div>
                   <h3 className="text-sm font-extrabold text-slate-900 dark:text-slate-50">Security & Sessions</h3>
@@ -396,9 +396,9 @@ export default function SettingsPage() {
                     <Button className="text-xs font-bold mt-1">Update Password</Button>
                   </div>
 
-                  <div className="border-t border-slate-100 dark:border-slate-800 pt-4 space-y-2">
+                  <div className="border-t border-slate-100 dark:border-dark-border pt-4 space-y-2">
                     <p className="font-extrabold text-[10px] text-slate-450 uppercase">Active Session Browser Devices</p>
-                    <div className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-950 border rounded-xl">
+                    <div className="flex items-center justify-between p-3 bg-slate-50 dark:bg-dark-bg border rounded-xl">
                       <div>
                         <p className="font-bold text-slate-800 dark:text-slate-100">Chrome on Windows (Active Session)</p>
                         <p className="text-[10px] text-slate-400">Hyderabad, India • 192.168.1.1</p>
@@ -413,7 +413,7 @@ export default function SettingsPage() {
 
           {/* TAB: API KEYS */}
           {activeTab === "api_keys" && (
-            <Card className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-850 rounded-2xl shadow-sm">
+            <Card className="bg-white dark:bg-dark-card border border-slate-200/80 dark:border-dark-border rounded-2xl shadow-sm">
               <CardContent className="p-6 space-y-6">
                 <div className="flex items-center justify-between gap-4">
                   <div>
@@ -428,11 +428,11 @@ export default function SettingsPage() {
 
                 <div className="space-y-3">
                   {apiKeys.map((key) => (
-                    <div key={key.id} className="flex items-center justify-between border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/20 p-3.5 rounded-2xl">
+                    <div key={key.id} className="flex items-center justify-between border border-slate-200 dark:border-dark-border bg-slate-50/50 dark:bg-dark-bg/20 p-3.5 rounded-2xl">
                       <div className="space-y-0.5">
                         <p className="font-extrabold text-xs text-slate-800 dark:text-slate-150">{key.name}</p>
                         <div className="flex items-center gap-2 mt-0.5">
-                          <code className="text-[10.5px] font-bold text-slate-500 font-mono bg-slate-100 dark:bg-slate-950 px-1.5 py-0.5 rounded border">{key.token}</code>
+                          <code className="text-[10.5px] font-bold text-slate-500 font-mono bg-slate-100 dark:bg-dark-bg px-1.5 py-0.5 rounded border">{key.token}</code>
                           <span className="text-[9.5px] font-semibold text-slate-400">Expires: {key.expires}</span>
                         </div>
                       </div>
@@ -452,7 +452,7 @@ export default function SettingsPage() {
           {/* TAB: BILLING */}
           {activeTab === "billing" && (
             <div className="space-y-6">
-              <Card className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-850 rounded-2xl shadow-sm">
+              <Card className="bg-white dark:bg-dark-card border border-slate-200/80 dark:border-dark-border rounded-2xl shadow-sm">
                 <CardContent className="p-6 space-y-4">
                   <div>
                     <h3 className="text-sm font-extrabold text-slate-900 dark:text-slate-50">Current Billing Plan</h3>
@@ -465,7 +465,7 @@ export default function SettingsPage() {
                         <Badge variant="indigo" className="text-[9px] font-extrabold uppercase px-2">Enterprise Plan</Badge>
                         <span className="text-xs font-bold text-slate-800 dark:text-slate-250">$499.00 / month</span>
                       </div>
-                      <p className="text-[11px] text-slate-500 dark:text-slate-400">Provides unlimited team users, custom webhook scopes, and Claude-3 classification.</p>
+                      <p className="text-[11px] text-slate-500 dark:text-dark-muted">Provides unlimited team users, custom webhook scopes, and Claude-3 classification.</p>
                     </div>
                     <Button variant="secondary" className="text-xs font-extrabold h-9">Downgrade tier</Button>
                   </div>
@@ -473,7 +473,7 @@ export default function SettingsPage() {
               </Card>
 
               {/* Invoices table */}
-              <Card className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-850 rounded-2xl shadow-sm">
+              <Card className="bg-white dark:bg-dark-card border border-slate-200/80 dark:border-dark-border rounded-2xl shadow-sm">
                 <CardContent className="p-6 space-y-4">
                   <h3 className="text-xs font-extrabold text-slate-900 dark:text-slate-50 uppercase tracking-widest">Invoices History</h3>
                   
@@ -508,7 +508,7 @@ export default function SettingsPage() {
 
           {/* TAB: AI SETTINGS */}
           {activeTab === "ai_settings" && (
-            <Card className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-850 rounded-2xl shadow-sm">
+            <Card className="bg-white dark:bg-dark-card border border-slate-200/80 dark:border-dark-border rounded-2xl shadow-sm">
               <CardContent className="p-6 space-y-6">
                 <div>
                   <h3 className="text-sm font-extrabold text-slate-900 dark:text-slate-50">AI Configuration</h3>
@@ -521,7 +521,7 @@ export default function SettingsPage() {
                     <select 
                       value={aiProvider}
                       onChange={(e) => setAiProvider(e.target.value)}
-                      className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 rounded-xl px-3.5 py-2 focus:outline-none"
+                      className="w-full bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-dark-border text-slate-700 dark:text-dark-secondaryText rounded-xl px-3.5 py-2 focus:outline-none"
                     >
                       <option value="claude">Claude-3.5 Sonnet (Recommended)</option>
                       <option value="gpt-4o">OpenAI GPT-4o</option>
@@ -541,7 +541,7 @@ export default function SettingsPage() {
                       step="0.1"
                       value={aiTemperature}
                       onChange={(e) => setAiTemperature(parseFloat(e.target.value))}
-                      className="w-full h-1 bg-slate-200 dark:bg-slate-800 accent-indigo-650 rounded-lg cursor-pointer"
+                      className="w-full h-1 bg-slate-200 dark:bg-dark-elevated accent-indigo-650 rounded-lg cursor-pointer"
                     />
                   </div>
 
@@ -551,7 +551,7 @@ export default function SettingsPage() {
                       rows={3}
                       value={aiSystemPrompt}
                       onChange={(e) => setAiSystemPrompt(e.target.value)}
-                      className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 rounded-xl px-3 py-2 outline-none focus:border-indigo-500 font-semibold resize-none"
+                      className="w-full bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-dark-border text-slate-700 dark:text-slate-200 rounded-xl px-3 py-2 outline-none focus:border-indigo-500 font-semibold resize-none"
                     />
                   </div>
                 </div>
@@ -561,14 +561,14 @@ export default function SettingsPage() {
 
           {/* TAB: BACKUPS */}
           {activeTab === "backups" && (
-            <Card className="bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-850 rounded-2xl shadow-sm">
+            <Card className="bg-white dark:bg-dark-card border border-slate-200/80 dark:border-dark-border rounded-2xl shadow-sm">
               <CardContent className="p-6 space-y-6">
                 <div>
                   <h3 className="text-sm font-extrabold text-slate-900 dark:text-slate-50">Database Backups</h3>
                   <p className="text-[11px] text-slate-450 mt-0.5">Download full workspace metadata backups or schedule automated retention cycles.</p>
                 </div>
 
-                <div className="border border-slate-200 dark:border-slate-800 bg-slate-50/50 p-4 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                <div className="border border-slate-200 dark:border-dark-border bg-slate-50/50 p-4 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                   <div className="space-y-1">
                     <p className="font-extrabold text-xs text-slate-800 dark:text-slate-200">Generate Manual Backup</p>
                     <p className="text-[10.5px] text-slate-450 leading-relaxed font-bold">Creates a zip file containing raw SQL feedback inputs, custom reports, and active themes.</p>
@@ -584,9 +584,9 @@ export default function SettingsPage() {
 
           {/* TAB: AUDIT LOGS */}
           {activeTab === "audit_logs" && (
-            <Card className="col-span-full bg-white dark:bg-slate-900 border border-slate-200/85 dark:border-slate-850 rounded-2xl shadow-sm">
+            <Card className="col-span-full bg-white dark:bg-dark-card border border-slate-200/85 dark:border-dark-border rounded-2xl shadow-sm">
               <CardContent className="p-6 space-y-4">
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-slate-100 dark:border-slate-800 pb-5">
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-slate-100 dark:border-dark-border pb-5">
                   <div>
                     <h3 className="text-sm font-extrabold text-slate-900 dark:text-slate-50">
                       Duplicate Feedback Audit Log
@@ -633,7 +633,7 @@ export default function SettingsPage() {
                         link.click();
                         document.body.removeChild(link);
                       }}
-                      className="text-xs font-bold bg-slate-900 text-white hover:bg-slate-800 dark:bg-slate-800"
+                      className="text-xs font-bold bg-slate-900 text-white hover:bg-slate-800 dark:bg-dark-elevated"
                     >
                       Export Audit Log (CSV)
                     </Button>
@@ -651,7 +651,7 @@ export default function SettingsPage() {
                 ) : (
                   <div className="mt-5 overflow-x-auto custom-scrollbar">
                     <table className="min-w-full divide-y divide-slate-100 dark:divide-slate-800 text-xs font-semibold">
-                      <thead className="bg-slate-50 dark:bg-slate-950 text-slate-505 dark:text-slate-400 uppercase tracking-wider text-[10px]">
+                      <thead className="bg-slate-50 dark:bg-dark-bg text-slate-505 dark:text-dark-muted uppercase tracking-wider text-[10px]">
                         <tr>
                           <th className="px-4 py-3 text-left">Timestamp</th>
                           <th className="px-4 py-3 text-left">Incoming Feedback</th>
@@ -663,9 +663,9 @@ export default function SettingsPage() {
                           <th className="px-4 py-3 text-left">Action</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-slate-100 dark:divide-slate-800 bg-white dark:bg-slate-900 text-slate-750 dark:text-slate-300">
+                      <tbody className="divide-y divide-slate-100 dark:divide-slate-800 bg-white dark:bg-dark-card text-slate-750 dark:text-dark-secondaryText">
                         {duplicateLogs.map((log: any) => (
-                          <tr key={log.id} className="align-top hover:bg-slate-50/50 dark:hover:bg-slate-800/40">
+                          <tr key={log.id} className="align-top hover:bg-slate-50/50 dark:hover:bg-dark-hover/40">
                             <td className="px-4 py-3 whitespace-nowrap text-slate-500 font-normal">
                               {new Date(log.createdAt).toLocaleString()}
                             </td>
@@ -704,7 +704,7 @@ export default function SettingsPage() {
 
           {/* TAB: DANGER ZONE */}
           {activeTab === "danger_zone" && (
-            <Card className="bg-white dark:bg-slate-900 border border-rose-200 dark:border-rose-950/40 rounded-2xl shadow-sm overflow-hidden">
+            <Card className="bg-white dark:bg-dark-card border border-rose-200 dark:border-rose-950/40 rounded-2xl shadow-sm overflow-hidden">
               <div className="bg-rose-50/50 dark:bg-rose-950/10 px-6 py-4 border-b border-rose-100 dark:border-rose-950/20">
                 <h3 className="text-sm font-extrabold text-rose-700 dark:text-rose-400 flex items-center gap-2">
                   <AlertOctagon className="h-5 w-5" />
@@ -722,7 +722,7 @@ export default function SettingsPage() {
                   <Button variant="danger" className="text-xs font-extrabold rounded-lg">Wipe Feedback Data</Button>
                 </div>
                 
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-t border-slate-100 dark:border-slate-800 pt-4">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-t border-slate-100 dark:border-dark-border pt-4">
                   <div className="space-y-0.5">
                     <p className="text-slate-800 dark:text-slate-200">Archive this workspace</p>
                     <p className="text-[10.5px] text-slate-450 font-normal">Freeze billing, deactivate active integrations, and lock member profiles.</p>

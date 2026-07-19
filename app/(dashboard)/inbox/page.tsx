@@ -110,7 +110,7 @@ export default function InboxPage() {
     return [
       <div key={item.id} className="space-y-2">
         <p className="font-bold text-xs text-slate-900 dark:text-slate-100">{item.customerName}</p>
-        <p className="mt-1 text-xs text-slate-500 dark:text-slate-400 leading-normal">{excerpt}</p>
+        <p className="mt-1 text-xs text-slate-500 dark:text-dark-muted leading-normal">{excerpt}</p>
         {s === "possible duplicate" && (
           <div className="flex items-center gap-2 mt-2 bg-amber-50/50 border border-amber-100 p-2 rounded-xl w-fit">
             <span className="text-[10px] font-bold text-amber-700">Possible Duplicate:</span>

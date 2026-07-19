@@ -163,23 +163,23 @@ export function EnterpriseImporter() {
   };
 
   return (
-    <Card className="border border-slate-200/80 shadow-sm rounded-3xl overflow-hidden bg-white dark:bg-slate-950 dark:border-slate-850">
+    <Card className="border border-slate-200/80 shadow-sm rounded-3xl overflow-hidden bg-white dark:bg-dark-bg dark:border-dark-border">
       <CardContent className="p-0">
         
         {/* Header Ribbon */}
-        <div className="bg-slate-50 dark:bg-slate-900/40 border-b border-slate-100 dark:border-slate-800 p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="bg-slate-50 dark:bg-dark-card/40 border-b border-slate-100 dark:border-dark-border p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <h2 className="text-xl font-bold text-slate-900 dark:text-slate-50">Enterprise CSV Import</h2>
-            <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 mt-1">Smart map, validate, and securely sync historic customer data.</p>
+            <p className="text-xs font-semibold text-slate-500 dark:text-dark-muted mt-1">Smart map, validate, and securely sync historic customer data.</p>
           </div>
           {step === "UPLOAD" && (
-            <Button onClick={handleDownloadTemplate} variant="secondary" className="text-xs font-bold bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 shadow-sm hover:bg-slate-50 dark:hover:bg-slate-700">
+            <Button onClick={handleDownloadTemplate} variant="secondary" className="text-xs font-bold bg-white dark:bg-dark-elevated border-slate-200 dark:border-dark-border shadow-sm hover:bg-slate-50 dark:hover:bg-slate-700">
               <Download className="h-4 w-4 mr-2 text-indigo-600 dark:text-indigo-400" />
               Download Official Template
             </Button>
           )}
           {step !== "UPLOAD" && step !== "PROGRESS" && step !== "SUMMARY" && (
-             <Button onClick={resetState} variant="secondary" className="text-xs font-bold text-slate-600 dark:text-slate-400">
+             <Button onClick={resetState} variant="secondary" className="text-xs font-bold text-slate-600 dark:text-dark-muted">
                Cancel Import
              </Button>
           )}
@@ -192,21 +192,21 @@ export function EnterpriseImporter() {
             <div className="space-y-6 animate-in fade-in zoom-in-95 duration-200">
               
               {/* Import Mode Selection */}
-              <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4">
-                <p className="text-[10px] uppercase font-black text-slate-400 dark:text-slate-500 tracking-wider mb-3">Select Import Mode</p>
+              <div className="bg-white dark:bg-dark-card border border-slate-200 dark:border-dark-border rounded-2xl p-4">
+                <p className="text-[10px] uppercase font-black text-slate-400 dark:text-dark-muted tracking-wider mb-3">Select Import Mode</p>
                 <div className="grid md:grid-cols-2 gap-4">
-                  <label className={`relative flex cursor-pointer rounded-xl border p-4 shadow-sm focus:outline-none ${importMode === "APPEND" ? "border-indigo-600 bg-indigo-50/50 dark:bg-indigo-900/20 dark:border-indigo-500 ring-1 ring-indigo-600 dark:ring-indigo-500" : "border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800"}`}>
+                  <label className={`relative flex cursor-pointer rounded-xl border p-4 shadow-sm focus:outline-none ${importMode === "APPEND" ? "border-indigo-600 bg-indigo-50/50 dark:bg-indigo-900/20 dark:border-indigo-500 ring-1 ring-indigo-600 dark:ring-indigo-500" : "border-slate-200 dark:border-dark-border hover:bg-slate-50 dark:hover:bg-dark-hover"}`}>
                     <input type="radio" name="importMode" value="APPEND" className="sr-only" checked={importMode === "APPEND"} onChange={() => setImportMode("APPEND")} />
                     <span className="flex flex-1">
                       <span className="flex flex-col">
                         <span className="block text-sm font-bold text-slate-900 dark:text-slate-100">Append New Feedback</span>
-                        <span className="mt-1 flex items-center text-xs font-medium text-slate-500 dark:text-slate-400">Preserves existing records. Safe default.</span>
+                        <span className="mt-1 flex items-center text-xs font-medium text-slate-500 dark:text-dark-muted">Preserves existing records. Safe default.</span>
                       </span>
                     </span>
                     <CheckCircle2 className={`h-5 w-5 ${importMode === "APPEND" ? "text-indigo-600 dark:text-indigo-400" : "invisible"}`} />
                   </label>
                   
-                  <label className={`relative flex cursor-pointer rounded-xl border p-4 shadow-sm focus:outline-none ${importMode === "REPLACE" ? "border-rose-600 bg-rose-50/50 dark:bg-rose-900/20 dark:border-rose-500 ring-1 ring-rose-600 dark:ring-rose-500" : "border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800"}`}>
+                  <label className={`relative flex cursor-pointer rounded-xl border p-4 shadow-sm focus:outline-none ${importMode === "REPLACE" ? "border-rose-600 bg-rose-50/50 dark:bg-rose-900/20 dark:border-rose-500 ring-1 ring-rose-600 dark:ring-rose-500" : "border-slate-200 dark:border-dark-border hover:bg-slate-50 dark:hover:bg-dark-hover"}`}>
                     <input type="radio" name="importMode" value="REPLACE" className="sr-only" checked={importMode === "REPLACE"} onChange={() => { setImportMode("REPLACE"); setFile(null); setShowReplaceWarning(false); }} />
                     <span className="flex flex-1">
                       <span className="flex flex-col">
@@ -229,7 +229,7 @@ export function EnterpriseImporter() {
                     <span className="text-sm font-semibold text-rose-700 dark:text-rose-400">{errorMessage}</span>
                   </div>
                   <div className="flex gap-2 shrink-0">
-                    <Button onClick={handleDownloadTemplate} variant="secondary" className="bg-white dark:bg-slate-800 text-xs text-rose-700 dark:text-rose-400 hover:bg-rose-100 dark:hover:bg-rose-900/40 border-rose-200 dark:border-rose-900/60 font-bold">
+                    <Button onClick={handleDownloadTemplate} variant="secondary" className="bg-white dark:bg-dark-elevated text-xs text-rose-700 dark:text-rose-400 hover:bg-rose-100 dark:hover:bg-rose-900/40 border-rose-200 dark:border-rose-900/60 font-bold">
                       Download Template
                     </Button>
                     <Button onClick={() => fileInputRef.current?.click()} className="bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold shadow-sm">
@@ -242,15 +242,15 @@ export function EnterpriseImporter() {
               {/* Upload Dropzone */}
               {!showReplaceWarning && !errorMessage && (
                 <div 
-                  className="rounded-3xl border-2 border-dashed border-slate-300 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/30 p-12 text-center hover:bg-slate-50 dark:hover:bg-slate-900/50 transition cursor-pointer"
+                  className="rounded-3xl border-2 border-dashed border-slate-300 dark:border-dark-border bg-slate-50/50 dark:bg-dark-card/30 p-12 text-center hover:bg-slate-50 dark:hover:bg-dark-elevated/50 transition cursor-pointer"
                   onClick={() => fileInputRef.current?.click()}
                 >
                   <input type="file" ref={fileInputRef} className="hidden" accept=".csv" onChange={onFileInputChange} />
-                  <div className="mx-auto w-12 h-12 bg-white dark:bg-slate-800 shadow-sm rounded-2xl flex items-center justify-center border border-slate-100 dark:border-slate-700 mb-4">
+                  <div className="mx-auto w-12 h-12 bg-white dark:bg-dark-elevated shadow-sm rounded-2xl flex items-center justify-center border border-slate-100 dark:border-dark-border mb-4">
                     <Upload className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
                   </div>
                   <p className="text-sm font-bold text-slate-900 dark:text-slate-100">Click or drag CSV file to upload</p>
-                  <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 mt-2">Supports large datasets via chunking (up to 50MB)</p>
+                  <p className="text-xs font-semibold text-slate-500 dark:text-dark-muted mt-2">Supports large datasets via chunking (up to 50MB)</p>
                 </div>
               )}
 
@@ -286,12 +286,12 @@ export function EnterpriseImporter() {
                
                <div>
                  <h3 className="text-lg font-black text-slate-900 dark:text-slate-50">Processing Import...</h3>
-                 <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 mt-2">
+                 <p className="text-xs font-semibold text-slate-500 dark:text-dark-muted mt-2">
                    {progressLog[progressLog.length - 1]}
                  </p>
                </div>
 
-               <div className="h-2 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+               <div className="h-2 w-full bg-slate-100 dark:bg-dark-elevated rounded-full overflow-hidden">
                  <div className="h-full bg-indigo-600 rounded-full transition-all duration-500 ease-out" style={{ width: `${progressPercent}%` }} />
                </div>
             </div>
@@ -311,7 +311,7 @@ export function EnterpriseImporter() {
                </div>
 
                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                 <div className="p-4 border border-slate-200 dark:border-slate-800 rounded-2xl bg-white dark:bg-slate-950 text-center">
+                 <div className="p-4 border border-slate-200 dark:border-dark-border rounded-2xl bg-white dark:bg-dark-bg text-center">
                    <p className="text-[10px] uppercase font-black text-slate-400 tracking-wider">Total Rows</p>
                    <p className="text-2xl font-black text-slate-900 dark:text-slate-50 mt-1">{importSummary.total}</p>
                  </div>

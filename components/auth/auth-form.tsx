@@ -100,7 +100,7 @@ export function PasswordStrengthMeter({ password }: { password: string }) {
             {strengthLabel}
           </span>
         </div>
-        <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+        <div className="h-1.5 w-full bg-slate-100 dark:bg-dark-elevated rounded-full overflow-hidden">
           <div
             className={`h-full rounded-full transition-all duration-300 ${strengthColor}`}
             style={{ width: `${percentage}%` }}
@@ -118,7 +118,7 @@ export function PasswordStrengthMeter({ password }: { password: string }) {
               <X className="h-3 w-3 text-slate-300 dark:text-slate-600 flex-shrink-0" />
             )}
             <span className={`text-[10px] font-semibold ${
-              rule.passed ? "text-emerald-700 dark:text-emerald-400" : "text-slate-400 dark:text-slate-500"
+              rule.passed ? "text-emerald-700 dark:text-emerald-400" : "text-slate-400 dark:text-dark-muted"
             }`}>
               {rule.label}
             </span>

@@ -146,8 +146,8 @@ export default function ChatPage({ params }: { params: { id: string } }) {
                   <div
                     className={`rounded-2xl p-4 shadow-md border ${
                       isUser
-                        ? "bg-slate-200 border-slate-300 text-slate-900 dark:bg-slate-800 dark:border-slate-700 dark:text-slate-100"
-                        : "bg-white border-slate-200/80 dark:bg-slate-900 dark:border-slate-850 text-slate-800 dark:text-slate-100"
+                        ? "bg-brand text-white shadow-md dark:shadow-[0_0_15px_rgba(91,92,255,0.2)]"
+                        : "bg-white border border-slate-200/80 dark:bg-[#111111] dark:border-[#262626] text-slate-800 dark:text-white"
                     }`}
                   >
                     <div className="text-xs font-semibold leading-relaxed markdown-content prose prose-sm prose-slate dark:prose-invert max-w-none">
@@ -157,15 +157,15 @@ export default function ChatPage({ params }: { params: { id: string } }) {
                     </div>
 
                     {message.citations && message.citations.length > 0 && (
-                      <div className="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800 space-y-2">
-                        <p className="text-[9px] font-extrabold uppercase tracking-widest text-slate-400 dark:text-slate-500">
+                      <div className="mt-4 pt-4 border-t border-slate-100 dark:border-dark-border space-y-2">
+                        <p className="text-[9px] font-extrabold uppercase tracking-widest text-slate-400 dark:text-dark-muted">
                           Sources & Citations
                         </p>
                         <div className="grid gap-2">
                           {message.citations.map((cite) => (
                             <div 
                               key={cite.id}
-                              className="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-150 dark:border-slate-900 text-[10.5px]"
+                              className="p-2.5 rounded-lg bg-slate-50 dark:bg-dark-bg border border-slate-150 dark:border-slate-900 text-[10.5px]"
                             >
                               <div className="flex items-center justify-between mb-1">
                                 <span className="font-bold text-slate-900 dark:text-slate-100">{cite.customer}</span>
@@ -173,7 +173,7 @@ export default function ChatPage({ params }: { params: { id: string } }) {
                                   {cite.sentiment}
                                 </Badge>
                               </div>
-                              <p className="text-slate-600 dark:text-slate-400 italic">"{cite.quote}"</p>
+                              <p className="text-slate-600 dark:text-dark-muted italic">"{cite.quote}"</p>
                             </div>
                           ))}
                         </div>
@@ -239,13 +239,13 @@ export default function ChatPage({ params }: { params: { id: string } }) {
               <div className="h-8 w-8 rounded-full bg-slate-900 dark:bg-white flex items-center justify-center flex-shrink-0 mt-1 shadow-sm border border-slate-700 dark:border-slate-200 animate-pulse">
                 <Loader2 className="h-4 w-4 text-white dark:text-slate-900 animate-spin" />
               </div>
-              <div className="space-y-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-850 p-4 rounded-2xl shadow-sm max-w-[80%]">
+              <div className="space-y-1 bg-white dark:bg-dark-card border border-slate-200 dark:border-dark-border p-4 rounded-2xl shadow-sm max-w-[80%]">
                 <div className="flex items-center gap-2">
                   <span className="relative flex h-2 w-2">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
                   </span>
-                  <span className="text-[11.5px] font-extrabold text-slate-500 dark:text-slate-400 animate-pulse">
+                  <span className="text-[11.5px] font-extrabold text-slate-500 dark:text-dark-muted animate-pulse">
                     {loadingSteps[loadingStep]}
                   </span>
                 </div>
@@ -257,7 +257,7 @@ export default function ChatPage({ params }: { params: { id: string } }) {
         </div>
       </div>
 
-      <div className="p-4 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-850">
+      <div className="p-4 bg-white dark:bg-dark-card border-t border-slate-200 dark:border-dark-border">
         <div className="max-w-3xl mx-auto space-y-2">
           <div className="flex items-center justify-between text-[9px] font-bold text-slate-400 select-none">
             <div className="flex items-center gap-3">
@@ -272,8 +272,8 @@ export default function ChatPage({ params }: { params: { id: string } }) {
 
           <div className={`flex items-end gap-2 border rounded-2xl p-2 transition-all duration-150 ${
             isUploading 
-              ? "border-slate-300 bg-slate-100 dark:border-slate-700 dark:bg-slate-800 opacity-70"
-              : "border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 focus-within:border-indigo-500"
+              ? "border-slate-300 bg-slate-100 dark:border-dark-border dark:bg-dark-elevated opacity-70"
+              : "border-slate-200 dark:border-dark-border bg-slate-50 dark:bg-dark-bg focus-within:border-indigo-500"
           }`}>
             <input 
               type="file" 
@@ -284,7 +284,7 @@ export default function ChatPage({ params }: { params: { id: string } }) {
             />
             <button 
               onClick={() => fileInputRef.current?.click()}
-              className="p-2 hover:bg-slate-200/60 dark:hover:bg-slate-900 rounded-xl text-slate-450 hover:text-slate-655 transition"
+              className="p-2 hover:bg-slate-200/60 dark:hover:bg-dark-elevated rounded-xl text-slate-450 hover:text-slate-655 transition"
               disabled={isUploading}
             >
               {isUploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Paperclip className="h-4 w-4" />}
@@ -299,7 +299,7 @@ export default function ChatPage({ params }: { params: { id: string } }) {
               className="flex-1 resize-none bg-transparent py-1.5 px-2 text-xs font-semibold text-slate-900 dark:text-slate-100 placeholder-slate-450 outline-none focus:ring-0 focus:outline-none max-h-[160px] custom-scrollbar focus:ring-offset-0 border-0"
             />
             <button 
-              className="p-2 hover:bg-slate-200/60 dark:hover:bg-slate-900 rounded-xl text-slate-450 hover:text-slate-655 transition"
+              className="p-2 hover:bg-slate-200/60 dark:hover:bg-dark-elevated rounded-xl text-slate-450 hover:text-slate-655 transition"
               disabled
             >
               <Mic className="h-4 w-4" />
@@ -310,7 +310,7 @@ export default function ChatPage({ params }: { params: { id: string } }) {
               className={`p-2 rounded-xl text-white transition shadow-sm ${
                 inputText.trim() && !isLoading
                   ? "bg-indigo-600 hover:bg-indigo-500 dark:bg-indigo-650"
-                  : "bg-slate-250 text-slate-400 dark:bg-slate-900 dark:text-slate-600 cursor-not-allowed"
+                  : "bg-slate-250 text-slate-400 dark:bg-dark-card dark:text-slate-600 cursor-not-allowed"
               }`}
             >
               <Send className="h-3.5 w-3.5" />

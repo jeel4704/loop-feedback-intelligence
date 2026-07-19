@@ -55,13 +55,13 @@ export default function AskLoopWelcomePage() {
             <h1 className="text-xl font-black text-slate-900 dark:text-slate-50 mt-4 tracking-tight">
               Welcome to Ask LOOP AI
             </h1>
-            <p className="text-xs font-bold text-slate-500 dark:text-slate-400 max-w-lg mx-auto leading-relaxed">
+            <p className="text-xs font-bold text-slate-500 dark:text-dark-muted max-w-lg mx-auto leading-relaxed">
               Analyze customer feedback, generate insights, discover trends, summarize reports, and manage your workspace using AI.
             </p>
           </div>
 
           <div className="space-y-3">
-            <p className="text-[9.5px] font-extrabold uppercase tracking-wider text-slate-450 dark:text-slate-500 text-center">
+            <p className="text-[9.5px] font-extrabold uppercase tracking-wider text-slate-450 dark:text-dark-muted text-center">
               Suggested Prompts
             </p>
             <div className="grid gap-3 sm:grid-cols-2">
@@ -69,9 +69,9 @@ export default function AskLoopWelcomePage() {
                 <div
                   key={idx}
                   onClick={() => handleSend(card.query)}
-                  className="border border-slate-200 dark:border-slate-850 bg-white dark:bg-slate-900 p-3.5 rounded-xl cursor-pointer hover:border-indigo-400 dark:hover:border-indigo-900 shadow-sm transition hover:-translate-y-0.5"
+                  className="border border-slate-200 dark:border-dark-border bg-white dark:bg-dark-card p-3.5 rounded-xl cursor-pointer hover:border-indigo-400 dark:hover:border-indigo-900 shadow-sm transition hover:-translate-y-0.5"
                 >
-                  <p className="text-xs font-extrabold text-slate-700 dark:text-slate-300 leading-normal flex items-center justify-between">
+                  <p className="text-xs font-extrabold text-slate-700 dark:text-dark-secondaryText leading-normal flex items-center justify-between">
                     <span>{card.query}</span>
                     <ArrowRight className="h-3.5 w-3.5 text-slate-400" />
                   </p>
@@ -83,7 +83,7 @@ export default function AskLoopWelcomePage() {
       </div>
 
       {/* Sticky Input area at the bottom */}
-      <div className="p-4 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-850">
+      <div className="p-4 bg-white dark:bg-dark-card border-t border-slate-200 dark:border-dark-border">
         <div className="max-w-3xl mx-auto space-y-2">
           <div className="flex items-center justify-between text-[9px] font-bold text-slate-400 select-none">
             <div className="flex items-center gap-3">
@@ -96,9 +96,9 @@ export default function AskLoopWelcomePage() {
             </div>
           </div>
 
-          <div className="flex items-end gap-2 border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 focus-within:border-indigo-500 rounded-2xl p-2 transition-all duration-150">
+          <div className="flex items-end gap-2 border border-slate-200 dark:border-dark-border bg-slate-50 dark:bg-dark-bg focus-within:border-indigo-500 rounded-2xl p-2 transition-all duration-150">
             <button 
-              className="p-2 hover:bg-slate-200/60 dark:hover:bg-slate-900 rounded-xl text-slate-450 hover:text-slate-655 transition"
+              className="p-2 hover:bg-slate-200/60 dark:hover:bg-dark-elevated rounded-xl text-slate-450 hover:text-slate-655 transition"
             >
               <Paperclip className="h-4 w-4" />
             </button>
@@ -112,7 +112,7 @@ export default function AskLoopWelcomePage() {
               className="flex-1 resize-none bg-transparent py-1.5 px-2 text-xs font-semibold text-slate-900 dark:text-slate-100 placeholder-slate-450 outline-none focus:ring-0 focus:outline-none max-h-[160px] custom-scrollbar focus:ring-offset-0 border-0"
             />
             <button 
-              className="p-2 hover:bg-slate-200/60 dark:hover:bg-slate-900 rounded-xl text-slate-450 hover:text-slate-655 transition"
+              className="p-2 hover:bg-slate-200/60 dark:hover:bg-dark-elevated rounded-xl text-slate-450 hover:text-slate-655 transition"
               disabled
             >
               <Mic className="h-4 w-4" />
@@ -123,7 +123,7 @@ export default function AskLoopWelcomePage() {
               className={`p-2 rounded-xl text-white transition shadow-sm ${
                 inputText.trim()
                   ? "bg-indigo-600 hover:bg-indigo-500 dark:bg-indigo-650"
-                  : "bg-slate-250 text-slate-400 dark:bg-slate-900 dark:text-slate-600 cursor-not-allowed"
+                  : "bg-slate-250 text-slate-400 dark:bg-dark-card dark:text-slate-600 cursor-not-allowed"
               }`}
             >
               <Send className="h-3.5 w-3.5" />

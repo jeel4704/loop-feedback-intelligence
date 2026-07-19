@@ -89,27 +89,27 @@ export default function TrendsPage() {
       />
 
       <div className="grid gap-4 lg:grid-cols-3">
-        <Card className="bg-white dark:bg-slate-950 border border-slate-200/80 dark:border-slate-850 shadow-sm rounded-2xl">
+        <Card className="bg-white dark:bg-dark-bg border border-slate-200/80 dark:border-dark-border shadow-sm rounded-2xl">
           <CardContent className="p-5">
-            <p className="text-sm text-slate-500 dark:text-slate-400 font-semibold tracking-wide">Total Volume Detected</p>
+            <p className="text-sm text-slate-500 dark:text-dark-muted font-semibold tracking-wide">Total Volume Detected</p>
             <p className="mt-2 text-3xl font-black tracking-tight text-slate-950 dark:text-slate-50">
               {stats?.feedbackCount?.toLocaleString() || "0"}
             </p>
             <p className="mt-1.5 text-xs text-emerald-600 dark:text-emerald-500 font-bold">Data live synced from database</p>
           </CardContent>
         </Card>
-        <Card className="bg-white dark:bg-slate-950 border border-slate-200/80 dark:border-slate-850 shadow-sm rounded-2xl">
+        <Card className="bg-white dark:bg-dark-bg border border-slate-200/80 dark:border-dark-border shadow-sm rounded-2xl">
           <CardContent className="p-5">
-            <p className="text-sm text-slate-500 dark:text-slate-400 font-semibold tracking-wide">Overall Positivity</p>
+            <p className="text-sm text-slate-500 dark:text-dark-muted font-semibold tracking-wide">Overall Positivity</p>
             <p className="mt-2 text-3xl font-black tracking-tight text-slate-950 dark:text-slate-50">
               {stats?.positive || 0}%
             </p>
-            <p className="mt-1.5 text-xs text-slate-600 dark:text-slate-400 font-medium">Of total analyzed feedback</p>
+            <p className="mt-1.5 text-xs text-slate-600 dark:text-dark-muted font-medium">Of total analyzed feedback</p>
           </CardContent>
         </Card>
-        <Card className="bg-white dark:bg-slate-950 border border-slate-200/80 dark:border-slate-850 shadow-sm rounded-2xl">
+        <Card className="bg-white dark:bg-dark-bg border border-slate-200/80 dark:border-dark-border shadow-sm rounded-2xl">
           <CardContent className="p-5">
-            <p className="text-sm text-slate-500 dark:text-slate-400 font-semibold tracking-wide">Active Discussion Themes</p>
+            <p className="text-sm text-slate-500 dark:text-dark-muted font-semibold tracking-wide">Active Discussion Themes</p>
             <p className="mt-2 text-3xl font-black tracking-tight text-slate-950 dark:text-slate-50">
               {stats?.activeThemesCount || 0}
             </p>
@@ -121,21 +121,21 @@ export default function TrendsPage() {
       </div>
 
       <div className="grid gap-6 xl:grid-cols-[0.85fr_1.15fr]">
-        <Card className="h-fit bg-white dark:bg-slate-950 border border-slate-200/80 dark:border-slate-850 shadow-sm rounded-2xl">
+        <Card className="h-fit bg-white dark:bg-dark-bg border border-slate-200/80 dark:border-dark-border shadow-sm rounded-2xl">
           <CardContent className="p-6">
             <h3 className="text-sm font-bold text-slate-900 dark:text-slate-50 uppercase tracking-widest mb-4">Theme Momentum</h3>
             <div className="space-y-2.5">
               {themeGrowth.length === 0 ? (
-                <p className="text-xs text-slate-500 dark:text-slate-400 font-semibold">No themes detected in the database.</p>
+                <p className="text-xs text-slate-500 dark:text-dark-muted font-semibold">No themes detected in the database.</p>
               ) : (
                 themeGrowth.map((theme) => (
                   <div
                     key={theme.name}
-                    className="flex items-center justify-between rounded-xl bg-slate-50/70 dark:bg-slate-900/40 border border-slate-100 dark:border-slate-800/60 px-3.5 py-2.5"
+                    className="flex items-center justify-between rounded-xl bg-slate-50/70 dark:bg-dark-card/40 border border-slate-100 dark:border-dark-border/60 px-3.5 py-2.5"
                   >
                     <div>
                       <p className="font-bold text-slate-900 dark:text-slate-100 text-sm">{theme.name}</p>
-                      <p className="mt-0.5 text-xs font-semibold text-slate-500 dark:text-slate-400">{theme.growth}</p>
+                      <p className="mt-0.5 text-xs font-semibold text-slate-500 dark:text-dark-muted">{theme.growth}</p>
                     </div>
                     {theme.spike ? (
                       <Badge variant="rose" className="font-bold tracking-wide uppercase text-[9px] px-1.5 py-0.5 bg-rose-100 dark:bg-rose-950/40 text-rose-700 dark:text-rose-400 border border-rose-200/60 dark:border-rose-900/40">Spike detected</Badge>

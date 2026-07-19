@@ -223,37 +223,37 @@ export default function FeedbackPage() {
                 <button
                   onClick={() => simulateIngestion("The dashboard performance is poor.", "Email")}
                   disabled={simLoading}
-                  className="w-full text-left p-3.5 bg-slate-50 dark:bg-slate-900/40 border border-slate-200/80 dark:border-slate-800/60 hover:bg-slate-100/70 dark:hover:bg-slate-800/60 rounded-xl transition text-xs font-semibold flex items-center justify-between text-slate-700 dark:text-slate-300"
+                  className="w-full text-left p-3.5 bg-slate-50 dark:bg-dark-card/40 border border-slate-200/80 dark:border-dark-border/60 hover:bg-slate-100/70 dark:hover:bg-dark-hover/60 rounded-xl transition text-xs font-semibold flex items-center justify-between text-slate-700 dark:text-dark-secondaryText"
                 >
                   <div>
-                    <span className="bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-400 px-1.5 py-0.5 rounded text-[9px] font-extrabold uppercase mr-2">Email</span>
+                    <span className="bg-slate-200 dark:bg-dark-elevated text-slate-700 dark:text-dark-muted px-1.5 py-0.5 rounded text-[9px] font-extrabold uppercase mr-2">Email</span>
                     "The dashboard performance is poor."
                   </div>
-                  <span className="text-slate-400 dark:text-slate-500 font-bold text-[10px]">Test Level 2 →</span>
+                  <span className="text-slate-400 dark:text-dark-muted font-bold text-[10px]">Test Level 2 →</span>
                 </button>
 
                 <button
                   onClick={() => simulateIngestion("the dashboard is slow", "Live Chat")}
                   disabled={simLoading}
-                  className="w-full text-left p-3.5 bg-slate-50 dark:bg-slate-900/40 border border-slate-200/80 dark:border-slate-800/60 hover:bg-slate-100/70 dark:hover:bg-slate-800/60 rounded-xl transition text-xs font-semibold flex items-center justify-between text-slate-700 dark:text-slate-300"
+                  className="w-full text-left p-3.5 bg-slate-50 dark:bg-dark-card/40 border border-slate-200/80 dark:border-dark-border/60 hover:bg-slate-100/70 dark:hover:bg-dark-hover/60 rounded-xl transition text-xs font-semibold flex items-center justify-between text-slate-700 dark:text-dark-secondaryText"
                 >
                   <div>
-                    <span className="bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-400 px-1.5 py-0.5 rounded text-[9px] font-extrabold uppercase mr-2">Live Chat</span>
+                    <span className="bg-slate-200 dark:bg-dark-elevated text-slate-700 dark:text-dark-muted px-1.5 py-0.5 rounded text-[9px] font-extrabold uppercase mr-2">Live Chat</span>
                     "the dashboard is slow"
                   </div>
-                  <span className="text-slate-400 dark:text-slate-500 font-bold text-[10px]">Test Level 1 →</span>
+                  <span className="text-slate-400 dark:text-dark-muted font-bold text-[10px]">Test Level 1 →</span>
                 </button>
 
                 <button
                   onClick={() => simulateIngestion("We need dark mode please", "Website")}
                   disabled={simLoading}
-                  className="w-full text-left p-3.5 bg-slate-50 dark:bg-slate-900/40 border border-slate-200/80 dark:border-slate-800/60 hover:bg-slate-100/70 dark:hover:bg-slate-800/60 rounded-xl transition text-xs font-semibold flex items-center justify-between text-slate-700 dark:text-slate-300"
+                  className="w-full text-left p-3.5 bg-slate-50 dark:bg-dark-card/40 border border-slate-200/80 dark:border-dark-border/60 hover:bg-slate-100/70 dark:hover:bg-dark-hover/60 rounded-xl transition text-xs font-semibold flex items-center justify-between text-slate-700 dark:text-dark-secondaryText"
                 >
                   <div>
-                    <span className="bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-400 px-1.5 py-0.5 rounded text-[9px] font-extrabold uppercase mr-2">Website</span>
+                    <span className="bg-slate-200 dark:bg-dark-elevated text-slate-700 dark:text-dark-muted px-1.5 py-0.5 rounded text-[9px] font-extrabold uppercase mr-2">Website</span>
                     "We need dark mode please"
                   </div>
-                  <span className="text-slate-400 dark:text-slate-500 font-bold text-[10px]">Test Unique →</span>
+                  <span className="text-slate-400 dark:text-dark-muted font-bold text-[10px]">Test Unique →</span>
                 </button>
               </div>
             </CardContent>
