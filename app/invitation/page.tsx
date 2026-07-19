@@ -116,16 +116,16 @@ function InvitationForm() {
   return (
     <form className="space-y-5" onSubmit={handleSubmit}>
       {/* Workspace & Pre-assigned Locked Role Badge */}
-      <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4 space-y-3">
-        <div className="flex justify-between items-center text-xs font-bold text-slate-500">
+      <div className="rounded-2xl border border-slate-200 dark:border-dark-border bg-slate-50 dark:bg-dark-elevated p-4 space-y-3">
+        <div className="flex justify-between items-center text-xs font-bold text-slate-500 dark:text-dark-muted">
           <span>Workspace</span>
-          <span className="text-slate-800 uppercase tracking-tight">{workspaceName}</span>
+          <span className="text-slate-950 dark:text-white uppercase tracking-tight">{workspaceName}</span>
         </div>
-        <div className="flex justify-between items-center text-xs font-bold text-slate-500">
+        <div className="flex justify-between items-center text-xs font-bold text-slate-500 dark:text-dark-muted">
           <span>Assigned Role</span>
           <Badge variant="blue" className="uppercase">{role}</Badge>
         </div>
-        <p className="text-[10px] text-slate-400 italic">
+        <p className="text-[10px] text-slate-400 dark:text-dark-muted/80 italic">
           * (Your workspace role is locked and pre-assigned by the workspace Owner)
         </p>
       </div>
@@ -137,7 +137,7 @@ function InvitationForm() {
       )}
 
       <label className="block">
-        <span className="mb-2 block text-sm font-medium text-slate-700">
+        <span className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">
           Full Name
         </span>
         <Input 
@@ -149,19 +149,19 @@ function InvitationForm() {
       </label>
 
       <label className="block">
-        <span className="mb-2 block text-sm font-medium text-slate-400">
+        <span className="mb-2 block text-sm font-medium text-slate-400 dark:text-slate-500">
           Business Email (Read Only)
         </span>
         <Input 
           type="email"
           disabled
           value={email}
-          className="bg-slate-100/80 border-slate-200 text-slate-400 font-medium"
+          className="bg-slate-100/80 dark:bg-dark-card border-slate-200 dark:border-dark-border text-slate-400 dark:text-slate-500 font-medium"
         />
       </label>
 
       <label className="block">
-        <span className="mb-2 block text-sm font-medium text-slate-700">
+        <span className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">
           Password
         </span>
         <Input 
@@ -174,7 +174,7 @@ function InvitationForm() {
       </label>
 
       <label className="block">
-        <span className="mb-2 block text-sm font-medium text-slate-700">
+        <span className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">
           Confirm Password
         </span>
         <Input 
@@ -195,20 +195,23 @@ function InvitationForm() {
 
 export default function InvitationPage() {
   return (
-    <main className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(99,102,241,0.14),_transparent_25%),linear-gradient(to_bottom,_#f8fbff,_#eef2ff)] px-6 py-16">
-      <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[1.2fr_0.9fr]">
-        <section className="rounded-[32px] border border-slate-200 bg-slate-950 p-8 text-white shadow-[0_24px_80px_-32px_rgba(15,23,42,0.85)] sm:p-10">
-          <div className="flex items-center gap-3 mb-6">
+    <main className="min-h-screen bg-slate-50 dark:bg-black px-6 py-16 flex items-center justify-center">
+      <div className="mx-auto grid max-w-6xl w-full gap-10 lg:grid-cols-[1.2fr_0.9fr]">
+        <section className="rounded-[32px] border border-slate-200 dark:border-dark-border bg-white dark:bg-dark-card p-8 text-slate-950 dark:text-white shadow-2xl sm:p-10 flex flex-col justify-center relative overflow-hidden">
+          {/* Subtle glow effect */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-brand/10 dark:bg-brand/20 blur-3xl rounded-full -mr-20 -mt-20 pointer-events-none" />
+          
+          <div className="flex items-center gap-3 mb-6 relative z-10">
             <Logo variant="horizontal" size="lg" />
           </div>
-          <h1 className="mt-4 text-4xl font-semibold tracking-tight">
+          <h1 className="mt-4 text-4xl sm:text-5xl font-extrabold tracking-tight leading-[1.15] relative z-10">
             Team Workspace Invitation
           </h1>
-          <p className="mt-4 max-w-xl text-sm leading-6 text-slate-300">
+          <p className="mt-6 max-w-xl text-base leading-relaxed text-slate-600 dark:text-dark-muted font-medium relative z-10">
             Join your colleagues in a shared feedback intelligence hub. Monitor customer trends, analyze sentiments, and collaborate.
           </p>
 
-          <div className="mt-8 grid gap-4 sm:grid-cols-2">
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 relative z-10">
             {[
               "Workspace isolated security protections",
               "Role-based action control models",
@@ -217,7 +220,7 @@ export default function InvitationPage() {
             ].map((item) => (
               <div
                 key={item}
-                className="rounded-2xl border border-white/10 bg-white/5 p-4 text-xs text-slate-200"
+                className="rounded-2xl border border-slate-200 dark:border-dark-border bg-slate-50 dark:bg-dark-elevated p-4 text-sm font-semibold text-slate-700 dark:text-dark-secondaryText shadow-sm"
               >
                 {item}
               </div>
@@ -225,14 +228,14 @@ export default function InvitationPage() {
           </div>
         </section>
 
-        <section className="rounded-[32px] border border-slate-200 bg-white p-8 shadow-sm sm:p-10">
-          <p className="text-sm font-semibold uppercase tracking-[0.24em] text-blue-600">
+        <section className="rounded-[32px] border border-slate-200 dark:border-dark-border bg-white dark:bg-dark-card p-8 shadow-2xl sm:p-10 flex flex-col justify-center relative overflow-hidden">
+          <p className="text-[10px] font-extrabold uppercase tracking-[0.24em] text-brand">
             Accept Invitation
           </p>
-          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-slate-950">
+          <h2 className="mt-3 text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-950 dark:text-white">
             Create Team Account
           </h2>
-          <div className="mt-8">
+          <div className="mt-8 relative z-10">
             <Suspense fallback={<div className="text-xs text-slate-400 font-semibold">Loading invitation form...</div>}>
               <InvitationForm />
             </Suspense>
