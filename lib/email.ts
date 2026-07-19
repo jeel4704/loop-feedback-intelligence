@@ -222,7 +222,7 @@ export async function sendMagicLinkEmail(email: string, token: string, expiryMin
           .logo-dot {height: 8px; width: 8px; border-radius: 50%; background-color: #2563eb;}
           .heading {font-size: 24px; font-weight: 700; color: #0f172a; margin-top: 0; margin-bottom: 16px; letter-spacing: -0.02em;}
           .text {font-size: 14px; line-height: 24px; color: #475569; margin-bottom: 24px;}
-          .button {display: inline-block; background-color: #2563eb; color: #ffffff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600;}
+          .button {display: inline-block; background-color: #2563eb; color: #ffffff !important; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600;}
           .footer-text {font-size: 12px; line-height: 20px; color: #94a3b8;}
         </style>
       </head>
@@ -235,7 +235,7 @@ export async function sendMagicLinkEmail(email: string, token: string, expiryMin
           <h1 class="heading">Verify your email address</h1>
           <p class="text">Click the button below to verify your email and complete your account setup.</p>
           <p style="text-align:center;margin:24px 0;">
-            <a href="${verificationUrl}" class="button">Verify Email &amp; Create Account</a>
+            <a href="${verificationUrl}" class="button" style="color: #ffffff; text-decoration: none;">Verify Email &amp; Create Account</a>
           </p>
           <p class="text">This verification link is active for <strong>${expiryMinutes} minutes</strong>.</p>
           <hr class="divider" style="border-top:1px solid #e2e8f0;margin:30px 0;"/>
@@ -275,7 +275,7 @@ export async function sendInvitationEmail(email: string, inviteUrl: string, work
           .logo-dot {height: 8px; width: 8px; border-radius: 50%; background-color: #2563eb;}
           .heading {font-size: 24px; font-weight: 700; color: #0f172a; margin-top: 0; margin-bottom: 16px; letter-spacing: -0.02em;}
           .text {font-size: 14px; line-height: 24px; color: #475569; margin-bottom: 24px;}
-          .button {display: inline-block; background-color: #2563eb; color: #ffffff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600;}
+          .button {display: inline-block; background-color: #2563eb; color: #ffffff !important; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600;}
           .footer-text {font-size: 12px; line-height: 20px; color: #94a3b8;}
           .highlight {font-weight: 600; color: #0f172a;}
         </style>
@@ -291,7 +291,7 @@ export async function sendInvitationEmail(email: string, inviteUrl: string, work
             You have been invited to join the workspace <span class="highlight">${workspaceName}</span> as <span class="highlight">${role}</span> on ${APP_NAME}.
           </p>
           <p style="text-align:center;margin:24px 0;">
-            <a href="${inviteUrl}" class="button">Accept Invitation &amp; Create Account</a>
+            <a href="${inviteUrl}" class="button" style="color: #ffffff; text-decoration: none;">Accept Invitation &amp; Create Account</a>
           </p>
           <p class="text">This invitation link is valid for 48 hours.</p>
           <hr class="divider" style="border-top:1px solid #e2e8f0;margin:30px 0;"/>
@@ -332,7 +332,7 @@ export async function sendPasswordResetEmail(email: string, token: string, expir
           .logo-dot {height: 8px; width: 8px; border-radius: 50%; background-color: #2563eb;}
           .heading {font-size: 24px; font-weight: 700; color: #0f172a; margin-top: 0; margin-bottom: 16px; letter-spacing: -0.02em;}
           .text {font-size: 14px; line-height: 24px; color: #475569; margin-bottom: 24px;}
-          .button {display: inline-block; background-color: #2563eb; color: #ffffff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600;}
+          .button {display: inline-block; background-color: #2563eb; color: #ffffff !important; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600;}
           .footer-text {font-size: 12px; line-height: 20px; color: #94a3b8;}
         </style>
       </head>
@@ -345,7 +345,7 @@ export async function sendPasswordResetEmail(email: string, token: string, expir
           <h1 class="heading">Reset your password</h1>
           <p class="text">We received a request to reset your password. Click the button below to choose a new password.</p>
           <p style="text-align:center;margin:24px 0;">
-            <a href="${resetUrl}" class="button">Reset Password</a>
+            <a href="${resetUrl}" class="button" style="color: #ffffff; text-decoration: none;">Reset Password</a>
           </p>
           <p class="text">This link is active for <strong>${expiryMinutes} minutes</strong>.</p>
           <hr class="divider" style="border-top:1px solid #e2e8f0;margin:30px 0;"/>

@@ -10,26 +10,29 @@ interface AuthShellProps {
 
 export function AuthShell({ title, description, children }: AuthShellProps) {
   return (
-    <main className="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900 via-slate-950 to-slate-950 px-6 py-16 flex items-center justify-center">
+    <main className="min-h-screen bg-slate-50 dark:bg-black px-6 py-16 flex items-center justify-center">
       <div className="mx-auto grid max-w-6xl w-full gap-10 lg:grid-cols-[1.2fr_0.9fr]">
         {/* Left Column - Branding & Info */}
-        <section className="rounded-[32px] border border-slate-800/60 bg-slate-900/40 p-8 text-white shadow-2xl backdrop-blur-sm sm:p-10 flex flex-col justify-center">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="flex items-center justify-center h-14 w-14 rounded-2xl border border-slate-700 bg-slate-800 shadow-inner">
-              <span className="font-extrabold text-2xl text-blue-500">L</span>
+        <section className="rounded-[32px] border border-slate-200 dark:border-dark-border bg-white dark:bg-dark-card p-8 text-slate-950 dark:text-white shadow-2xl sm:p-10 flex flex-col justify-center relative overflow-hidden">
+          {/* Subtle glow effect in the corner for premium feel */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-brand/10 dark:bg-brand/20 blur-3xl rounded-full -mr-20 -mt-20 pointer-events-none" />
+          
+          <div className="flex items-center gap-3 mb-6 relative z-10">
+            <div className="flex items-center justify-center h-14 w-14 rounded-2xl border border-slate-200 dark:border-dark-border bg-slate-100 dark:bg-dark-elevated shadow-inner">
+              <span className="font-extrabold text-2xl text-brand">L</span>
             </div>
-            <span className="font-extrabold text-2xl text-white tracking-tight">LOOP</span>
+            <span className="font-extrabold text-2xl text-slate-950 dark:text-white tracking-tight">LOOP</span>
           </div>
-          <h1 className="mt-4 text-4xl sm:text-5xl font-extrabold tracking-tight leading-[1.15]">
-            Customer Feedback <span className="text-blue-500">Intelligence</span>
+          <h1 className="mt-4 text-4xl sm:text-5xl font-extrabold tracking-tight leading-[1.15] relative z-10">
+            Customer Feedback <span className="text-brand">Intelligence</span>
           </h1>
-          <p className="mt-6 max-w-xl text-base leading-relaxed text-slate-400 font-medium">
+          <p className="mt-6 max-w-xl text-base leading-relaxed text-slate-600 dark:text-dark-muted font-medium relative z-10">
             Ingest customer feedback, classify it with AI, monitor trends,
             and turn raw conversations into decision-ready Voice of Customer
             reporting.
           </p>
 
-          <div className="mt-10 grid gap-4 sm:grid-cols-2">
+          <div className="mt-10 grid gap-4 sm:grid-cols-2 relative z-10">
             {[
               "Multi-tenant workspace isolation",
               "Role-based access for Admin, Analyst, Viewer",
@@ -38,7 +41,7 @@ export function AuthShell({ title, description, children }: AuthShellProps) {
             ].map((item) => (
               <div
                 key={item}
-                className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4 text-sm font-semibold text-slate-300 shadow-sm"
+                className="rounded-2xl border border-slate-200 dark:border-dark-border bg-slate-50 dark:bg-dark-elevated p-4 text-sm font-semibold text-slate-700 dark:text-dark-secondaryText shadow-sm"
               >
                 {item}
               </div>
@@ -47,14 +50,14 @@ export function AuthShell({ title, description, children }: AuthShellProps) {
         </section>
 
         {/* Right Column - Form */}
-        <section className="rounded-[32px] border border-slate-800 bg-slate-900/60 p-8 shadow-2xl backdrop-blur-md sm:p-10 flex flex-col justify-center">
-          <p className="text-[10px] font-extrabold uppercase tracking-[0.24em] text-blue-500">
+        <section className="rounded-[32px] border border-slate-200 dark:border-dark-border bg-white dark:bg-dark-card p-8 shadow-2xl sm:p-10 flex flex-col justify-center relative overflow-hidden">
+          <p className="text-[10px] font-extrabold uppercase tracking-[0.24em] text-brand">
             {title}
           </p>
-          <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-white">
+          <h2 className="mt-3 text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-950 dark:text-white">
             {description}
           </h2>
-          <div className="mt-8">{children}</div>
+          <div className="mt-8 relative z-10">{children}</div>
         </section>
       </div>
     </main>
