@@ -15,7 +15,7 @@ html {
 }
 
 body {
-  @apply min-h-screen bg-slate-50 text-slate-950 antialiased dark:bg-dark-bg dark:text-dark-text;
+  @apply min-h-screen bg-slate-50 text-slate-950 antialiased dark:bg-black dark:text-dark-primary;
   font-feature-settings: "rlig" 1, "calt" 1;
 }
 
@@ -24,7 +24,7 @@ a {
 }
 
 ::selection {
-  @apply bg-blue-100 text-blue-950 dark:bg-accent-glow dark:text-accent-hover;
+  @apply bg-blue-100 text-blue-950 dark:bg-brand-glow dark:text-white;
 }
 
 /* Thin modern custom scrollbar matching Notion/Linear */
@@ -39,14 +39,17 @@ a {
   background: #cbd5e1;
   border-radius: 9999px;
 }
+.dark .custom-scrollbar::-webkit-scrollbar-track {
+  background: #000000;
+}
 .dark .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #262626; /* dark-border */
+  background: #262626;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
 .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #5B5CFF; /* accent */
+  background: #5B5CFF;
 }
 
 /* Hide horizontal scrollbar scroll overflow */
@@ -56,6 +59,6 @@ a {
   scrollbar-color: #cbd5e1 transparent;
 }
 .dark .custom-scrollbar {
-  scrollbar-color: #262626 transparent;
+  scrollbar-color: #334155 transparent;
 }
 

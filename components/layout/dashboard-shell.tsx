@@ -104,21 +104,17 @@ export function DashboardShell({ children }: DashboardShellProps) {
               key={item.label}
               href={item.href as any}
               className={cn(
-                "flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-[13px] font-semibold transition-all duration-300 relative group overflow-hidden outline-none focus-visible:ring-2 focus-visible:ring-accent",
+                "flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-[13px] font-semibold transition-all duration-200 relative group overflow-hidden outline-none focus-visible:ring-2 focus-visible:ring-indigo-500",
                 isActive
-                  ? "bg-[#efeffe] dark:bg-accent/10 dark:shadow-[0_0_15px_rgba(91,92,255,0.15)] text-[#4f46e5] dark:text-accent font-bold"
-                  : "text-slate-655 hover:bg-slate-100/80 dark:text-dark-muted dark:hover:bg-dark-elevated/60 dark:hover:text-dark-text"
+                  ? "bg-[#efeffe] dark:bg-brand-glow/30 text-[#4f46e5] dark:text-brand font-bold"
+                  : "text-slate-655 hover:bg-slate-100/80 dark:text-dark-muted dark:hover:bg-dark-hover dark:hover:text-slate-100"
               )}
             >
-              <Icon className={cn("h-4.5 w-4.5 transition-all duration-300", isActive ? "text-[#4f46e5] dark:text-accent dark:drop-shadow-[0_0_8px_rgba(91,92,255,0.8)]" : "text-slate-405 group-hover:text-slate-600 dark:text-dark-muted dark:group-hover:text-dark-secondaryText group-hover:scale-110")} />
+              <Icon className={cn("h-4.5 w-4.5 transition-colors", isActive ? "text-[#4f46e5] dark:text-brand" : "text-slate-405 group-hover:text-slate-600 dark:text-dark-muted dark:group-hover:text-slate-100")} />
               <span>{item.label}</span>
               {/* Subtle hover indicator dot */}
               {!isActive && (
                 <span className="absolute right-3 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-[#4f46e5]/40 opacity-0 group-hover:opacity-100 transition-opacity" />
-              )}
-              {/* Active Indicator Line */}
-              {isActive && (
-                <span className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-1/2 rounded-r-md bg-[#4f46e5] dark:bg-accent dark:shadow-[0_0_10px_rgba(91,92,255,1)]" />
               )}
             </Link>
           );
@@ -140,20 +136,16 @@ export function DashboardShell({ children }: DashboardShellProps) {
                 key={item.label}
                 href={item.href as any}
                 className={cn(
-                  "flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-[13px] font-semibold transition-all duration-300 relative group overflow-hidden outline-none focus-visible:ring-2 focus-visible:ring-accent",
+                  "flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-[13px] font-semibold transition-all duration-200 relative group overflow-hidden outline-none focus-visible:ring-2 focus-visible:ring-indigo-500",
                   isActive
-                    ? "bg-[#efeffe] dark:bg-accent/10 dark:shadow-[0_0_15px_rgba(91,92,255,0.15)] text-[#4f46e5] dark:text-accent font-bold"
-                    : "text-slate-655 hover:bg-slate-100/80 dark:text-dark-muted dark:hover:bg-dark-elevated/60 dark:hover:text-dark-text"
+                    ? "bg-[#efeffe] dark:bg-brand-glow/30 text-[#4f46e5] dark:text-brand font-bold"
+                    : "text-slate-655 hover:bg-slate-100/80 dark:text-dark-muted dark:hover:bg-dark-hover dark:hover:text-slate-100"
                 )}
               >
-                <Icon className={cn("h-4.5 w-4.5 transition-all duration-300", isActive ? "text-[#4f46e5] dark:text-accent dark:drop-shadow-[0_0_8px_rgba(91,92,255,0.8)]" : "text-slate-405 group-hover:text-slate-600 dark:text-dark-muted dark:group-hover:text-dark-secondaryText group-hover:scale-110")} />
+                <Icon className={cn("h-4.5 w-4.5 transition-colors", isActive ? "text-[#4f46e5] dark:text-brand" : "text-slate-405 group-hover:text-slate-600 dark:text-dark-muted dark:group-hover:text-slate-100")} />
                 <span>{item.label}</span>
                 {!isActive && (
                   <span className="absolute right-3 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-[#4f46e5]/40 opacity-0 group-hover:opacity-100 transition-opacity" />
-                )}
-                {/* Active Indicator Line */}
-                {isActive && (
-                  <span className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-1/2 rounded-r-md bg-[#4f46e5] dark:bg-accent dark:shadow-[0_0_10px_rgba(91,92,255,1)]" />
                 )}
               </Link>
             );
@@ -186,7 +178,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
       </div>
 
       {/* Bottom sticky items */}
-      <div className="pt-6 border-t border-slate-200/60 dark:border-dark-border flex-shrink-0 space-y-5 bg-[#fafbfe] dark:bg-dark-bg">
+      <div className="pt-6 border-t border-slate-200/60 dark:border-dark-border flex-shrink-0 space-y-5 bg-[#fafbfe] dark:bg-dark-sidebar">
 
 
         {/* User initials & quick Sign out */}
@@ -220,7 +212,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
     <div className="min-h-screen bg-[#fcfdff] dark:bg-dark-bg flex text-slate-800 dark:text-slate-100 transition-colors duration-300">
       <div className="flex min-h-screen w-full relative">
         {/* DESKTOP STICKY SIDEBAR */}
-        <aside className="w-[260px] h-screen sticky top-0 hidden lg:flex flex-col justify-between bg-[#fafbfe] dark:bg-dark-bg px-5 py-6 border-r border-slate-200/80 dark:border-slate-900 flex-shrink-0 z-20 overflow-hidden">
+        <aside className="w-[260px] h-screen sticky top-0 hidden lg:flex flex-col justify-between bg-[#fafbfe] dark:bg-dark-sidebar px-5 py-6 border-r border-slate-200/80 dark:border-dark-border flex-shrink-0 z-20 overflow-hidden">
           {renderSidebarContent(false)}
         </aside>
 
@@ -242,7 +234,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
                 animate={{ x: 0 }}
                 exit={{ x: "-100%" }}
                 transition={{ type: "spring", damping: 25, stiffness: 220 }}
-                className="fixed inset-y-0 left-0 z-50 w-[260px] bg-[#fafbfe] dark:bg-dark-bg border-r border-slate-200/80 dark:border-dark-border/80 flex flex-col justify-between px-5 py-6 lg:hidden overflow-hidden"
+                className="fixed inset-y-0 left-0 z-50 w-[260px] bg-[#fafbfe] dark:bg-dark-sidebar border-r border-slate-200/80 dark:border-dark-border/80 flex flex-col justify-between px-5 py-6 lg:hidden overflow-hidden"
               >
                 {renderSidebarContent(true)}
               </motion.aside>
@@ -255,7 +247,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
           {/* HEADER NAV BAR */}
           <header 
             className={cn(
-              "sticky top-0 bg-white/80 dark:bg-dark-bg/80 backdrop-blur-md z-30 px-6 py-4 w-full transition-all duration-200 border-b border-slate-200/60 dark:border-slate-900",
+              "sticky top-0 bg-white/80 dark:bg-dark-navbar/80 backdrop-blur-md z-30 px-6 py-4 w-full transition-all duration-200 border-b border-slate-200/60 dark:border-dark-border",
               isScrolled && "shadow-sm border-b dark:border-dark-border"
             )}
           >

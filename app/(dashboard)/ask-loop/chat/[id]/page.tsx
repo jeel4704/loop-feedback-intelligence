@@ -146,8 +146,8 @@ export default function ChatPage({ params }: { params: { id: string } }) {
                   <div
                     className={`rounded-2xl p-4 shadow-md border ${
                       isUser
-                        ? "bg-slate-200 border-slate-300 text-slate-900 dark:bg-dark-elevated dark:border-dark-border dark:text-slate-100"
-                        : "bg-white border-slate-200/80 dark:bg-dark-card dark:border-dark-border text-slate-800 dark:text-slate-100"
+                        ? "bg-brand text-white shadow-md dark:shadow-[0_0_15px_rgba(91,92,255,0.2)]"
+                        : "bg-white border border-slate-200/80 dark:bg-[#111111] dark:border-[#262626] text-slate-800 dark:text-white"
                     }`}
                   >
                     <div className="text-xs font-semibold leading-relaxed markdown-content prose prose-sm prose-slate dark:prose-invert max-w-none">

@@ -214,8 +214,7 @@ export function DashboardCharts({
           </CardContent>
         </Card>
 
-        {/* Sentiment Distribution (Donut Chart) */}
-        <Card className="lg:col-span-4 border border-slate-200/80 dark:border-slate-900 shadow-sm bg-white dark:bg-dark-bg rounded-2xl">
+        <Card className="lg:col-span-4 border border-slate-200/80 dark:border-dark-border shadow-sm bg-white dark:bg-dark-card rounded-2xl">
           <CardContent className="p-6 flex flex-col justify-between h-full">
             <div>
               <h3 className="text-sm font-bold text-slate-900 dark:text-slate-50 mb-4">Sentiment Distribution</h3>
