@@ -205,7 +205,7 @@ export default function DashboardPage() {
               <CardContent className="p-4">
                 <p className="text-[10.5px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Total Feedback</p>
                 <h4 className="text-xl font-extrabold text-slate-950 dark:text-slate-50 mt-1">{stats.feedbackCount.toLocaleString()}</h4>
-                <p className="text-[10.5px] text-emerald-600 dark:text-emerald-500 font-bold mt-1">↑ 18.2% <span className="text-slate-400 dark:text-slate-600 font-semibold">vs last month</span></p>
+                <p className="text-[9.5px] text-slate-400 dark:text-slate-500 font-semibold mt-1">Based on real database records</p>
               </CardContent>
             </Card>
             {/* Card 2: Positive */}
@@ -213,7 +213,7 @@ export default function DashboardPage() {
               <CardContent className="p-4">
                 <p className="text-[10.5px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Positive</p>
                 <h4 className="text-xl font-extrabold text-slate-950 dark:text-slate-50 mt-1">{stats.positive}%</h4>
-                <p className="text-[10.5px] text-emerald-600 dark:text-emerald-500 font-bold mt-1">↑ 7.6% <span className="text-slate-400 dark:text-slate-600 font-semibold">vs last month</span></p>
+                <p className="text-[9.5px] text-slate-400 dark:text-slate-500 font-semibold mt-1">Calculated from actual data</p>
               </CardContent>
             </Card>
             {/* Card 3: Negative */}
@@ -221,7 +221,7 @@ export default function DashboardPage() {
               <CardContent className="p-4">
                 <p className="text-[10.5px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Negative</p>
                 <h4 className="text-xl font-extrabold text-slate-950 dark:text-slate-50 mt-1">{stats.negative}%</h4>
-                <p className="text-[10.5px] text-rose-500 font-bold mt-1">↓ 4.3% <span className="text-slate-400 dark:text-slate-600 font-semibold">vs last month</span></p>
+                <p className="text-[9.5px] text-slate-400 dark:text-slate-500 font-semibold mt-1">Calculated from actual data</p>
               </CardContent>
             </Card>
             {/* Card 4: Neutral */}
@@ -229,7 +229,7 @@ export default function DashboardPage() {
               <CardContent className="p-4">
                 <p className="text-[10.5px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Neutral</p>
                 <h4 className="text-xl font-extrabold text-slate-950 dark:text-slate-50 mt-1">{stats.neutral}%</h4>
-                <p className="text-[10.5px] text-emerald-600 dark:text-emerald-500 font-bold mt-1">↑ 3.1% <span className="text-slate-400 dark:text-slate-600 font-semibold">vs last month</span></p>
+                <p className="text-[9.5px] text-slate-400 dark:text-slate-500 font-semibold mt-1">Calculated from actual data</p>
               </CardContent>
             </Card>
             {/* Card 5: Open Themes */}
@@ -237,25 +237,23 @@ export default function DashboardPage() {
               <CardContent className="p-4">
                 <p className="text-[10.5px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Open Themes</p>
                 <h4 className="text-xl font-extrabold text-slate-950 dark:text-slate-50 mt-1">{stats.activeThemesCount}</h4>
-                <p className="text-[10.5px] text-emerald-600 dark:text-emerald-500 font-bold mt-1">↑ 8.1% <span className="text-slate-400 dark:text-slate-600 font-semibold">vs last month</span></p>
+                <p className="text-[9.5px] text-slate-400 dark:text-slate-500 font-semibold mt-1">Automatically clustered</p>
               </CardContent>
             </Card>
             {/* Card 6: Resolutions */}
             <Card className="bg-white dark:bg-slate-950 border border-slate-200/80 dark:border-slate-850 shadow-sm rounded-2xl">
               <CardContent className="p-4">
                 <p className="text-[10.5px] font-extrabold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Resolutions</p>
-                <h4 className="text-xl font-extrabold text-slate-950 dark:text-slate-50 mt-1">{stats.resolutionsCount}</h4>
-                <p className="text-[10.5px] text-emerald-600 dark:text-emerald-500 font-bold mt-1">↑ 15.4% <span className="text-slate-400 dark:text-slate-600 font-semibold">vs last month</span></p>
+                <h4 className="text-xl font-extrabold text-slate-950 dark:text-slate-50 mt-1">{stats.resolutionsCount || 0}</h4>
+                <p className="text-[9.5px] text-slate-400 dark:text-slate-500 font-semibold mt-1">Closed or Resolved issues</p>
               </CardContent>
             </Card>
             {/* Card 7: Duplicates Prevented */}
             <Card className="bg-white dark:bg-slate-950 border border-slate-200/80 dark:border-slate-850 shadow-sm rounded-2xl hover:border-indigo-200 dark:hover:border-indigo-900 transition-all duration-200">
               <CardContent className="p-4">
-                <p className="text-[10.5px] font-extrabold text-[#4f46e5] dark:text-indigo-400 uppercase tracking-wider">Duplicates Prevented</p>
-                <h4 className="text-xl font-extrabold text-slate-950 dark:text-slate-50 mt-1">{stats.duplicatesPrevented?.thisWeek || 76}</h4>
-                <p className="text-[9.5px] text-slate-500 dark:text-slate-500 font-bold mt-1">
-                  Today: <span className="text-slate-900 dark:text-slate-300 font-extrabold">{stats.duplicatesPrevented?.today || 18}</span> | Month: <span className="text-slate-900 dark:text-slate-300 font-extrabold">{stats.duplicatesPrevented?.thisMonth || 214}</span>
-                </p>
+                <p className="text-[10.5px] font-extrabold text-[#4f46e5] dark:text-indigo-400 uppercase tracking-wider">Duplicates</p>
+                <h4 className="text-xl font-extrabold text-slate-950 dark:text-slate-50 mt-1">{stats.duplicatesPrevented?.thisWeek || 0}</h4>
+                <p className="text-[9.5px] text-slate-400 dark:text-slate-500 font-semibold mt-1">Tracked automatically</p>
               </CardContent>
             </Card>
           </>
