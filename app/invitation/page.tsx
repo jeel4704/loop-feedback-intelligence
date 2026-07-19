@@ -196,7 +196,7 @@ function InvitationForm() {
 export default function InvitationPage() {
   return (
     <main className="min-h-screen bg-slate-50 dark:bg-black px-6 py-16 flex items-center justify-center">
-      <div className="mx-auto grid max-w-6xl w-full gap-10 lg:grid-cols-[1.2fr_0.9fr]">
+      <div className="mx-auto grid max-w-6xl w-full gap-10 lg:grid-cols-[1.2fr_0.9fr] lg:items-center">
         <section className="rounded-[32px] border border-slate-200 dark:border-dark-border bg-white dark:bg-dark-card p-8 text-slate-950 dark:text-white shadow-2xl sm:p-10 flex flex-col justify-center relative overflow-hidden">
           {/* Subtle glow effect */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-brand/10 dark:bg-brand/20 blur-3xl rounded-full -mr-20 -mt-20 pointer-events-none" />
