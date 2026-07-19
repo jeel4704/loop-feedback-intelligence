@@ -11,7 +11,7 @@ interface AuthShellProps {
 export function AuthShell({ title, description, children }: AuthShellProps) {
   return (
     <main className="min-h-screen bg-slate-50 dark:bg-black px-6 py-16 flex items-center justify-center">
-      <div className="mx-auto grid max-w-6xl w-full gap-10 lg:grid-cols-[1.2fr_0.9fr]">
+      <div className="mx-auto grid max-w-6xl w-full gap-10 lg:grid-cols-[1.2fr_0.9fr] lg:items-center">
         {/* Left Column - Branding & Info */}
         <section className="rounded-[32px] border border-slate-200 dark:border-dark-border bg-white dark:bg-dark-card p-8 text-slate-950 dark:text-white shadow-2xl sm:p-10 flex flex-col justify-center relative overflow-hidden">
           {/* Subtle glow effect in the corner for premium feel */}
