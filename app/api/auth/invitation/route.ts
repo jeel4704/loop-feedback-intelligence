@@ -121,7 +121,7 @@ export async function POST(req: Request) {
     const workspaceName = workspace?.name || "LOOP Workspace";
 
     const baseUrl = (process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000").replace(/\/$/, "");
-    const inviteUrl = `${baseUrl}/invite/${token}`;
+    const inviteUrl = `${baseUrl}/invite?token=${token}`;
 
     // Send invitation email
     await sendInvitationEmail(email, inviteUrl, workspaceName, role);
