@@ -33,10 +33,16 @@ export async function GET(req: Request) {
       return NextResponse.json({ error: "Invitation has expired" }, { status: 400 });
     }
 
+    const user = await prisma.user.findUnique({
+      where: { email: invitation.email },
+      select: { id: true }
+    });
+
     return NextResponse.json({
       email: invitation.email,
       workspaceName: invitation.workspace.name,
-      role: invitation.role
+      role: invitation.role,
+      userExists: !!user
     }, { status: 200 });
   } catch (error) {
     console.error("Fetch invitation error:", error);
@@ -114,7 +120,7 @@ export async function POST(req: Request) {
     });
     const workspaceName = workspace?.name || "LOOP Workspace";
 
-    const inviteUrl = `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/invitation?token=${token}`;
+    const inviteUrl = `${process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"}/invite/${token}`;
 
     // Send invitation email
     await sendInvitationEmail(email, inviteUrl, workspaceName, role);
@@ -138,7 +144,7 @@ export async function PUT(req: Request) {
   try {
     const { token, name, password } = await req.json();
 
-    if (!token || !name || !password) {
+    if (!token || !password) {
       return NextResponse.json({ error: "Missing required registration parameters" }, { status: 400 });
     }
 
@@ -163,49 +169,74 @@ export async function PUT(req: Request) {
       return NextResponse.json({ error: "Invitation code has expired" }, { status: 400 });
     }
 
-    // Hash password
-    const passwordHash = hashPassword(password);
+    // Determine if user exists
+    const existingUser = await prisma.user.findUnique({ where: { email: invitation.email } });
 
-    // Create user and membership in a transaction
-    await prisma.$transaction(async (tx) => {
-      // Find or create User
-      let user = await tx.user.findUnique({ where: { email: invitation.email } });
-      if (!user) {
-        user = await tx.user.create({
+    if (existingUser) {
+      // Existing User Flow: Verify password
+      const isValid = verifyPassword(password, existingUser.passwordHash!);
+      if (!isValid) {
+        return NextResponse.json({ error: "Incorrect password for this existing account." }, { status: 401 });
+      }
+
+      await prisma.$transaction(async (tx) => {
+        // Create Workspace Membership if not exists
+        const membershipExists = await tx.workspaceMembership.findFirst({
+          where: { userId: existingUser.id, workspaceId: invitation.workspaceId }
+        });
+
+        if (!membershipExists) {
+          await tx.workspaceMembership.create({
+            data: {
+              userId: existingUser.id,
+              workspaceId: invitation.workspaceId,
+              role: invitation.role
+            }
+          });
+        }
+
+        // Mark invitation as accepted
+        await tx.invitation.update({
+          where: { id: invitation.id },
+          data: { acceptedAt: new Date() }
+        });
+      });
+
+      return NextResponse.json({ message: "Invitation accepted for existing user" }, { status: 200 });
+
+    } else {
+      // New User Flow
+      if (!name) {
+        return NextResponse.json({ error: "Name is required for new accounts." }, { status: 400 });
+      }
+
+      const passwordHash = hashPassword(password);
+
+      await prisma.$transaction(async (tx) => {
+        const newUser = await tx.user.create({
           data: {
             name,
             email: invitation.email,
             passwordHash
           }
         });
-      } else {
-        // If user already existed (e.g. from other workspaces), update password hash if not set
-        await tx.user.update({
-          where: { id: user.id },
+
+        await tx.workspaceMembership.create({
           data: {
-            name,
-            passwordHash
+            userId: newUser.id,
+            workspaceId: invitation.workspaceId,
+            role: invitation.role
           }
         });
-      }
 
-      // Create Workspace Membership
-      await tx.workspaceMembership.create({
-        data: {
-          userId: user.id,
-          workspaceId: invitation.workspaceId,
-          role: invitation.role
-        }
+        await tx.invitation.update({
+          where: { id: invitation.id },
+          data: { acceptedAt: new Date() }
+        });
       });
 
-      // Mark invitation as accepted
-      await tx.invitation.update({
-        where: { id: invitation.id },
-        data: { acceptedAt: new Date() }
-      });
-    });
-
-    return NextResponse.json({ message: "Invitation accepted and account registered" }, { status: 200 });
+      return NextResponse.json({ message: "Invitation accepted and account registered" }, { status: 200 });
+    }
   } catch (error) {
     console.error("Accept invitation error:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
