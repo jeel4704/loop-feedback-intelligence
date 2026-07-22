@@ -108,7 +108,7 @@ function InvitationForm() {
         </div>
         <div className="flex justify-center">
           <Link href="/login">
-            <Button variant="secondary" size="sm">Return to Login</Button>
+            <Button variant="secondary">Return to Login</Button>
           </Link>
         </div>
       </div>
