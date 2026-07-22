@@ -43,6 +43,23 @@ export default function InboxPage() {
   const [page, setPage] = useState(1);
   const limit = 50;
 
+  // Dynamic filter lists
+  const [availableChannels, setAvailableChannels] = useState<string[]>([]);
+  const [availableStatuses, setAvailableStatuses] = useState<string[]>([]);
+  const [availableSentiments, setAvailableSentiments] = useState<string[]>([]);
+
+  // Fetch filter options on mount
+  useEffect(() => {
+    fetch("/api/feedback/filters")
+      .then((res) => res.json())
+      .then((data) => {
+        setAvailableChannels(data.channels || []);
+        setAvailableStatuses(data.statuses || []);
+        setAvailableSentiments(data.sentiments || []);
+      })
+      .catch((err) => console.error("Error fetching filters:", err));
+  }, []);
+
   useEffect(() => {
     setLoading(true);
     const query = new URLSearchParams();
@@ -175,34 +192,28 @@ export default function InboxPage() {
             value={channel}
             onChange={(e) => setChannel(e.target.value)}
           >
-            <option value="all">All channels</option>
-            <option value="Email">Email</option>
-            <option value="Live Chat">Live Chat</option>
-            <option value="Survey">Survey</option>
-            <option value="Support Ticket">Support Ticket</option>
-            <option value="Play Store">Play Store</option>
-            <option value="App Store">App Store</option>
-            <option value="Website">Website</option>
-            <option value="Mobile App">Mobile App</option>
+            <option value="all">All Channels</option>
+            {availableChannels.map(c => (
+              <option key={c} value={c}>{c}</option>
+            ))}
           </Select>
           <Select 
             value={sentiment}
             onChange={(e) => setSentiment(e.target.value)}
           >
-            <option value="all">All sentiment</option>
-            <option value="Positive">Positive</option>
-            <option value="Neutral">Neutral</option>
-            <option value="Negative">Negative</option>
+            <option value="all">All Sentiments</option>
+            {availableSentiments.map(s => (
+              <option key={s} value={s}>{s}</option>
+            ))}
           </Select>
           <Select 
             value={statusFilter}
             onChange={(e) => setStatusFilter(e.target.value)}
           >
-            <option value="all">All statuses</option>
-            <option value="New">New</option>
-            <option value="Possible Duplicate">Possible Duplicate</option>
-            <option value="Reviewed">Reviewed</option>
-            <option value="Actioned">Actioned</option>
+            <option value="all">All Statuses</option>
+            {availableStatuses.map(st => (
+              <option key={st} value={st}>{st}</option>
+            ))}
           </Select>
         </CardContent>
       </Card>
@@ -216,8 +227,16 @@ export default function InboxPage() {
           <div className="bg-slate-50 dark:bg-dark-elevated w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 border border-slate-100 dark:border-dark-border">
             <span className="text-2xl">📥</span>
           </div>
-          <h3 className="font-extrabold text-lg text-slate-950 dark:text-white">No feedback collected yet</h3>
-          <p className="text-[13px] text-slate-500 dark:text-dark-muted mt-2 font-medium">When you ingest feedback via email, surveys, or integrations, it will appear here.</p>
+          <h3 className="font-extrabold text-lg text-slate-950 dark:text-white">
+            {(search || channel !== "all" || sentiment !== "all" || statusFilter !== "all") 
+              ? "No feedback matches your selected filters" 
+              : "No feedback collected yet"}
+          </h3>
+          <p className="text-[13px] text-slate-500 dark:text-dark-muted mt-2 font-medium">
+            {(search || channel !== "all" || sentiment !== "all" || statusFilter !== "all") 
+              ? "Try adjusting your search criteria or clearing filters to see more records." 
+              : "When you ingest feedback via email, surveys, or integrations, it will appear here."}
+          </p>
         </div>
       ) : (
         <>

@@ -17,12 +17,12 @@ export function DataTable({ columns, rows }: DataTableProps) {
       <CardContent className="overflow-hidden p-0">
         <div className="overflow-x-auto custom-scrollbar">
           <table className="min-w-full divide-y divide-slate-200 dark:divide-dark-border">
-            <thead className="bg-slate-50 dark:bg-dark-elevated">
+            <thead className="bg-slate-100 dark:bg-slate-900">
               <tr>
                 {columns.map((column) => (
                   <th
                     key={column.key}
-                    className="px-5 py-3.5 text-left text-[11px] font-black uppercase tracking-[0.15em] text-slate-500 dark:text-dark-muted border-b border-slate-200 dark:border-dark-border"
+                    className="px-5 py-3.5 text-left text-[11px] font-black uppercase tracking-[0.15em] text-slate-900 dark:text-white border-b border-slate-200 dark:border-dark-border"
                   >
                     {column.label}
                   </th>

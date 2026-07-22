@@ -20,7 +20,10 @@ import {
   Building2,
   Settings,
   Menu,
-  X
+  X,
+  PanelLeftClose,
+  PanelLeftOpen,
+  ChevronDown
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/ui";
@@ -39,39 +42,40 @@ export function DashboardShell({ children }: DashboardShellProps) {
   const { data: session } = useSession();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  
+  // Persisted collapsible state
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   const user = session?.user as any;
   const userRole = user?.role || "VIEWER";
   const userName = user?.name || user?.email?.split("@")[0] || "User";
   const workspaceName = user?.workspaceName || user?.workspaceSlug || "Workspace";
 
-  // Watch scroll to show soft shadow under navbar
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 10) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
+    setMounted(true);
+    const stored = localStorage.getItem("sidebarCollapsed");
+    if (stored === "true") setIsCollapsed(true);
+  }, []);
+
+  const toggleSidebar = () => {
+    const next = !isCollapsed;
+    setIsCollapsed(next);
+    localStorage.setItem("sidebarCollapsed", String(next));
+  };
+
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 10);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile drawer on route change
   useEffect(() => {
     setIsMobileOpen(false);
   }, [pathname]);
 
-  // Generate initials
-  const initials = userName
-    .split(" ")
-    .map((n: string) => n[0])
-    .join("")
-    .toUpperCase()
-    .slice(0, 2) || "U";
+  const initials = userName.split(" ").map((n: string) => n[0]).join("").toUpperCase().slice(0, 2) || "U";
 
-  // Navigation Items
   const primaryNavItems = [
     { label: "Overview", href: "/dashboard", icon: Home, roles: ["OWNER", "ADMIN", "ANALYST", "VIEWER"] },
     { label: "Feedback", href: "/feedback", icon: MessageSquare, roles: ["OWNER", "ADMIN", "ANALYST"] },
@@ -84,143 +88,194 @@ export function DashboardShell({ children }: DashboardShellProps) {
   const manageNavItems = [
     { label: "Sources", href: "/inbox", icon: Database, roles: ["OWNER", "ADMIN", "ANALYST", "VIEWER"] },
     { label: "Users & Roles", href: "/members", icon: Users, roles: ["OWNER", "ADMIN"] },
-    { label: "Workspaces", href: "/workspaces", icon: Building2, roles: ["OWNER", "ADMIN"] },
+    { label: "Workspace", href: "/workspaces", icon: Building2, roles: ["OWNER", "ADMIN"] },
     { label: "Settings", href: "/settings", icon: Settings, roles: ["OWNER", "ADMIN"] }
   ];
 
   const allowedPrimaryItems = primaryNavItems.filter(item => item.roles.includes(userRole));
   const allowedManageItems = manageNavItems.filter(item => item.roles.includes(userRole));
 
-  const renderNavLinks = () => (
-    <div className="space-y-6">
-      {/* Primary Nav Section */}
-      <nav className="space-y-1" aria-label="Primary navigation">
-        {allowedPrimaryItems.map((item) => {
-          const isActive = pathname === item.href;
-          const Icon = item.icon;
+  const renderNavLinks = (items: typeof primaryNavItems) => (
+    <nav className="flex flex-col gap-2 w-full" aria-label="Navigation">
+      {items.map((item) => {
+        const isActive = pathname === item.href || (pathname.startsWith(item.href) && item.href !== "/dashboard");
+        const Icon = item.icon;
 
+        const linkContent = (
+          <Link
+            key={item.label}
+            href={item.href as any}
+            className={cn(
+              "flex items-center rounded-xl transition-all duration-250 relative group outline-none focus-visible:ring-2 focus-visible:ring-indigo-500",
+              isCollapsed ? "justify-center w-11 h-11 mx-auto" : "gap-3 px-3.5 py-2.5 w-full",
+              isActive
+                ? "bg-gradient-to-br from-[#6C4EFF] to-[#5a3ee6] text-white shadow-[0_4px_15px_rgba(108,78,255,0.25)]"
+                : "text-slate-500 hover:text-slate-900 hover:bg-slate-100 dark:text-[#CFCFCF] dark:hover:bg-[#151515] dark:hover:text-white hover:-translate-y-0.5"
+            )}
+          >
+            {isActive && !isCollapsed && (
+              <span className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-2/3 bg-white rounded-r-full" />
+            )}
+            {isActive && isCollapsed && (
+              <span className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-1/2 bg-white rounded-r-full" />
+            )}
+            
+            <Icon className={cn(
+              "transition-transform duration-250", 
+              isCollapsed ? "h-[22px] w-[22px]" : "h-5 w-5",
+              isActive ? "text-white" : "group-hover:scale-105"
+            )} />
+            
+            {!isCollapsed && (
+              <span className="text-[13.5px] font-medium whitespace-nowrap">{item.label}</span>
+            )}
+          </Link>
+        );
+
+        if (isCollapsed) {
           return (
-            <Link
-              key={item.label}
-              href={item.href as any}
-              className={cn(
-                "flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-[13px] font-semibold transition-all duration-200 relative group overflow-hidden outline-none focus-visible:ring-2 focus-visible:ring-indigo-500",
-                isActive
-                  ? "bg-[#efeffe] dark:bg-brand-glow/30 text-[#4f46e5] dark:text-brand font-bold"
-                  : "text-slate-655 hover:bg-slate-100/80 dark:text-dark-muted dark:hover:bg-dark-hover dark:hover:text-slate-100"
-              )}
-            >
-              <Icon className={cn("h-4.5 w-4.5 transition-colors", isActive ? "text-[#4f46e5] dark:text-brand" : "text-slate-405 group-hover:text-slate-600 dark:text-dark-muted dark:group-hover:text-slate-100")} />
-              <span>{item.label}</span>
-              {/* Subtle hover indicator dot */}
-              {!isActive && (
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-[#4f46e5]/40 opacity-0 group-hover:opacity-100 transition-opacity" />
-              )}
-            </Link>
+            <Tooltip key={item.label} content={item.label} position="right">
+              {linkContent}
+            </Tooltip>
           );
-        })}
-      </nav>
+        }
 
-      {/* Manage Nav Section */}
-      <div className="pt-2">
-        <p className="text-[10px] font-extrabold text-slate-400 dark:text-dark-muted uppercase tracking-widest mb-2 px-3.5 select-none">
-          Manage
-        </p>
-        <nav className="space-y-1" aria-label="Management navigation">
-          {allowedManageItems.map((item) => {
-            const isActive = pathname === item.href;
-            const Icon = item.icon;
-
-            return (
-              <Link
-                key={item.label}
-                href={item.href as any}
-                className={cn(
-                  "flex items-center gap-3 rounded-xl px-3.5 py-2.5 text-[13px] font-semibold transition-all duration-200 relative group overflow-hidden outline-none focus-visible:ring-2 focus-visible:ring-indigo-500",
-                  isActive
-                    ? "bg-[#efeffe] dark:bg-brand-glow/30 text-[#4f46e5] dark:text-brand font-bold"
-                    : "text-slate-655 hover:bg-slate-100/80 dark:text-dark-muted dark:hover:bg-dark-hover dark:hover:text-slate-100"
-                )}
-              >
-                <Icon className={cn("h-4.5 w-4.5 transition-colors", isActive ? "text-[#4f46e5] dark:text-brand" : "text-slate-405 group-hover:text-slate-600 dark:text-dark-muted dark:group-hover:text-slate-100")} />
-                <span>{item.label}</span>
-                {!isActive && (
-                  <span className="absolute right-3 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-[#4f46e5]/40 opacity-0 group-hover:opacity-100 transition-opacity" />
-                )}
-              </Link>
-            );
-          })}
-        </nav>
-      </div>
-    </div>
+        return linkContent;
+      })}
+    </nav>
   );
 
-  const renderSidebarContent = (isMobile = false) => (
-    <>
-      {/* Top sticky logo block */}
-      <div className="flex items-center justify-between pb-6 border-b border-slate-200/50 dark:border-dark-border/50 flex-shrink-0">
-        <Link href="/dashboard" className="transition-opacity hover:opacity-80">
-          <Logo variant="horizontal" size="md" />
-        </Link>
-        {isMobile && (
-          <button 
-            onClick={() => setIsMobileOpen(false)}
-            className="p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-dark-hover text-slate-400 hover:text-slate-650 dark:text-dark-muted dark:hover:text-slate-250 transition-colors"
-          >
-            <X className="h-5 w-5" />
-          </button>
-        )}
-      </div>
-
-      {/* Middle scrollable nav links */}
-      <div className="flex-1 overflow-y-auto pr-1 py-4 custom-scrollbar">
-        {renderNavLinks()}
-      </div>
-
-      {/* Bottom sticky items */}
-      <div className="pt-6 border-t border-slate-200/60 dark:border-dark-border flex-shrink-0 space-y-5 bg-[#fafbfe] dark:bg-dark-sidebar">
-
-
-        {/* User initials & quick Sign out */}
-        <div className="flex items-center justify-between pt-1">
-          <div className="flex items-center gap-3 min-w-0">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-100 dark:bg-indigo-950 text-xs font-bold text-[#4f46e5] dark:text-indigo-400 border border-indigo-200/25">
-              {initials}
-            </div>
-            <div className="min-w-0">
-              <p className="text-xs font-bold text-slate-900 dark:text-slate-50 truncate">{userName}</p>
-              <p className="text-[10px] text-slate-405 dark:text-slate-550 font-bold truncate">
-                {userRole === "OWNER" ? "Workspace Owner" : userRole}
-              </p>
-            </div>
+  const renderSidebarContent = (isMobile = false) => {
+    const collapsed = isMobile ? false : isCollapsed;
+    
+    return (
+      <div className="flex flex-col h-full overflow-hidden">
+        {/* Top Header */}
+        <div className={cn(
+          "flex pb-6 border-b border-slate-200/50 dark:border-[#202020] flex-shrink-0 transition-all duration-300",
+          collapsed ? "flex-col items-center gap-4" : "flex-row items-center justify-between"
+        )}>
+          <Link href="/dashboard" className="transition-opacity hover:opacity-80">
+            {collapsed ? (
+              <Logo variant="icon" size="md" />
+            ) : (
+              <div className="flex flex-col">
+                <Logo variant="horizontal" size="md" />
+                <span className="text-[10px] font-semibold text-slate-500 dark:text-[#CFCFCF] mt-1 uppercase tracking-wider ml-1">
+                  {workspaceName}
+                </span>
+              </div>
+            )}
+          </Link>
+          
+          <div className="flex items-center">
+            {!isMobile && (
+              <button
+                onClick={toggleSidebar}
+                className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 dark:hover:text-white dark:hover:bg-[#151515] transition-colors"
+                title={collapsed ? "Expand Sidebar" : "Hide Sidebar"}
+              >
+                {collapsed ? <PanelLeftOpen className="h-5 w-5" /> : <PanelLeftClose className="h-5 w-5" />}
+              </button>
+            )}
+            
+            {isMobile && (
+              <button 
+                onClick={() => setIsMobileOpen(false)}
+                className="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-[#151515] text-slate-400 hover:text-slate-700 dark:text-[#CFCFCF] dark:hover:text-white transition-colors"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            )}
           </div>
-          <Tooltip content="Sign Out">
-            <button 
-              onClick={() => signOut({ callbackUrl: "/" })}
-              className="text-slate-400 hover:text-rose-600 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-905 transition-colors"
-              aria-label="Sign out of loop"
-            >
-              <LogOut className="h-4 w-4" />
-            </button>
-          </Tooltip>
+        </div>
+
+        {/* Scrollable Nav Links */}
+        <div className="flex-1 overflow-y-auto overflow-x-hidden py-6 custom-scrollbar flex flex-col gap-6">
+          <div>
+            {!collapsed && (
+              <p className="text-[10px] font-bold text-slate-400 dark:text-[#666666] uppercase tracking-wider mb-3 px-3.5 select-none">
+                Platform
+              </p>
+            )}
+            {renderNavLinks(allowedPrimaryItems)}
+          </div>
+          
+          <div>
+            {!collapsed && (
+              <p className="text-[10px] font-bold text-slate-400 dark:text-[#666666] uppercase tracking-wider mb-3 px-3.5 select-none mt-2">
+                Management
+              </p>
+            )}
+            {collapsed && <div className="h-px w-6 mx-auto bg-slate-200 dark:bg-[#202020] my-4" />}
+            {renderNavLinks(allowedManageItems)}
+          </div>
+        </div>
+
+        {/* Bottom Section */}
+        <div className="pt-4 border-t border-slate-200/60 dark:border-[#202020] flex-shrink-0 flex flex-col gap-2">
+          
+          {/* User Profile */}
+          <div className={cn(
+            "flex items-center gap-3 p-2 rounded-xl transition-colors cursor-pointer hover:bg-slate-100 dark:hover:bg-[#151515]",
+            collapsed ? "justify-center w-11 h-11 mx-auto" : "justify-between w-full"
+          )}>
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-slate-200 dark:bg-[#202020] text-xs font-bold text-slate-700 dark:text-white border border-slate-300 dark:border-[#333333]">
+                {initials}
+              </div>
+              {!collapsed && (
+                <div className="min-w-0">
+                  <p className="text-[13.5px] font-semibold text-slate-900 dark:text-white truncate leading-tight">{userName}</p>
+                  <p className="text-[11px] text-slate-500 dark:text-[#CFCFCF] truncate mt-0.5">
+                    {userRole === "OWNER" ? "Workspace Owner" : userRole}
+                  </p>
+                </div>
+              )}
+            </div>
+            {!collapsed && <ChevronDown className="h-4 w-4 text-slate-400 shrink-0" />}
+          </div>
+
+          {/* Logout Button */}
+          <button
+            onClick={() => signOut({ callbackUrl: "/" })}
+            className={cn(
+              "flex items-center text-slate-500 dark:text-[#CFCFCF] hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-all duration-250 rounded-xl",
+              collapsed ? "justify-center w-11 h-11 mx-auto" : "gap-3 px-3.5 py-2.5 w-full"
+            )}
+            title={collapsed ? "Logout" : undefined}
+          >
+            <LogOut className={cn("transition-transform duration-250", collapsed ? "h-[22px] w-[22px]" : "h-5 w-5")} />
+            {!collapsed && <span className="text-[13.5px] font-medium">Logout</span>}
+          </button>
         </div>
       </div>
-    </>
-  );
+    );
+  };
+
+  if (!mounted) return null; // Avoid hydration mismatch on initial load for localstorage state
 
   return (
-    <div className="min-h-screen bg-[#fcfdff] dark:bg-dark-bg flex text-slate-800 dark:text-slate-100 transition-colors duration-300">
+    <div className="min-h-screen bg-white dark:bg-[#000000] flex text-slate-800 dark:text-slate-100 transition-colors duration-300">
       <div className="flex min-h-screen w-full relative">
+        
         {/* DESKTOP STICKY SIDEBAR */}
-        <aside className="w-[260px] h-screen sticky top-0 hidden lg:flex flex-col justify-between bg-[#fafbfe] dark:bg-dark-sidebar px-5 py-6 border-r border-slate-200/80 dark:border-dark-border flex-shrink-0 z-20 overflow-hidden print:hidden">
+        <motion.aside 
+          initial={false}
+          animate={{ width: isCollapsed ? 80 : 280 }}
+          transition={{ type: "spring", damping: 25, stiffness: 220 }}
+          className={cn(
+            "h-screen sticky top-0 hidden lg:flex flex-col bg-slate-50 dark:bg-[#0B0B0B] border-r border-slate-200/80 dark:border-dark-border flex-shrink-0 z-20 print:hidden",
+            isCollapsed ? "px-3 py-6" : "px-5 py-6"
+          )}
+        >
           {renderSidebarContent(false)}
-        </aside>
+        </motion.aside>
 
         {/* MOBILE SLIDING SIDEBAR DRAWER */}
         <AnimatePresence>
           {isMobileOpen && (
             <>
-              {/* Sliding backdrop */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -228,13 +283,12 @@ export function DashboardShell({ children }: DashboardShellProps) {
                 onClick={() => setIsMobileOpen(false)}
                 className="fixed inset-0 z-40 bg-slate-950/60 backdrop-blur-sm lg:hidden print:hidden"
               />
-              {/* Drawer layout */}
               <motion.aside
                 initial={{ x: "-100%" }}
                 animate={{ x: 0 }}
                 exit={{ x: "-100%" }}
                 transition={{ type: "spring", damping: 25, stiffness: 220 }}
-                className="fixed inset-y-0 left-0 z-50 w-[260px] bg-[#fafbfe] dark:bg-dark-sidebar border-r border-slate-200/80 dark:border-dark-border/80 flex flex-col justify-between px-5 py-6 lg:hidden overflow-hidden print:hidden"
+                className="fixed inset-y-0 left-0 z-50 w-[280px] bg-slate-50 dark:bg-[#0B0B0B] border-r border-slate-200/80 dark:border-dark-border/80 flex flex-col px-5 py-6 lg:hidden overflow-hidden print:hidden"
               >
                 {renderSidebarContent(true)}
               </motion.aside>
@@ -242,21 +296,20 @@ export function DashboardShell({ children }: DashboardShellProps) {
           )}
         </AnimatePresence>
 
-        {/* Content area right */}
-        <div className="flex-1 flex flex-col min-h-screen min-w-0 bg-[#f8fafc] dark:bg-dark-card/30 overflow-hidden">
+        {/* CONTENT AREA */}
+        <div className="flex-1 flex flex-col min-h-screen min-w-0 bg-white dark:bg-[#000000] overflow-hidden">
           {/* HEADER NAV BAR */}
           <header 
             className={cn(
-              "sticky top-0 bg-white/80 dark:bg-dark-navbar/80 backdrop-blur-md z-30 px-6 py-4 w-full transition-all duration-200 border-b border-slate-200/60 dark:border-dark-border print:hidden",
-              isScrolled && "shadow-sm border-b dark:border-dark-border"
+              "sticky top-0 bg-white/80 dark:bg-[#000000]/80 backdrop-blur-md z-30 px-6 py-4 w-full transition-all duration-200 border-b border-transparent print:hidden",
+              isScrolled && "shadow-sm border-slate-200/60 dark:border-dark-border"
             )}
           >
             <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-              {/* Header Title Greeting / Menu Trigger */}
               <div className="flex items-center gap-3">
                 <button 
                   onClick={() => setIsMobileOpen(true)}
-                  className="lg:hidden p-2 hover:bg-slate-100 dark:hover:bg-dark-hover text-slate-400 hover:text-slate-655 dark:hover:text-slate-200 rounded-xl transition outline-none"
+                  className="lg:hidden p-2 hover:bg-slate-100 dark:hover:bg-dark-hover text-slate-400 hover:text-slate-650 dark:hover:text-slate-200 rounded-xl transition outline-none"
                   aria-label="Open sidebar"
                 >
                   <Menu className="h-5 w-5" />
@@ -266,26 +319,19 @@ export function DashboardShell({ children }: DashboardShellProps) {
                   <h1 className="text-base font-bold text-slate-900 dark:text-slate-50 truncate leading-none">
                     Welcome back, {userName.split(" ")[0]}
                   </h1>
-                  <p className="text-[11px] text-slate-405 dark:text-dark-muted font-semibold mt-1">
+                  <p className="text-[11px] text-slate-500 dark:text-dark-muted font-semibold mt-1">
                     Here's what's happening with your feedback today.
                   </p>
                 </div>
               </div>
 
-              {/* Header Actions items */}
               <div className="flex items-center gap-3.5 justify-end">
-                {/* Global Search Component */}
                 <SearchBar />
-
-                {/* Navbar Action Icons */}
                 <div className="flex items-center gap-1 text-slate-400">
-
                   <Tooltip content="Toggle Theme" position="bottom">
                     <ThemeSwitcher />
                   </Tooltip>
                 </div>
-
-                {/* Profile Dropdown */}
                 <ProfileDropdown />
               </div>
             </div>
