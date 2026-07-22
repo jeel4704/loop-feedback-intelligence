@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import InvitationClient from "./invitation-client";
 
 export default function InvitePage({ params }: { params: { token: string } }) {
