@@ -62,7 +62,22 @@ export async function POST(req: Request) {
       });
     }
 
-    // 2. Fetch existing feedbacks for duplicate checking (Append mode or after Replace)
+    // 2. Create the Import record FIRST so we have an importId
+    const currentImport = await prisma.import.create({
+      data: {
+        workspaceId,
+        fileName: fileName || "CSV_Upload",
+        fileSize: fileSize || 0,
+        importedBy: session.user.id || "system",
+        validRecords: 0,
+        invalidRecords: 0,
+        duration: 0,
+        source: "CSV Enterprise Engine",
+        status: "PROCESSING"
+      }
+    });
+
+    // 3. Fetch existing feedbacks for duplicate checking (Append mode or after Replace)
     const existingFeedbacks = await prisma.feedback.findMany({
       where: { 
         workspaceId,
@@ -82,7 +97,7 @@ export async function POST(req: Request) {
       }
     });
 
-    // 3. Fetch themes for mapping
+    // 4. Fetch themes for mapping
     const existingThemesList = await prisma.theme.findMany({
       where: { workspaceId }
     });
@@ -213,7 +228,8 @@ export async function POST(req: Request) {
                   customerEmail,
                   duplicateOf: possibleDuplicateOf,
                   similarityScore: possibleSimilarity,
-                  createdAt: new Date(providedDate)
+                  createdAt: new Date(providedDate),
+                  importId: currentImport.id // SET IMPORT ID HERE!
                 }
               });
 
@@ -285,59 +301,39 @@ export async function POST(req: Request) {
 
     const duration = Math.round((Date.now() - startTime) / 1000); // seconds
 
-    // Save Import record
-    await prisma.import.create({
+    // Save final Import status
+    await prisma.import.update({
+      where: { id: currentImport.id },
       data: {
-        workspaceId,
-        fileName: fileName || "CSV_Upload",
-        fileSize: fileSize || 0,
-        importedBy: session.user.id || "system",
         validRecords: importedItems.length,
         invalidRecords: errors.length + duplicateReports.length, // duplicates count as invalid/skipped
         duration,
-        source: "CSV Enterprise Engine",
         status: errors.length === items.length ? "FAILED" : "COMPLETED"
       }
     });
 
-    await prisma.activityLog.create({
-      data: {
-        workspaceId,
-        label: `Imported ${importedItems.length} feedbacks from ${fileName || 'CSV'} (${importMode}).`,
-        timeLabel: "Just now"
-      }
-    });
-
-    if (importedItems.length === 0 && errors.length > 0) {
-      return NextResponse.json({ error: `Failed to import feedback: ${errors[0]}` }, { status: 400 });
-    }
-
-    // Force Next.js Data Cache to purge and trigger Real-Time Sync on Dashboards
-    revalidatePath("/");
-    revalidatePath("/dashboard");
-    revalidatePath("/trends");
-
-    // Detailed Enterprise Logging
-    console.log(`[CSV Import Pipeline] Execution Summary:`);
-    console.log(` - File: ${fileName || "Unknown CSV"}`);
-    console.log(` - Parsed Rows: ${items.length}`);
-    console.log(` - Inserted: ${importedItems.length}`);
-    console.log(` - Skipped (Duplicates): ${duplicateReports.length}`);
-    console.log(` - Failed: ${errors.length}`);
     if (importedItems.length > 0) {
-      console.log(` - Latest Feedback ID inserted: ${importedItems[0].id}`);
+      await prisma.activityLog.create({
+        data: {
+          workspaceId,
+          label: `Imported ${importedItems.length} records from ${fileName || 'CSV'}.`,
+          timeLabel: "Just now"
+        }
+      });
     }
+
+    revalidatePath("/feedback");
 
     return NextResponse.json({
-      message: "CSV Import Completed",
-      total: items.length,
+      success: true,
       imported: importedItems.length,
-      duplicates: duplicateReports.length,
-      failed: errors.length,
-      report: duplicateReports
-    }, { status: 201 });
-  } catch (error) {
-    console.error("Enterprise CSV Import error:", error);
-    return NextResponse.json({ error: "Failed to process enterprise import" }, { status: 500 });
+      errors: errors.length,
+      skipped: skippedItems.length,
+      duplicateReports,
+      errorDetails: errors.slice(0, 10)
+    });
+  } catch (error: any) {
+    console.error("Enterprise CSV Upload API Error:", error);
+    return NextResponse.json({ error: error.message || "Failed to process import" }, { status: 500 });
   }
 }

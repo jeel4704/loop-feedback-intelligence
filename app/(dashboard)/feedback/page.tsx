@@ -147,9 +147,9 @@ export default function FeedbackPage() {
       />
 
       <div className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
-        <Card>
-          <CardContent className="p-6">
-            <h2 className="text-xl font-semibold text-slate-950">Add Feedback</h2>
+        <Card className="border border-slate-200 dark:border-dark-border shadow-[0_8px_30px_rgb(0,0,0,0.12)] dark:shadow-[0_8px_30px_rgba(255,255,255,0.03)] rounded-2xl bg-white dark:bg-dark-card overflow-hidden">
+          <CardContent className="p-8">
+            <h2 className="text-xl font-bold text-slate-950 dark:text-white">Add Feedback</h2>
             
             <form className="mt-6 space-y-5" onSubmit={handleSubmit}>
               {success && (
@@ -212,9 +212,9 @@ export default function FeedbackPage() {
           <ImportHistory />
 
           {/* Ingestion Inbox Simulator Card */}
-          <Card>
-            <CardContent className="p-6">
-              <h3 className="text-lg font-semibold text-slate-950">Incoming Ingestion Simulator</h3>
+          <Card className="border border-slate-200 dark:border-dark-border shadow-[0_8px_30px_rgb(0,0,0,0.12)] dark:shadow-[0_8px_30px_rgba(255,255,255,0.03)] rounded-2xl bg-white dark:bg-dark-card overflow-hidden mt-6">
+            <CardContent className="p-8">
+              <h3 className="text-lg font-bold text-slate-950 dark:text-white">Incoming Ingestion Simulator</h3>
               <p className="mt-2 text-sm text-slate-600">
                 Simulate active ingestion channels (Email, Website, Survey, Live Chat) to test Level 1 and Level 2 duplicate detection and auto-merges.
               </p>
@@ -261,30 +261,30 @@ export default function FeedbackPage() {
         </div>
       </div>
       {showModal && duplicateDetails && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-sm p-4 animate-in fade-in duration-150">
-          <div className="w-full max-w-lg bg-white rounded-3xl border border-slate-200/80 shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
-            <div className="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
-              <div className="flex items-center gap-2 text-rose-600">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 dark:bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-150">
+          <div className="w-full max-w-lg bg-white dark:bg-dark-card rounded-3xl border border-slate-200/80 dark:border-dark-border shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
+            <div className="p-6 border-b border-slate-100 dark:border-dark-border flex items-center justify-between bg-slate-50/50 dark:bg-dark-elevated">
+              <div className="flex items-center gap-2 text-rose-600 dark:text-rose-500">
                 <AlertCircle className="h-5 w-5" />
-                <h3 className="text-sm font-bold text-slate-900">Duplicate Feedback Detected</h3>
+                <h3 className="text-sm font-bold text-slate-900 dark:text-white">Duplicate Feedback Detected</h3>
               </div>
               <button 
                 onClick={() => setShowModal(false)}
-                className="text-slate-400 hover:text-slate-600 text-lg font-bold"
+                className="text-slate-400 dark:text-dark-muted hover:text-slate-600 dark:hover:text-white text-lg font-bold transition-colors"
               >
                 ×
               </button>
             </div>
             
             <div className="p-6 space-y-4">
-              <p className="text-xs text-slate-600 font-semibold leading-relaxed">
+              <p className="text-[13px] text-slate-600 dark:text-gray-300 font-semibold leading-relaxed">
                 A similar feedback already exists. The duplicate submission has been skipped to maintain clean customer feedback data.
               </p>
               
-              <div className="p-4 bg-slate-50 border border-slate-200/60 rounded-2xl space-y-3">
+              <div className="p-4 bg-slate-50 dark:bg-dark-elevated border border-slate-200/60 dark:border-dark-border rounded-2xl space-y-3">
                 <div className="space-y-1">
-                  <span className="text-[10px] font-extrabold text-slate-400 uppercase tracking-wider">Existing Feedback Content</span>
-                  <p className="text-xs text-slate-700 italic leading-relaxed">
+                  <span className="text-[10px] font-extrabold text-slate-400 dark:text-dark-muted uppercase tracking-wider">Existing Feedback Content</span>
+                  <p className="text-[13px] text-slate-700 dark:text-gray-200 italic leading-relaxed">
                     "{duplicateDetails.existingFeedback.content}"
                   </p>
                 </div>

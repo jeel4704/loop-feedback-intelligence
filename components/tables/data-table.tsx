@@ -13,27 +13,27 @@ interface DataTableProps {
 
 export function DataTable({ columns, rows }: DataTableProps) {
   return (
-    <Card>
+    <Card className="border border-slate-200 dark:border-dark-border shadow-sm rounded-2xl overflow-hidden bg-white dark:bg-dark-card">
       <CardContent className="overflow-hidden p-0">
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-800">
-            <thead className="bg-slate-50 dark:bg-dark-card/50">
+        <div className="overflow-x-auto custom-scrollbar">
+          <table className="min-w-full divide-y divide-slate-200 dark:divide-dark-border">
+            <thead className="bg-slate-50 dark:bg-dark-elevated">
               <tr>
                 {columns.map((column) => (
                   <th
                     key={column.key}
-                    className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-[0.22em] text-slate-500 dark:text-dark-muted"
+                    className="px-5 py-3.5 text-left text-[11px] font-black uppercase tracking-[0.15em] text-slate-500 dark:text-dark-muted border-b border-slate-200 dark:border-dark-border"
                   >
                     {column.label}
                   </th>
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-slate-850 bg-white dark:bg-dark-bg">
+            <tbody className="divide-y divide-slate-100 dark:divide-dark-border bg-white dark:bg-dark-card">
               {rows.map((row, index) => (
-                <tr key={index} className="align-top">
+                <tr key={index} className="align-top hover:bg-slate-50/80 dark:hover:bg-dark-hover transition-colors duration-150">
                   {row.map((cell, cellIndex) => (
-                    <td key={cellIndex} className="px-4 py-4 text-sm text-slate-700 dark:text-dark-secondaryText">
+                    <td key={cellIndex} className="px-5 py-4 text-[13px] text-slate-700 dark:text-gray-300">
                       {cell}
                     </td>
                   ))}

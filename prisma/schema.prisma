@@ -72,10 +72,13 @@ model Feedback {
   importedAt     DateTime        @default(now())
   updatedAt      DateTime        @updatedAt
   embedding      Embedding?
+  importId       String?
+  import         Import?         @relation(fields: [importId], references: [id], onDelete: SetNull)
   workspace      Workspace       @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   themes         FeedbackTheme[]
 
   @@index([workspaceId])
+  @@index([importId])
   @@index([createdAt])
   @@index([sentiment])
 }
@@ -116,6 +119,9 @@ model Report {
   title       String
   summary     String
   status      ReportStatus @default(DRAFT)
+  startDate   DateTime?
+  endDate     DateTime?
+  snapshot    Json?
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
   workspace   Workspace    @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
@@ -138,6 +144,7 @@ model Import {
   
   workspace       Workspace    @relation(fields: [workspaceId], references: [id], onDelete: Cascade)
   user            User         @relation(fields: [importedBy], references: [id], onDelete: Cascade)
+  feedbacks       Feedback[]
   
   @@index([workspaceId])
 }

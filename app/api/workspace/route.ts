@@ -57,8 +57,8 @@ export async function GET() {
         themesCount: ws._count.themes,
         createdAt: ws.createdAt,
         updatedAt: ws.updatedAt,
-        plan: m.role === "OWNER" ? "Enterprise" : "Startup", // Dynamic mocked plan tier based on roles
-        storageUsed: `${(ws._count.feedback * 1.2).toFixed(1)} MB`, // Dynamic storage estimation
+        plan: m.role === "OWNER" ? "Enterprise" : "Startup",
+        storageUsed: `${(ws._count.feedback * 1.2).toFixed(1)} MB`,
         storageLimit: "10 GB",
         isActive: true
       };

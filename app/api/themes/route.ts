@@ -33,7 +33,7 @@ export async function GET() {
       const total = feedbackItems.length;
       const positive = feedbackItems.filter(f => f.sentiment !== null && f.sentiment > 0.1).length;
       
-      let sentimentSummary = "No feedback matches";
+      let sentimentSummary = "Insufficient data";
       if (total > 0) {
         const positivePercentage = Math.round((positive / total) * 100);
         sentimentSummary = `${positivePercentage}% positive sentiment`;

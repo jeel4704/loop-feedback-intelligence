@@ -212,7 +212,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
     <div className="min-h-screen bg-[#fcfdff] dark:bg-dark-bg flex text-slate-800 dark:text-slate-100 transition-colors duration-300">
       <div className="flex min-h-screen w-full relative">
         {/* DESKTOP STICKY SIDEBAR */}
-        <aside className="w-[260px] h-screen sticky top-0 hidden lg:flex flex-col justify-between bg-[#fafbfe] dark:bg-dark-sidebar px-5 py-6 border-r border-slate-200/80 dark:border-dark-border flex-shrink-0 z-20 overflow-hidden">
+        <aside className="w-[260px] h-screen sticky top-0 hidden lg:flex flex-col justify-between bg-[#fafbfe] dark:bg-dark-sidebar px-5 py-6 border-r border-slate-200/80 dark:border-dark-border flex-shrink-0 z-20 overflow-hidden print:hidden">
           {renderSidebarContent(false)}
         </aside>
 
@@ -226,7 +226,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={() => setIsMobileOpen(false)}
-                className="fixed inset-0 z-40 bg-slate-950/60 backdrop-blur-sm lg:hidden"
+                className="fixed inset-0 z-40 bg-slate-950/60 backdrop-blur-sm lg:hidden print:hidden"
               />
               {/* Drawer layout */}
               <motion.aside
@@ -234,7 +234,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
                 animate={{ x: 0 }}
                 exit={{ x: "-100%" }}
                 transition={{ type: "spring", damping: 25, stiffness: 220 }}
-                className="fixed inset-y-0 left-0 z-50 w-[260px] bg-[#fafbfe] dark:bg-dark-sidebar border-r border-slate-200/80 dark:border-dark-border/80 flex flex-col justify-between px-5 py-6 lg:hidden overflow-hidden"
+                className="fixed inset-y-0 left-0 z-50 w-[260px] bg-[#fafbfe] dark:bg-dark-sidebar border-r border-slate-200/80 dark:border-dark-border/80 flex flex-col justify-between px-5 py-6 lg:hidden overflow-hidden print:hidden"
               >
                 {renderSidebarContent(true)}
               </motion.aside>
@@ -247,7 +247,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
           {/* HEADER NAV BAR */}
           <header 
             className={cn(
-              "sticky top-0 bg-white/80 dark:bg-dark-navbar/80 backdrop-blur-md z-30 px-6 py-4 w-full transition-all duration-200 border-b border-slate-200/60 dark:border-dark-border",
+              "sticky top-0 bg-white/80 dark:bg-dark-navbar/80 backdrop-blur-md z-30 px-6 py-4 w-full transition-all duration-200 border-b border-slate-200/60 dark:border-dark-border print:hidden",
               isScrolled && "shadow-sm border-b dark:border-dark-border"
             )}
           >
