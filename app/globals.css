@@ -62,3 +62,57 @@ a {
   scrollbar-color: #334155 transparent;
 }
 
+/* Custom Search Input CSS to bypass Tailwind inheritance & Chrome Autofill */
+.enterprise-search-input {
+  background-color: #FFFFFF !important;
+  color: #111827 !important;
+  caret-color: #111827 !important;
+  border: 1px solid #D1D5DB !important;
+  outline: none !important;
+}
+.enterprise-search-input::placeholder {
+  color: #6B7280 !important;
+  opacity: 1 !important;
+}
+.enterprise-search-input::selection {
+  background-color: rgba(99, 102, 241, 0.3) !important;
+}
+.enterprise-search-input:focus {
+  border-color: #6366F1 !important;
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.2) !important;
+}
+.enterprise-search-input:-webkit-autofill,
+.enterprise-search-input:-webkit-autofill:hover,
+.enterprise-search-input:-webkit-autofill:focus,
+.enterprise-search-input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #FFFFFF inset !important;
+  -webkit-text-fill-color: #111827 !important;
+  caret-color: #111827 !important;
+}
+
+.dark .enterprise-search-input {
+  background-color: #121212 !important;
+  color: #FFFFFF !important;
+  caret-color: #FFFFFF !important;
+  border: 1px solid #2E2E2E !important;
+}
+.dark .enterprise-search-input::placeholder {
+  color: #9CA3AF !important;
+  opacity: 1 !important;
+}
+.dark .enterprise-search-input::selection {
+  background-color: rgba(99, 102, 241, 0.5) !important;
+  color: #FFFFFF !important;
+}
+.dark .enterprise-search-input:focus {
+  border-color: #6366F1 !important;
+  box-shadow: 0 0 0 3px rgba(99,102,241,0.2) !important;
+}
+.dark .enterprise-search-input:-webkit-autofill,
+.dark .enterprise-search-input:-webkit-autofill:hover,
+.dark .enterprise-search-input:-webkit-autofill:focus,
+.dark .enterprise-search-input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #121212 inset !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+  caret-color: #FFFFFF !important;
+}

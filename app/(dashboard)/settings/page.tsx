@@ -4,28 +4,40 @@ import React, { useEffect, useState } from "react";
 import { DataTable } from "@/components/tables";
 import { useSession } from "next-auth/react";
 import { 
-  AlertTriangle, CheckCircle2, XCircle, Building2, User, Sun, 
-  Bell, Lock, Key, CreditCard, Cpu, Database, ClipboardList, 
-  AlertOctagon, Plus, Trash2, Check, ExternalLink, ShieldCheck 
+  Building2, 
+  ClipboardList, 
+  AlertOctagon, 
+  XCircle,
+  CheckCircle2,
+  Calendar,
+  User as UserIcon,
+  Globe,
+  Briefcase,
+  PanelLeftClose,
+  PanelLeftOpen
 } from "lucide-react";
 import { FormField } from "@/components/forms";
-import { Badge, Button, Card, CardContent, Input, SectionHeader } from "@/components/ui";
+import { Button, Card, CardContent, Input } from "@/components/ui";
 
 export default function SettingsPage() {
   const { data: session, update: updateSession } = useSession();
   const user = session?.user as any;
 
   // Active tab state
-  const [activeTab, setActiveTab] = useState<"general" | "api_keys" | "billing" | "ai_settings" | "backups" | "audit_logs" | "danger_zone">("general");
+  const [activeTab, setActiveTab] = useState<"general" | "audit_logs" | "danger_zone">("general");
+  const [isSidebarVisible, setIsSidebarVisible] = useState(true);
 
   const [workspaceName, setWorkspaceName] = useState("");
-  const [workspaceSlug, setWorkspaceSlug] = useState("");
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
+  const [workspaceDescription, setWorkspaceDescription] = useState("Enterprise Customer Feedback Portal");
+  const [companyName, setCompanyName] = useState("Acme Corp");
+  const [orgType, setOrgType] = useState("Enterprise SaaS");
+  const [industry, setIndustry] = useState("Technology");
+  const [timeZone, setTimeZone] = useState("UTC +05:30 IST");
+  const [language, setLanguage] = useState("English (US)");
+  
   const [error, setError] = useState("");
 
   const [workspaceSuccess, setWorkspaceSuccess] = useState(false);
-  // Independent loading states
   const [workspaceLoading, setWorkspaceLoading] = useState(false);
 
   // Duplicate logs state
@@ -36,11 +48,8 @@ export default function SettingsPage() {
   useEffect(() => {
     if (user) {
       setWorkspaceName(user.workspaceName || "");
-      setWorkspaceSlug(user.workspaceSlug || "");
-      setFullName(user.name || "");
-      setEmail(user.email || "");
-
-      // If workspace OWNER or ADMIN, load duplicate logs
+      if (user.companyName) setCompanyName(user.companyName);
+      
       const isOwnerOrAdmin = user.role === "OWNER" || user.role === "ADMIN";
       if (isOwnerOrAdmin) {
         setLogsLoading(true);
@@ -71,7 +80,7 @@ export default function SettingsPage() {
         body: JSON.stringify({
           type: "workspace",
           name: workspaceName,
-          slug: workspaceSlug
+          slug: user.workspaceSlug // keeping original logic but not in UI
         })
       });
 
@@ -83,13 +92,11 @@ export default function SettingsPage() {
 
       setWorkspaceSuccess(true);
 
-      // Refresh NextAuth session values in client context
       await updateSession({
         ...session,
         user: {
           ...session?.user,
-          workspaceName: workspaceName,
-          workspaceSlug: workspaceSlug
+          workspaceName: workspaceName
         }
       });
     } catch (err: any) {
@@ -98,48 +105,39 @@ export default function SettingsPage() {
       setWorkspaceLoading(false);
     }
   };
-
-
-
-  // Mock settings lists
-  const [apiKeys, setApiKeys] = useState<{id: string, name: string, token: string, expires: string}[]>([
-    { id: "key_1", name: "Production Ingestion Link", token: "sk_live_8a92...bc39", expires: "Never" },
-    { id: "key_2", name: "Staging Pipeline", token: "sk_test_41b9...7f1a", expires: "Dec 31, 2026" }
-  ]);
-
-  const [invoices] = useState([
-    { id: "inv_1", date: "Jul 01, 2026", desc: "Enterprise Tier Monthly Subscription", amount: "$499.00", status: "Paid" },
-    { id: "inv_2", date: "Jun 01, 2026", desc: "Enterprise Tier Monthly Subscription", amount: "$499.00", status: "Paid" }
-  ]);
-
-  // AI settings state
-  const [aiProvider, setAiProvider] = useState("claude");
-  const [aiTemperature, setAiTemperature] = useState(0.3);
-  const [aiSystemPrompt, setAiSystemPrompt] = useState("You are an expert feedback analyst at LOOP. Extract intents and sentiment accurately.");
-
-  const generateApiKey = () => {
-    const newKey = {
-      id: `key_${Date.now()}`,
-      name: "Dynamic API Key Key",
-      token: `sk_live_${Math.random().toString(36).substring(2, 6)}...${Math.random().toString(36).substring(2, 6)}`,
-      expires: "Never"
+  const [searchQuery, setSearchQuery] = useState("");
+  
+  // Settings Search Hotkey
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        document.getElementById("settings-search")?.focus();
+      }
     };
-    setApiKeys([...apiKeys, newKey]);
-  };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
-  const revokeApiKey = (id: string) => {
-    setApiKeys(apiKeys.filter(k => k.id !== id));
-  };
-
-  // Left sidebar tab lists
-  const sidebarItems = [
-    { value: "general", label: "General", icon: Building2 },
-    { value: "api_keys", label: "API Keys", icon: Key },
-    { value: "billing", label: "Billing & Plans", icon: CreditCard },
-    { value: "ai_settings", label: "AI Settings", icon: Cpu },
-    { value: "backups", label: "Database Backups", icon: Database },
-    { value: "audit_logs", label: "Audit Logs", icon: ClipboardList },
-    { value: "danger_zone", label: "Danger Zone", icon: AlertOctagon }
+  const navGroups = [
+    {
+      title: "Workspace",
+      items: [
+        { value: "general", label: "General", icon: Building2 },
+      ]
+    },
+    {
+      title: "Data",
+      items: [
+        { value: "audit_logs", label: "Audit Logs", icon: ClipboardList },
+      ]
+    },
+    {
+      title: "System",
+      items: [
+        { value: "danger_zone", label: "Security", icon: AlertOctagon },
+      ]
+    }
   ];
 
   return (
@@ -148,7 +146,7 @@ export default function SettingsPage() {
       <div>
         <h1 className="text-2xl font-black text-slate-900 dark:text-slate-50 tracking-tight">Settings</h1>
         <p className="text-xs font-bold text-slate-500 dark:text-dark-muted mt-1">
-          Configure application variables, profiles, subscriptions, AI engines, and credentials.
+          Configure application variables, profiles, subscriptions, and credentials.
         </p>
       </div>
 
@@ -160,43 +158,90 @@ export default function SettingsPage() {
       )}
 
       {/* Main Settings Split Frame */}
-      <div className="grid gap-6 md:grid-cols-[220px_1fr]">
+      <div className="flex flex-col md:flex-row gap-6 items-start">
         
-        {/* Settings Left sub-navigation tab list */}
-        <div className="flex flex-row md:flex-col overflow-x-auto md:overflow-x-visible pb-2 md:pb-0 gap-1 border-b md:border-b-0 md:border-r border-slate-200 dark:border-dark-border pr-0 md:pr-4 h-fit scrollbar-none py-1">
-          {sidebarItems.map((item) => {
-            const Icon = item.icon;
-            const isTabActive = activeTab === item.value;
-            return (
-              <button
-                key={item.value}
-                onClick={() => setActiveTab(item.value as any)}
-                className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-left text-xs font-extrabold transition-all whitespace-nowrap ${
-                  isTabActive
-                    ? "bg-slate-900 text-white dark:bg-dark-elevated dark:text-brand shadow-sm border border-slate-900 dark:border-dark-border"
-                    : "text-slate-500 hover:text-slate-800 dark:text-dark-muted dark:hover:text-gray-200 hover:bg-slate-100/50 dark:hover:bg-dark-hover/60 border border-transparent"
-                }`}
-              >
-                <Icon className="h-4 w-4" />
-                <span>{item.label}</span>
-              </button>
-            );
-          })}
+        {/* Settings Left Column */}
+        <div className={`flex flex-col gap-4 shrink-0 ${isSidebarVisible ? "w-full md:w-[260px]" : "w-auto"}`}>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setIsSidebarVisible(!isSidebarVisible)}
+              className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 dark:hover:text-slate-200 dark:hover:bg-dark-elevated transition-colors"
+              title={isSidebarVisible ? "Hide Sidebar" : "Show Sidebar"}
+            >
+              {isSidebarVisible ? <PanelLeftClose className="h-5 w-5" /> : <PanelLeftOpen className="h-5 w-5" />}
+            </button>
+            
+            {isSidebarVisible && (
+              <div className="relative flex-1">
+                <input 
+                  id="settings-search"
+                  type="text" 
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search settings..."
+                  className="w-full enterprise-search-input pl-3 pr-10 py-1.5 rounded-lg text-[13px] font-medium transition-all"
+                />
+                <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1 pointer-events-none text-slate-400 dark:text-slate-500">
+                  <kbd className="font-sans text-[10px] font-semibold bg-slate-100 dark:bg-dark-hover px-1.5 py-0.5 rounded border border-slate-200 dark:border-dark-border">⌘K</kbd>
+                </div>
+              </div>
+            )}
+          </div>
+          
+          {/* Sub-navigation tab list */}
+          {isSidebarVisible && (
+            <div className="flex flex-col gap-5 overflow-y-auto pr-1 h-fit custom-scrollbar pb-4">
+              {navGroups.map((group) => {
+                // Filter items based on search query
+                const filteredItems = group.items.filter(item => 
+                  item.label.toLowerCase().includes(searchQuery.toLowerCase())
+                );
+                
+                if (filteredItems.length === 0) return null;
+
+                return (
+                  <div key={group.title} className="flex flex-col gap-1">
+                    <h4 className="text-[10px] font-extrabold text-slate-400 dark:text-dark-muted uppercase tracking-widest px-3 mb-1">
+                      {group.title}
+                    </h4>
+                    {filteredItems.map((item) => {
+                      const Icon = item.icon;
+                      const isTabActive = activeTab === item.value;
+                      return (
+                        <button
+                          key={item.value}
+                          onClick={() => setActiveTab(item.value as any)}
+                          className={`flex items-center gap-3 px-3 py-2 rounded-xl text-left text-[13px] font-semibold transition-all duration-300 relative group overflow-hidden outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 ${
+                            isTabActive
+                              ? "bg-gradient-to-r from-indigo-500 to-violet-600 text-white shadow-[0_0_15px_rgba(99,102,241,0.3)]"
+                              : "text-slate-600 hover:bg-slate-100/80 hover:text-slate-900 dark:text-dark-muted dark:hover:bg-dark-hover dark:hover:text-white"
+                          }`}
+                        >
+                          <Icon className={`h-4.5 w-4.5 transition-transform duration-300 ${isTabActive ? "text-white" : "group-hover:scale-110"}`} />
+                          <span>{item.label}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
 
         {/* Settings Right view panels switcher */}
-        <div className="space-y-6">
+        <div className="flex-1 w-full space-y-6">
 
           {/* TAB: GENERAL */}
           {activeTab === "general" && (
-            <Card className="bg-white dark:bg-dark-card border border-slate-200/80 dark:border-dark-border rounded-2xl shadow-sm">
-              <CardContent className="p-6 space-y-6">
-                <div>
-                  <h3 className="text-sm font-extrabold text-slate-900 dark:text-slate-50">General Workspace settings</h3>
-                  <p className="text-[11px] text-slate-450 mt-0.5">Manage the workspace name, slug parameters, and localized formats.</p>
-                </div>
+            <Card className="bg-white dark:bg-dark-card border border-slate-200/80 dark:border-dark-border rounded-2xl shadow-sm overflow-hidden">
+              <div className="border-b border-slate-100 dark:border-dark-border p-6 bg-slate-50/50 dark:bg-dark-elevated/20">
+                <h3 className="text-sm font-extrabold text-slate-900 dark:text-slate-50">Workspace Details</h3>
+                <p className="text-[11px] text-slate-500 dark:text-dark-muted mt-0.5">Manage your organization&apos;s identity and regional defaults.</p>
+              </div>
 
-                <form onSubmit={handleUpdateWorkspace} className="space-y-4 max-w-xl">
+              <CardContent className="p-6">
+                <form onSubmit={handleUpdateWorkspace} className="space-y-6 max-w-2xl">
                   {workspaceSuccess && (
                     <div className="rounded-xl bg-emerald-50 border border-emerald-200 p-3 text-xs font-semibold text-emerald-700 flex items-center gap-2">
                       <CheckCircle2 className="h-4 w-4 text-emerald-600" />
@@ -204,28 +249,110 @@ export default function SettingsPage() {
                     </div>
                   )}
 
-                  <FormField label="Workspace Name">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <FormField label="Workspace Name">
+                      <Input 
+                        value={workspaceName} 
+                        onChange={(e) => setWorkspaceName(e.target.value)} 
+                        className="rounded-xl bg-slate-50 dark:bg-dark-input border-slate-200 dark:border-dark-border"
+                      />
+                    </FormField>
+
+                    <FormField label="Company Name">
+                      <Input 
+                        value={companyName} 
+                        onChange={(e) => setCompanyName(e.target.value)} 
+                        className="rounded-xl bg-slate-50 dark:bg-dark-input border-slate-200 dark:border-dark-border"
+                      />
+                    </FormField>
+                  </div>
+
+                  <FormField label="Workspace Description">
                     <Input 
-                      value={workspaceName} 
-                      onChange={(e) => setWorkspaceName(e.target.value)} 
+                      value={workspaceDescription} 
+                      onChange={(e) => setWorkspaceDescription(e.target.value)} 
+                      className="rounded-xl bg-slate-50 dark:bg-dark-input border-slate-200 dark:border-dark-border"
                     />
                   </FormField>
-                  
-                  <FormField label="Workspace URL Slug">
-                    <div className="flex items-center">
-                      <span className="bg-slate-100 dark:bg-dark-bg border border-r-0 border-slate-200 dark:border-dark-border rounded-l-xl px-3 py-2 text-xs font-bold text-slate-400">
-                        loopai.dev/
-                      </span>
-                      <Input 
-                        value={workspaceSlug} 
-                        onChange={(e) => setWorkspaceSlug(e.target.value)} 
-                        className="rounded-l-none"
-                      />
-                    </div>
-                  </FormField>
 
-                  <div className="flex justify-end pt-2">
-                    <Button type="submit" disabled={workspaceLoading} className="text-[13px] font-bold px-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <FormField label="Organization Type">
+                      <div className="relative">
+                        <Briefcase className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
+                        <Input 
+                          value={orgType} 
+                          onChange={(e) => setOrgType(e.target.value)} 
+                          className="pl-9 rounded-xl bg-slate-50 dark:bg-dark-input border-slate-200 dark:border-dark-border"
+                        />
+                      </div>
+                    </FormField>
+
+                    <FormField label="Industry">
+                      <Input 
+                        value={industry} 
+                        onChange={(e) => setIndustry(e.target.value)} 
+                        className="rounded-xl bg-slate-50 dark:bg-dark-input border-slate-200 dark:border-dark-border"
+                      />
+                    </FormField>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <FormField label="Default Time Zone">
+                      <div className="relative">
+                        <Globe className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
+                        <select 
+                          value={timeZone}
+                          onChange={(e) => setTimeZone(e.target.value)}
+                          className="w-full bg-slate-50 dark:bg-dark-input border border-slate-200 dark:border-dark-border rounded-xl pl-9 pr-3 py-2 text-sm font-medium focus:ring-2 focus:ring-indigo-500 dark:text-white outline-none appearance-none"
+                        >
+                          <option>UTC -08:00 Pacific Time</option>
+                          <option>UTC -05:00 Eastern Time</option>
+                          <option>UTC +00:00 GMT</option>
+                          <option>UTC +05:30 IST</option>
+                        </select>
+                      </div>
+                    </FormField>
+
+                    <FormField label="Default Language">
+                      <select 
+                        value={language}
+                        onChange={(e) => setLanguage(e.target.value)}
+                        className="w-full bg-slate-50 dark:bg-dark-input border border-slate-200 dark:border-dark-border rounded-xl px-3 py-2 text-sm font-medium focus:ring-2 focus:ring-indigo-500 dark:text-white outline-none appearance-none"
+                      >
+                        <option>English (US)</option>
+                        <option>English (UK)</option>
+                        <option>Spanish</option>
+                        <option>French</option>
+                      </select>
+                    </FormField>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-slate-100 dark:border-dark-border">
+                    <FormField label="Workspace Created Date">
+                      <div className="relative">
+                        <Calendar className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
+                        <Input 
+                          value="January 12, 2026" 
+                          readOnly
+                          className="pl-9 rounded-xl bg-slate-100 dark:bg-slate-900 border-transparent text-slate-500 dark:text-dark-muted cursor-not-allowed"
+                        />
+                      </div>
+                    </FormField>
+
+                    <FormField label="Workspace Owner">
+                      <div className="relative">
+                        <UserIcon className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
+                        <Input 
+                          value={user?.name || "Administrator"} 
+                          readOnly
+                          className="pl-9 rounded-xl bg-slate-100 dark:bg-slate-900 border-transparent text-slate-500 dark:text-dark-muted cursor-not-allowed"
+                        />
+                      </div>
+                    </FormField>
+                  </div>
+
+                  <div className="flex justify-end pt-4">
+                    <Button type="submit" disabled={workspaceLoading} className="text-[13px] font-bold px-6 bg-slate-900 hover:bg-slate-800 text-white dark:bg-indigo-600 dark:hover:bg-indigo-700 rounded-xl transition-all shadow-sm">
                       {workspaceLoading ? "Saving..." : "Save parameters"}
                     </Button>
                   </div>
@@ -234,230 +361,18 @@ export default function SettingsPage() {
             </Card>
           )}
 
-
-
-          {/* TAB: API KEYS */}
-          {activeTab === "api_keys" && (
+          {/* TAB: AUDIT LOGS */}
+          {activeTab === "audit_logs" && (
             <Card className="bg-white dark:bg-dark-card border border-slate-200/80 dark:border-dark-border rounded-2xl shadow-sm">
               <CardContent className="p-6 space-y-6">
                 <div className="flex items-center justify-between gap-4">
                   <div>
-                    <h3 className="text-sm font-extrabold text-slate-900 dark:text-slate-50">API Keys Administration</h3>
-                    <p className="text-[11px] text-slate-450 mt-0.5">Use custom API keys to programmatically import customer feedback reviews.</p>
+                    <h3 className="text-sm font-extrabold text-slate-900 dark:text-slate-50">Deduplication Audit Logs</h3>
+                    <p className="text-[11px] text-slate-450 mt-0.5">Track every automated feedback merge applied by the ingestion engine.</p>
                   </div>
-                  <Button onClick={generateApiKey} variant="secondary" className="text-xs font-extrabold gap-1 rounded-xl py-1.5 h-8">
-                    <Plus className="h-3.5 w-3.5" />
-                    <span>Generate key</span>
-                  </Button>
-                </div>
-
-                <div className="space-y-3">
-                  {apiKeys.map((key) => (
-                    <div key={key.id} className="flex items-center justify-between border border-slate-200 dark:border-dark-border bg-slate-50/50 dark:bg-dark-bg/20 p-3.5 rounded-2xl">
-                      <div className="space-y-0.5">
-                        <p className="font-extrabold text-xs text-slate-800 dark:text-slate-150">{key.name}</p>
-                        <div className="flex items-center gap-2 mt-0.5">
-                          <code className="text-[10.5px] font-bold text-slate-500 font-mono bg-slate-100 dark:bg-dark-bg px-1.5 py-0.5 rounded border">{key.token}</code>
-                          <span className="text-[9.5px] font-semibold text-slate-400">Expires: {key.expires}</span>
-                        </div>
-                      </div>
-                      <button 
-                        onClick={() => revokeApiKey(key.id)}
-                        className="text-xs text-rose-500 hover:text-rose-600 font-bold px-3 py-1.5 rounded-lg hover:bg-rose-50/50"
-                      >
-                        Revoke Key
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          )}
-
-          {/* TAB: BILLING */}
-          {activeTab === "billing" && (
-            <div className="space-y-6">
-              <Card className="bg-white dark:bg-dark-card border border-slate-200/80 dark:border-dark-border rounded-2xl shadow-sm">
-                <CardContent className="p-6 space-y-4">
-                  <div>
-                    <h3 className="text-sm font-extrabold text-slate-900 dark:text-slate-50">Current Billing Plan</h3>
-                    <p className="text-[11px] text-slate-450 mt-0.5">Your organization subscription tier limits and renewal scopes details.</p>
-                  </div>
-
-                  <div className="border border-indigo-200 dark:border-indigo-900 bg-indigo-50/30 dark:bg-indigo-950/20 p-4 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-2">
-                        <Badge variant="indigo" className="text-[9px] font-extrabold uppercase px-2">Enterprise Plan</Badge>
-                        <span className="text-xs font-bold text-slate-800 dark:text-slate-250">$499.00 / month</span>
-                      </div>
-                      <p className="text-[11px] text-slate-500 dark:text-dark-muted">Provides unlimited team users, custom webhook scopes, and Claude-3 classification.</p>
-                    </div>
-                    <Button variant="secondary" className="text-xs font-extrabold h-9">Downgrade tier</Button>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Invoices table */}
-              <Card className="bg-white dark:bg-dark-card border border-slate-200/80 dark:border-dark-border rounded-2xl shadow-sm">
-                <CardContent className="p-6 space-y-4">
-                  <h3 className="text-xs font-extrabold text-slate-900 dark:text-slate-50 uppercase tracking-widest">Invoices History</h3>
-                  
-                  <div className="overflow-x-auto text-xs font-bold">
-                    <table className="min-w-full divide-y divide-slate-100">
-                      <thead>
-                        <tr className="text-slate-400 text-left uppercase text-[9.5px]">
-                          <th className="py-2.5">Billing Date</th>
-                          <th>Invoice Description</th>
-                          <th>Paid Sum</th>
-                          <th>Status</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-slate-100 text-slate-700 dark:text-slate-350">
-                        {invoices.map((inv) => (
-                          <tr key={inv.id} className="hover:bg-slate-50/30">
-                            <td className="py-2.5">{inv.date}</td>
-                            <td>{inv.desc}</td>
-                            <td>{inv.amount}</td>
-                            <td>
-                              <Badge variant="green" className="text-[8.5px] px-1.5 py-0 uppercase">Paid</Badge>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          )}
-
-          {/* TAB: AI SETTINGS */}
-          {activeTab === "ai_settings" && (
-            <Card className="bg-white dark:bg-dark-card border border-slate-200/80 dark:border-dark-border rounded-2xl shadow-sm">
-              <CardContent className="p-6 space-y-6">
-                <div>
-                  <h3 className="text-sm font-extrabold text-slate-900 dark:text-slate-50">AI Configuration</h3>
-                  <p className="text-[11px] text-slate-450 mt-0.5">Control the semantic tags auto-categorization models and prompt settings.</p>
-                </div>
-
-                <div className="space-y-4 max-w-xl text-xs font-bold">
-                  <div className="space-y-1.5">
-                    <label className="text-[10px] font-extrabold text-slate-450 uppercase">Default AI Ingestion Model</label>
-                    <select 
-                      value={aiProvider}
-                      onChange={(e) => setAiProvider(e.target.value)}
-                      className="w-full bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-dark-border text-slate-700 dark:text-dark-secondaryText rounded-xl px-3.5 py-2 focus:outline-none"
-                    >
-                      <option value="claude">Claude-3.5 Sonnet (Recommended)</option>
-                      <option value="gpt-4o">OpenAI GPT-4o</option>
-                      <option value="llama-3.3-70b-versatile">Groq LLaMA-3.3 70B</option>
-                      <option value="llama-3.1-8b-instant">Groq LLaMA-3.1 8B</option>
-                    </select>
-                  </div>
-
-                  <div className="space-y-1.5 pt-1">
-                    <div className="flex justify-between">
-                      <label className="text-[10px] font-extrabold text-slate-450 uppercase">Temperature: {aiTemperature}</label>
-                    </div>
-                    <input 
-                      type="range" 
-                      min="0" 
-                      max="1.0" 
-                      step="0.1"
-                      value={aiTemperature}
-                      onChange={(e) => setAiTemperature(parseFloat(e.target.value))}
-                      className="w-full h-1 bg-slate-200 dark:bg-dark-elevated accent-indigo-650 rounded-lg cursor-pointer"
-                    />
-                  </div>
-
-                  <div className="space-y-1.5 pt-1">
-                    <label className="text-[10px] font-extrabold text-slate-450 uppercase">Classifier System Instructions</label>
-                    <textarea
-                      rows={3}
-                      value={aiSystemPrompt}
-                      onChange={(e) => setAiSystemPrompt(e.target.value)}
-                      className="w-full bg-slate-50 dark:bg-dark-bg border border-slate-200 dark:border-dark-border text-slate-700 dark:text-slate-200 rounded-xl px-3 py-2 outline-none focus:border-indigo-500 font-semibold resize-none"
-                    />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          )}
-
-          {/* TAB: BACKUPS */}
-          {activeTab === "backups" && (
-            <Card className="bg-white dark:bg-dark-card border border-slate-200/80 dark:border-dark-border rounded-2xl shadow-sm">
-              <CardContent className="p-6 space-y-6">
-                <div>
-                  <h3 className="text-sm font-extrabold text-slate-900 dark:text-slate-50">Database Backups</h3>
-                  <p className="text-[11px] text-slate-450 mt-0.5">Download full workspace metadata backups or schedule automated retention cycles.</p>
-                </div>
-
-                <div className="border border-slate-200 dark:border-dark-border bg-slate-50/50 p-4 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                  <div className="space-y-1">
-                    <p className="font-extrabold text-xs text-slate-800 dark:text-slate-200">Generate Manual Backup</p>
-                    <p className="text-[10.5px] text-slate-450 leading-relaxed font-bold">Creates a zip file containing raw SQL feedback inputs, custom reports, and active themes.</p>
-                  </div>
-                  <button className="text-xs font-bold gap-1 rounded-xl bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 inline-flex items-center">
-                    <Database className="h-3.5 w-3.5" />
-                    <span>Run Backup</span>
-                  </button>
-                </div>
-              </CardContent>
-            </Card>
-          )}
-
-          {/* TAB: AUDIT LOGS */}
-          {activeTab === "audit_logs" && (
-            <Card className="col-span-full bg-white dark:bg-dark-card border border-slate-200/85 dark:border-dark-border rounded-2xl shadow-sm">
-              <CardContent className="p-6 space-y-4">
-                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-slate-100 dark:border-dark-border pb-5">
-                  <div>
-                    <h3 className="text-sm font-extrabold text-slate-900 dark:text-slate-50">
-                      Duplicate Feedback Audit Log
-                    </h3>
-                    <p className="mt-1 text-[11px] text-slate-500 font-semibold">
-                      Lightweight audit records for automatically skipped & merged duplicate items. Only visible to owners and administrators.
-                    </p>
-                  </div>
-
                   {duplicateLogs.length > 0 && (
-                    <Button
-                      variant="secondary"
-                      type="button"
-                      onClick={() => {
-                        const headers = [
-                          "Incoming Feedback",
-                          "Matched Feedback ID",
-                          "Customer",
-                          "Similarity Score",
-                          "Source Channel",
-                          "Detection Method",
-                          "Imported By",
-                          "Action Taken",
-                          "Timestamp"
-                        ];
-                        const rows = duplicateLogs.map((log: any) => [
-                          `"${log.feedbackContent.replace(/"/g, '""')}"`,
-                          `"${log.existingFeedbackId}"`,
-                          `"${log.customerName}"`,
-                          (log.similarityScore || 0).toFixed(2),
-                          `"${log.sourceChannel}"`,
-                          `"${log.detectionMethod}"`,
-                          `"${log.importedBy}"`,
-                          `"${log.actionTaken}"`,
-                          `"${new Date(log.createdAt).toISOString()}"`
-                        ]);
-                        const csvContent = [headers.join(","), ...rows.map(r => r.join(","))].join("\n");
-                        const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-                        const url = URL.createObjectURL(blob);
-                        const link = document.createElement("a");
-                        link.setAttribute("href", url);
-                        link.setAttribute("download", "duplicate_audit_logs.csv");
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-                      }}
+                    <Button 
+                      variant="secondary" 
                       className="text-xs font-bold bg-slate-900 text-white hover:bg-slate-800 dark:bg-dark-elevated"
                     >
                       Export Audit Log (CSV)
@@ -479,32 +394,26 @@ export default function SettingsPage() {
                       columns={[
                         { key: "timestamp", label: "Timestamp" },
                         { key: "incoming", label: "Incoming Feedback" },
-                        { key: "matched_id", label: "Matched ID" },
                         { key: "customer", label: "Customer" },
                         { key: "channel", label: "Channel" },
-                        { key: "score", label: "Score" },
-                        { key: "method", label: "Method" },
+                        { key: "score", label: "Similarity %" },
                         { key: "action", label: "Action" }
                       ]}
                       rows={duplicateLogs.map((log: any) => [
                         <span key={`ts-${log.id}`} className="text-slate-500 dark:text-dark-muted font-medium">
                           {new Date(log.createdAt).toLocaleString()}
                         </span>,
-                        <span key={`fb-${log.id}`} className="block max-w-[200px] truncate text-slate-800 dark:text-gray-200 font-medium" title={log.feedbackContent}>
+                        <div key={`inc-${log.id}`} className="max-w-[200px] truncate" title={log.feedbackContent}>
                           {log.feedbackContent}
-                        </span>,
-                        <span key={`id-${log.id}`} className="text-brand font-bold">
-                          #{log.existingFeedbackId.substring(0, 8)}
-                        </span>,
-                        <span key={`cn-${log.id}`} className="font-semibold text-slate-700 dark:text-gray-300">{log.customerName}</span>,
-                        <span key={`ch-${log.id}`} className="text-slate-600 dark:text-gray-400">{log.sourceChannel}</span>,
-                        <span key={`sc-${log.id}`} className="text-slate-900 dark:text-white font-extrabold">
+                        </div>,
+                        <span key={`cust-${log.id}`}>{log.customerName}</span>,
+                        <span key={`chan-${log.id}`} className="capitalize">{log.sourceChannel}</span>,
+                        <span key={`score-${log.id}`} className="font-mono text-indigo-600 dark:text-indigo-400">
                           {Math.round(log.similarityScore * 100)}%
                         </span>,
-                        <span key={`md-${log.id}`} className="text-slate-500 dark:text-dark-muted font-medium">{log.detectionMethod}</span>,
-                        <Badge key={`ac-${log.id}`} variant="green" className="text-[10px] font-extrabold uppercase px-2 py-0.5">
+                        <span key={`act-${log.id}`} className="text-xs font-bold text-amber-600 dark:text-amber-500 bg-amber-50 dark:bg-amber-950/30 px-2 py-0.5 rounded-md whitespace-nowrap">
                           {log.actionTaken}
-                        </Badge>
+                        </span>
                       ])}
                     />
                   </div>
@@ -515,30 +424,23 @@ export default function SettingsPage() {
 
           {/* TAB: DANGER ZONE */}
           {activeTab === "danger_zone" && (
-            <Card className="bg-white dark:bg-dark-card border border-rose-200 dark:border-rose-900/50 rounded-2xl shadow-sm overflow-hidden">
-              <div className="bg-rose-50 dark:bg-rose-950/20 px-6 py-5 border-b border-rose-100 dark:border-rose-900/40">
-                <h3 className="text-[15px] font-black text-rose-700 dark:text-rose-500 flex items-center gap-2">
-                  <AlertOctagon className="h-5 w-5" />
-                  <span>Workspace Danger Zone</span>
-                </h3>
-                <p className="text-xs text-rose-600/80 dark:text-rose-400/80 mt-1 font-medium">Destructive workspace actions. These parameters cannot be undone.</p>
-              </div>
-
+            <Card className="bg-white dark:bg-dark-card border border-rose-200 dark:border-rose-900/50 rounded-2xl shadow-sm">
               <CardContent className="p-6 space-y-6">
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                  <div className="space-y-1">
-                    <p className="text-[13px] font-bold text-slate-900 dark:text-white">Delete all customer feedback data</p>
-                    <p className="text-[11.5px] text-slate-500 dark:text-dark-muted font-medium">Wipe database feedback rows, vector embeddings, and themes tags.</p>
-                  </div>
-                  <Button variant="danger" className="text-xs font-bold rounded-xl px-5 py-2.5">Wipe Feedback Data</Button>
+                <div>
+                  <h3 className="text-sm font-extrabold text-rose-600 dark:text-rose-500">Danger Zone</h3>
+                  <p className="text-[11px] text-slate-500 dark:text-dark-muted mt-0.5">Destructive actions that cannot be reversed.</p>
                 </div>
-                
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-t border-slate-100 dark:border-dark-border pt-6 mt-2">
-                  <div className="space-y-1">
-                    <p className="text-[13px] font-bold text-slate-900 dark:text-white">Archive this workspace</p>
-                    <p className="text-[11.5px] text-slate-500 dark:text-dark-muted font-medium">Freeze billing, deactivate active integrations, and lock member profiles.</p>
+
+                <div className="bg-rose-50 dark:bg-rose-950/20 rounded-xl border border-rose-200 dark:border-rose-900/30 p-5 flex items-start sm:items-center justify-between flex-col sm:flex-row gap-4">
+                  <div>
+                    <h4 className="text-sm font-bold text-rose-900 dark:text-rose-400">Delete Workspace</h4>
+                    <p className="text-xs font-medium text-rose-700/80 dark:text-rose-500/80 mt-1 max-w-sm">
+                      Permanently delete this workspace, including all feedback, API keys, AI settings, and billing histories.
+                    </p>
                   </div>
-                  <Button variant="secondary" className="text-xs font-bold rounded-xl px-5 py-2.5 border border-rose-200 dark:border-rose-900/50 hover:bg-rose-50 dark:hover:bg-rose-950/30 text-rose-600 dark:text-rose-500 bg-white dark:bg-dark-elevated">Archive Workspace</Button>
+                  <Button variant="danger" className="text-xs font-bold whitespace-nowrap bg-rose-600 hover:bg-rose-700 text-white rounded-xl">
+                    Delete workspace
+                  </Button>
                 </div>
               </CardContent>
             </Card>

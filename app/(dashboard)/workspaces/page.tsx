@@ -348,13 +348,13 @@ export default function WorkspacesPage() {
           {/* Search Controls */}
           <div className="flex items-center justify-between gap-3 border border-slate-200/80 dark:border-dark-border bg-white dark:bg-dark-card p-3.5 rounded-2xl shadow-sm">
             <div className="relative flex-1 max-w-sm">
-              <Search className="absolute left-3 top-2.5 h-3.5 w-3.5 text-slate-400" />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4.5 w-4.5 text-[#6B7280] dark:text-[#9CA3AF] pointer-events-none" />
               <input
                 type="text"
                 placeholder="Search workspaces by name or slug..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full bg-slate-50 dark:bg-slate-955 border border-slate-200 dark:border-dark-border rounded-xl py-1.5 pl-9 pr-4 text-xs font-semibold text-slate-700 dark:text-slate-200 placeholder-slate-400 outline-none focus:border-indigo-500"
+                className="enterprise-search-input w-full h-[44px] pl-11 pr-4 rounded-[12px] text-sm font-semibold transition-all duration-200"
               />
             </div>
             <p className="text-[10px] font-extrabold text-slate-400">Total: {filteredWorkspaces.length} workspaces</p>
@@ -643,25 +643,27 @@ export default function WorkspacesPage() {
                           <div className="space-y-1.5 text-xs font-bold pt-1">
                             <p className="text-[10px] uppercase font-extrabold text-slate-455">Organization settings</p>
                             <form onSubmit={handleUpdateWorkspaceDetails} className="space-y-3">
-                              <div className="space-y-1">
-                                <span className="text-[9px] uppercase font-bold text-slate-400">Rename workspace</span>
+                              <div className="space-y-1.5">
+                                <span className="text-[10px] uppercase font-bold text-slate-500 dark:text-gray-300">Rename workspace</span>
                                 <input
                                   type="text"
                                   value={renameName}
+                                  placeholder="Workspace Name"
                                   onChange={(e) => setRenameName(e.target.value)}
-                                  className="w-full bg-slate-50 dark:bg-slate-955 border rounded-lg px-2.5 py-1.5 text-xs font-bold outline-none"
+                                  className="w-full bg-slate-50 dark:bg-dark-input border border-slate-200 dark:border-dark-border rounded-xl px-3 py-2 text-xs font-bold text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-gray-500 outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all"
                                 />
                               </div>
-                              <div className="space-y-1">
-                                <span className="text-[9px] uppercase font-bold text-slate-400">URL Slug</span>
+                              <div className="space-y-1.5">
+                                <span className="text-[10px] uppercase font-bold text-slate-500 dark:text-gray-300">URL Slug</span>
                                 <input
                                   type="text"
                                   value={renameSlug}
+                                  placeholder="workspace-slug"
                                   onChange={(e) => setRenameSlug(e.target.value)}
-                                  className="w-full bg-slate-50 dark:bg-slate-955 border rounded-lg px-2.5 py-1.5 text-xs font-mono outline-none"
+                                  className="w-full bg-slate-50 dark:bg-dark-input border border-slate-200 dark:border-dark-border rounded-xl px-3 py-2 text-xs font-mono font-medium text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-gray-500 outline-none focus:ring-2 focus:ring-purple-500/20 focus:border-purple-500 transition-all"
                                 />
                               </div>
-                              <button type="submit" className="w-full text-xs font-bold py-1.5 h-8 rounded-xl bg-blue-600 hover:bg-blue-700 text-white transition flex items-center justify-center">
+                              <button type="submit" className="w-full text-xs font-bold py-2 h-9 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white transition flex items-center justify-center shadow-md">
                                 Save updates
                               </button>
                             </form>
@@ -690,7 +692,7 @@ export default function WorkspacesPage() {
 
                     <div className="overflow-x-auto text-xs font-semibold">
                       <table className="min-w-full divide-y divide-slate-100 dark:divide-slate-800">
-                        <thead className="bg-slate-50 dark:bg-slate-955 text-slate-455 dark:text-dark-muted uppercase tracking-wider text-[10px]">
+                        <thead className="sticky top-0 z-10 bg-[#F5F7FA] dark:bg-[#161616] text-[#1F2937] dark:text-[#FFFFFF] uppercase tracking-[0.5px] font-semibold text-[10px] border-b border-[#D1D5DB] dark:border-[#2E2E2E]">
                           <tr>
                             <th className="px-4 py-3 text-left">Collaborator</th>
                             <th className="px-4 py-3 text-left">Email Address</th>
@@ -780,7 +782,7 @@ export default function WorkspacesPage() {
                     ) : (
                       <div className="overflow-x-auto text-xs font-semibold">
                         <table className="min-w-full divide-y divide-slate-100 dark:divide-slate-800">
-                          <thead className="bg-slate-50 dark:bg-slate-955 text-slate-455 uppercase tracking-wider text-[10px]">
+                          <thead className="sticky top-0 z-10 bg-[#F5F7FA] dark:bg-[#161616] text-[#1F2937] dark:text-[#FFFFFF] uppercase tracking-[0.5px] font-semibold text-[10px] border-b border-[#D1D5DB] dark:border-[#2E2E2E]">
                             <tr>
                               <th className="px-4 py-3 text-left">Report Document</th>
                               <th className="px-4 py-3 text-left">Status</th>
@@ -876,7 +878,7 @@ export default function WorkspacesPage() {
                     
                     <div className="overflow-x-auto text-xs font-semibold">
                       <table className="min-w-full divide-y divide-slate-100 dark:divide-slate-800">
-                        <thead className="bg-slate-50 dark:bg-slate-955 text-slate-455 uppercase tracking-wider text-[10px]">
+                        <thead className="sticky top-0 z-10 bg-[#F5F7FA] dark:bg-[#161616] text-[#1F2937] dark:text-[#FFFFFF] uppercase tracking-[0.5px] font-semibold text-[10px] border-b border-[#D1D5DB] dark:border-[#2E2E2E]">
                           <tr>
                             <th className="px-4 py-3 text-left">CSV File Imported</th>
                             <th className="px-4 py-3 text-left">Rows Successfully Loaded</th>
