@@ -129,13 +129,13 @@ export default function InboxPage() {
           </div>
         )}
       </div>,
-      <div className="flex items-center gap-2">
+      <div key={`${item.id}-source`} className="flex items-center gap-2">
         <span className="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-dark-elevated text-[11px] font-bold text-slate-700 dark:text-gray-300 border border-slate-200 dark:border-dark-border">
           {item.source}
         </span>
       </div>,
-      <span className="text-[13px] font-semibold text-slate-800 dark:text-gray-200">{themeName}</span>,
-      <div className="flex items-center gap-1.5">
+      <span key={`${item.id}-theme`} className="text-[13px] font-semibold text-slate-800 dark:text-gray-200">{themeName}</span>,
+      <div key={`${item.id}-sentiment`} className="flex items-center gap-1.5">
         <div className={`w-1.5 h-1.5 rounded-full ${
           item.sentimentLabel === 'Positive' ? 'bg-emerald-500' :
           item.sentimentLabel === 'Negative' ? 'bg-rose-500' :
