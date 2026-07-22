@@ -35,7 +35,7 @@ export default auth((req) => {
   const user = req.auth?.user as any;
   const pathname = nextUrl.pathname;
 
-  const isPublic = publicPaths.includes(pathname);
+const isPublic = publicPaths.includes(pathname) || pathname.startsWith("/invite/");
   const isAuthPage = authOnlyPaths.includes(pathname);
 
   // ============================================================
