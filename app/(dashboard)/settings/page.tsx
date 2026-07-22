@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import { DataTable } from "@/components/tables";
 import { useSession } from "next-auth/react";
 import { 
   AlertTriangle, CheckCircle2, XCircle, Building2, User, Sun, 
