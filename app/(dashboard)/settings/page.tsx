@@ -15,20 +15,17 @@ export default function SettingsPage() {
   const user = session?.user as any;
 
   // Active tab state
-  const [activeTab, setActiveTab] = useState<"general" | "profile" | "appearance" | "notifications" | "security" | "api_keys" | "billing" | "ai_settings" | "backups" | "audit_logs" | "danger_zone">("general");
+  const [activeTab, setActiveTab] = useState<"general" | "api_keys" | "billing" | "ai_settings" | "backups" | "audit_logs" | "danger_zone">("general");
 
   const [workspaceName, setWorkspaceName] = useState("");
   const [workspaceSlug, setWorkspaceSlug] = useState("");
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
 
   const [workspaceSuccess, setWorkspaceSuccess] = useState(false);
-  const [profileSuccess, setProfileSuccess] = useState(false);
-  const [error, setError] = useState("");
-  
   // Independent loading states
   const [workspaceLoading, setWorkspaceLoading] = useState(false);
-  const [profileLoading, setProfileLoading] = useState(false);
 
   // Duplicate logs state
   const [duplicateLogs, setDuplicateLogs] = useState<any[]>([]);
@@ -101,44 +98,7 @@ export default function SettingsPage() {
     }
   };
 
-  const handleUpdateProfile = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-    setProfileSuccess(false);
-    setProfileLoading(true);
 
-    try {
-      const res = await fetch("/api/settings", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          type: "profile",
-          fullName
-        })
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.error || "Failed to update profile.");
-      }
-
-      setProfileSuccess(true);
-
-      // Refresh NextAuth session values in client context
-      await updateSession({
-        ...session,
-        user: {
-          ...session?.user,
-          name: fullName
-        }
-      });
-    } catch (err: any) {
-      setError(err.message || "Failed to update profile.");
-    } finally {
-      setProfileLoading(false);
-    }
-  };
 
   // Mock settings lists
   const [apiKeys, setApiKeys] = useState<{id: string, name: string, token: string, expires: string}[]>([
@@ -173,10 +133,6 @@ export default function SettingsPage() {
   // Left sidebar tab lists
   const sidebarItems = [
     { value: "general", label: "General", icon: Building2 },
-    { value: "profile", label: "Profile", icon: User },
-    { value: "appearance", label: "Appearance", icon: Sun },
-    { value: "notifications", label: "Notifications", icon: Bell },
-    { value: "security", label: "Security", icon: Lock },
     { value: "api_keys", label: "API Keys", icon: Key },
     { value: "billing", label: "Billing & Plans", icon: CreditCard },
     { value: "ai_settings", label: "AI Settings", icon: Cpu },
@@ -206,7 +162,7 @@ export default function SettingsPage() {
       <div className="grid gap-6 md:grid-cols-[220px_1fr]">
         
         {/* Settings Left sub-navigation tab list */}
-        <div className="flex flex-row md:flex-col overflow-x-auto md:overflow-x-visible pb-2 md:pb-0 gap-1 border-b md:border-b-0 md:border-r border-slate-200 dark:border-dark-border pr-0 md:pr-4 h-fit scrollbar-none">
+        <div className="flex flex-row md:flex-col overflow-x-auto md:overflow-x-visible pb-2 md:pb-0 gap-1 border-b md:border-b-0 md:border-r border-slate-200 dark:border-dark-border pr-0 md:pr-4 h-fit scrollbar-none py-1">
           {sidebarItems.map((item) => {
             const Icon = item.icon;
             const isTabActive = activeTab === item.value;
@@ -214,10 +170,10 @@ export default function SettingsPage() {
               <button
                 key={item.value}
                 onClick={() => setActiveTab(item.value as any)}
-                className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-left text-xs font-extrabold transition-all whitespace-nowrap ${
+                className={`flex items-center gap-3 px-4 py-2.5 rounded-xl text-left text-xs font-extrabold transition-all whitespace-nowrap ${
                   isTabActive
-                    ? "bg-[#efeffe] dark:bg-indigo-950/60 text-[#4f46e5] dark:text-indigo-400 font-black shadow-sm"
-                    : "text-slate-500 hover:text-slate-700 dark:text-dark-muted dark:hover:text-slate-200 hover:bg-slate-100/50 dark:hover:bg-dark-elevated/60"
+                    ? "bg-slate-900 text-white dark:bg-dark-elevated dark:text-brand shadow-sm border border-slate-900 dark:border-dark-border"
+                    : "text-slate-500 hover:text-slate-800 dark:text-dark-muted dark:hover:text-gray-200 hover:bg-slate-100/50 dark:hover:bg-dark-hover/60 border border-transparent"
                 }`}
               >
                 <Icon className="h-4 w-4" />
@@ -267,149 +223,17 @@ export default function SettingsPage() {
                     </div>
                   </FormField>
 
-                  <Button type="submit" disabled={workspaceLoading} className="text-xs font-bold">
-                    {workspaceLoading ? "Saving..." : "Save parameters"}
-                  </Button>
+                  <div className="flex justify-end pt-2">
+                    <Button type="submit" disabled={workspaceLoading} className="text-[13px] font-bold px-6">
+                      {workspaceLoading ? "Saving..." : "Save parameters"}
+                    </Button>
+                  </div>
                 </form>
               </CardContent>
             </Card>
           )}
 
-          {/* TAB: PROFILE */}
-          {activeTab === "profile" && (
-            <Card className="bg-white dark:bg-dark-card border border-slate-200/80 dark:border-dark-border rounded-2xl shadow-sm">
-              <CardContent className="p-6 space-y-6">
-                <div>
-                  <h3 className="text-sm font-extrabold text-slate-900 dark:text-slate-50">User Profile Settings</h3>
-                  <p className="text-[11px] text-slate-450 mt-0.5">Update your display avatar details and username parameters.</p>
-                </div>
 
-                <form onSubmit={handleUpdateProfile} className="space-y-4 max-w-xl">
-                  {profileSuccess && (
-                    <div className="rounded-xl bg-emerald-50 border border-emerald-200 p-3 text-xs font-semibold text-emerald-700 flex items-center gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-emerald-600" />
-                      <span>Profile updated successfully!</span>
-                    </div>
-                  )}
-
-                  <FormField label="Full Display Name">
-                    <Input 
-                      value={fullName} 
-                      onChange={(e) => setFullName(e.target.value)} 
-                    />
-                  </FormField>
-                  
-                  <FormField label="Registered Email (Read Only)">
-                    <Input 
-                      disabled 
-                      value={email} 
-                      className="bg-slate-100 border-slate-250 text-slate-400 font-semibold text-xs dark:bg-dark-bg dark:border-dark-border"
-                    />
-                  </FormField>
-
-                  <Button type="submit" disabled={profileLoading} className="text-xs font-bold">
-                    {profileLoading ? "Updating..." : "Update profile"}
-                  </Button>
-                </form>
-              </CardContent>
-            </Card>
-          )}
-
-          {/* TAB: APPEARANCE */}
-          {activeTab === "appearance" && (
-            <Card className="bg-white dark:bg-dark-card border border-slate-200/80 dark:border-dark-border rounded-2xl shadow-sm">
-              <CardContent className="p-6 space-y-6">
-                <div>
-                  <h3 className="text-sm font-extrabold text-slate-900 dark:text-slate-50">Theme & Appearance</h3>
-                  <p className="text-[11px] text-slate-450 mt-0.5">Choose light/dark preferences or adjust visual components layout scale.</p>
-                </div>
-
-                <div className="space-y-4 text-xs font-bold text-slate-700 dark:text-slate-350">
-                  <div className="space-y-2">
-                    <p className="text-[10px] font-extrabold text-slate-450 uppercase">Application Theme</p>
-                    <div className="flex gap-3">
-                      <button className="flex-1 p-3 rounded-xl border border-slate-200 dark:border-dark-border text-center bg-white dark:bg-dark-card">
-                        ☀️ Light Theme
-                      </button>
-                      <button className="flex-1 p-3 rounded-xl border border-slate-200 dark:border-dark-border text-center bg-white dark:bg-dark-card">
-                        🌙 Dark Theme
-                      </button>
-                    </div>
-                  </div>
-
-                  <div className="space-y-2 pt-2 border-t border-slate-100 dark:border-dark-border">
-                    <label className="flex items-center gap-2">
-                      <input type="checkbox" className="rounded text-indigo-650 accent-indigo-650" />
-                      <span>Compact mode (tight layout sizing)</span>
-                    </label>
-                    <label className="flex items-center gap-2">
-                      <input type="checkbox" defaultChecked className="rounded text-indigo-650 accent-indigo-650" />
-                      <span>Enable UI Animations and motion transitions</span>
-                    </label>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          )}
-
-          {/* TAB: NOTIFICATIONS */}
-          {activeTab === "notifications" && (
-            <Card className="bg-white dark:bg-dark-card border border-slate-200/80 dark:border-dark-border rounded-2xl shadow-sm">
-              <CardContent className="p-6 space-y-6">
-                <div>
-                  <h3 className="text-sm font-extrabold text-slate-900 dark:text-slate-50">Notifications Rules</h3>
-                  <p className="text-[11px] text-slate-450 mt-0.5">Control where and when you receive weekly insight reports or alert hooks.</p>
-                </div>
-
-                <div className="space-y-3.5 text-xs font-bold text-slate-700 dark:text-dark-secondaryText">
-                  <label className="flex items-center gap-2.5">
-                    <input type="checkbox" defaultChecked className="rounded text-indigo-650 accent-indigo-650" />
-                    <span>Email me weekly digest summaries of feedback sentiment</span>
-                  </label>
-                  <label className="flex items-center gap-2.5">
-                    <input type="checkbox" defaultChecked className="rounded text-indigo-650 accent-indigo-650" />
-                    <span>Slack notifications alerts for critical negative clusters</span>
-                  </label>
-                  <label className="flex items-center gap-2.5">
-                    <input type="checkbox" className="rounded text-indigo-650 accent-indigo-650" />
-                    <span>Browser push popups for simulated ingestion tests</span>
-                  </label>
-                </div>
-              </CardContent>
-            </Card>
-          )}
-
-          {/* TAB: SECURITY */}
-          {activeTab === "security" && (
-            <Card className="bg-white dark:bg-dark-card border border-slate-200/80 dark:border-dark-border rounded-2xl shadow-sm">
-              <CardContent className="p-6 space-y-6">
-                <div>
-                  <h3 className="text-sm font-extrabold text-slate-900 dark:text-slate-50">Security & Sessions</h3>
-                  <p className="text-[11px] text-slate-450 mt-0.5">Reset authorization passwords or monitor open browser session tokens.</p>
-                </div>
-
-                <div className="space-y-4 text-xs">
-                  <div className="space-y-2 max-w-sm">
-                    <p className="font-extrabold text-[10px] text-slate-450 uppercase">Update Account Password</p>
-                    <Input type="password" placeholder="Current password..." />
-                    <Input type="password" placeholder="New password..." />
-                    <Button className="text-xs font-bold mt-1">Update Password</Button>
-                  </div>
-
-                  <div className="border-t border-slate-100 dark:border-dark-border pt-4 space-y-2">
-                    <p className="font-extrabold text-[10px] text-slate-450 uppercase">Active Session Browser Devices</p>
-                    <div className="flex items-center justify-between p-3 bg-slate-50 dark:bg-dark-bg border rounded-xl">
-                      <div>
-                        <p className="font-bold text-slate-800 dark:text-slate-100">Chrome on Windows (Active Session)</p>
-                        <p className="text-[10px] text-slate-400">Hyderabad, India • 192.168.1.1</p>
-                      </div>
-                      <Badge variant="green" className="text-[8px] font-extrabold uppercase">This Device</Badge>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          )}
 
           {/* TAB: API KEYS */}
           {activeTab === "api_keys" && (
@@ -641,61 +465,47 @@ export default function SettingsPage() {
                 </div>
 
                 {logsLoading ? (
-                  <div className="text-center py-8 text-xs text-slate-400 font-semibold">
+                  <div className="text-center py-8 text-[13px] text-slate-500 dark:text-dark-muted font-semibold animate-pulse">
                     Loading duplicate audit records...
                   </div>
                 ) : duplicateLogs.length === 0 ? (
-                  <div className="text-center py-10 text-xs text-slate-405 font-semibold">
+                  <div className="text-center py-10 text-[13px] text-slate-500 dark:text-dark-muted font-semibold">
                     No duplicate feedbacks have been logged yet.
                   </div>
                 ) : (
-                  <div className="mt-5 overflow-x-auto custom-scrollbar">
-                    <table className="min-w-full divide-y divide-slate-100 dark:divide-slate-800 text-xs font-semibold">
-                      <thead className="bg-slate-50 dark:bg-dark-bg text-slate-505 dark:text-dark-muted uppercase tracking-wider text-[10px]">
-                        <tr>
-                          <th className="px-4 py-3 text-left">Timestamp</th>
-                          <th className="px-4 py-3 text-left">Incoming Feedback</th>
-                          <th className="px-4 py-3 text-left">Matched ID</th>
-                          <th className="px-4 py-3 text-left">Customer</th>
-                          <th className="px-4 py-3 text-left">Channel</th>
-                          <th className="px-4 py-3 text-left">Score</th>
-                          <th className="px-4 py-3 text-left">Method</th>
-                          <th className="px-4 py-3 text-left">Action</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-slate-100 dark:divide-slate-800 bg-white dark:bg-dark-card text-slate-750 dark:text-dark-secondaryText">
-                        {duplicateLogs.map((log: any) => (
-                          <tr key={log.id} className="align-top hover:bg-slate-50/50 dark:hover:bg-dark-hover/40">
-                            <td className="px-4 py-3 whitespace-nowrap text-slate-500 font-normal">
-                              {new Date(log.createdAt).toLocaleString()}
-                            </td>
-                            <td className="px-4 py-3 max-w-xs truncate" title={log.feedbackContent}>
-                              {log.feedbackContent}
-                            </td>
-                            <td className="px-4 py-3 whitespace-nowrap text-indigo-650 font-bold">
-                              #{log.existingFeedbackId.substring(0, 8)}
-                            </td>
-                            <td className="px-4 py-3 whitespace-nowrap">
-                              {log.customerName}
-                            </td>
-                            <td className="px-4 py-3 whitespace-nowrap">
-                              {log.sourceChannel}
-                            </td>
-                            <td className="px-4 py-3 whitespace-nowrap text-slate-900 dark:text-slate-100 font-extrabold">
-                              {Math.round(log.similarityScore * 100)}%
-                            </td>
-                            <td className="px-4 py-3 whitespace-nowrap font-normal text-slate-500">
-                              {log.detectionMethod}
-                            </td>
-                            <td className="px-4 py-3 whitespace-nowrap">
-                              <span className="bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-450 px-2 py-0.5 rounded-full text-[10px] font-extrabold">
-                                {log.actionTaken}
-                              </span>
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                  <div className="mt-5">
+                    <DataTable
+                      columns={[
+                        { key: "timestamp", label: "Timestamp" },
+                        { key: "incoming", label: "Incoming Feedback" },
+                        { key: "matched_id", label: "Matched ID" },
+                        { key: "customer", label: "Customer" },
+                        { key: "channel", label: "Channel" },
+                        { key: "score", label: "Score" },
+                        { key: "method", label: "Method" },
+                        { key: "action", label: "Action" }
+                      ]}
+                      rows={duplicateLogs.map((log: any) => [
+                        <span key={`ts-${log.id}`} className="text-slate-500 dark:text-dark-muted font-medium">
+                          {new Date(log.createdAt).toLocaleString()}
+                        </span>,
+                        <span key={`fb-${log.id}`} className="block max-w-[200px] truncate text-slate-800 dark:text-gray-200 font-medium" title={log.feedbackContent}>
+                          {log.feedbackContent}
+                        </span>,
+                        <span key={`id-${log.id}`} className="text-brand font-bold">
+                          #{log.existingFeedbackId.substring(0, 8)}
+                        </span>,
+                        <span key={`cn-${log.id}`} className="font-semibold text-slate-700 dark:text-gray-300">{log.customerName}</span>,
+                        <span key={`ch-${log.id}`} className="text-slate-600 dark:text-gray-400">{log.sourceChannel}</span>,
+                        <span key={`sc-${log.id}`} className="text-slate-900 dark:text-white font-extrabold">
+                          {Math.round(log.similarityScore * 100)}%
+                        </span>,
+                        <span key={`md-${log.id}`} className="text-slate-500 dark:text-dark-muted font-medium">{log.detectionMethod}</span>,
+                        <Badge key={`ac-${log.id}`} variant="green" className="text-[10px] font-extrabold uppercase px-2 py-0.5">
+                          {log.actionTaken}
+                        </Badge>
+                      ])}
+                    />
                   </div>
                 )}
               </CardContent>
@@ -704,30 +514,30 @@ export default function SettingsPage() {
 
           {/* TAB: DANGER ZONE */}
           {activeTab === "danger_zone" && (
-            <Card className="bg-white dark:bg-dark-card border border-rose-200 dark:border-rose-950/40 rounded-2xl shadow-sm overflow-hidden">
-              <div className="bg-rose-50/50 dark:bg-rose-950/10 px-6 py-4 border-b border-rose-100 dark:border-rose-950/20">
-                <h3 className="text-sm font-extrabold text-rose-700 dark:text-rose-400 flex items-center gap-2">
+            <Card className="bg-white dark:bg-dark-card border border-rose-200 dark:border-rose-900/50 rounded-2xl shadow-sm overflow-hidden">
+              <div className="bg-rose-50 dark:bg-rose-950/20 px-6 py-5 border-b border-rose-100 dark:border-rose-900/40">
+                <h3 className="text-[15px] font-black text-rose-700 dark:text-rose-500 flex items-center gap-2">
                   <AlertOctagon className="h-5 w-5" />
                   <span>Workspace Danger Zone</span>
                 </h3>
-                <p className="text-[11px] text-rose-600/80 dark:text-rose-450 mt-0.5">Destructive workspace actions. These parameters cannot be undone.</p>
+                <p className="text-xs text-rose-600/80 dark:text-rose-400/80 mt-1 font-medium">Destructive workspace actions. These parameters cannot be undone.</p>
               </div>
 
-              <CardContent className="p-6 space-y-6 text-xs font-bold">
+              <CardContent className="p-6 space-y-6">
                 <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                  <div className="space-y-0.5">
-                    <p className="text-slate-800 dark:text-slate-200">Delete all customer feedback data</p>
-                    <p className="text-[10.5px] text-slate-450 font-normal">Wipe database feedback rows, vector embeddings, and themes tags.</p>
+                  <div className="space-y-1">
+                    <p className="text-[13px] font-bold text-slate-900 dark:text-white">Delete all customer feedback data</p>
+                    <p className="text-[11.5px] text-slate-500 dark:text-dark-muted font-medium">Wipe database feedback rows, vector embeddings, and themes tags.</p>
                   </div>
-                  <Button variant="danger" className="text-xs font-extrabold rounded-lg">Wipe Feedback Data</Button>
+                  <Button variant="danger" className="text-xs font-bold rounded-xl px-5 py-2.5">Wipe Feedback Data</Button>
                 </div>
                 
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-t border-slate-100 dark:border-dark-border pt-4">
-                  <div className="space-y-0.5">
-                    <p className="text-slate-800 dark:text-slate-200">Archive this workspace</p>
-                    <p className="text-[10.5px] text-slate-450 font-normal">Freeze billing, deactivate active integrations, and lock member profiles.</p>
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-t border-slate-100 dark:border-dark-border pt-6 mt-2">
+                  <div className="space-y-1">
+                    <p className="text-[13px] font-bold text-slate-900 dark:text-white">Archive this workspace</p>
+                    <p className="text-[11.5px] text-slate-500 dark:text-dark-muted font-medium">Freeze billing, deactivate active integrations, and lock member profiles.</p>
                   </div>
-                  <Button variant="secondary" className="text-xs font-bold rounded-lg border border-rose-200 hover:bg-rose-50/20 text-rose-500">Archive Workspace</Button>
+                  <Button variant="secondary" className="text-xs font-bold rounded-xl px-5 py-2.5 border border-rose-200 dark:border-rose-900/50 hover:bg-rose-50 dark:hover:bg-rose-950/30 text-rose-600 dark:text-rose-500 bg-white dark:bg-dark-elevated">Archive Workspace</Button>
                 </div>
               </CardContent>
             </Card>

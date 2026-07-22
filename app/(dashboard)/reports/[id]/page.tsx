@@ -9,6 +9,7 @@ import {
   Badge,
   Button
 } from "@/components/ui";
+import { ExecutivePDFReport } from "./executive-pdf-report";
 import {
   LineChart,
   Line,
@@ -67,7 +68,7 @@ interface ReportData {
   }[];
 }
 
-const COLORS = ["#10b981", "#ef4444", "#94a3b8"]; // Positive, Negative, Neutral
+const COLORS = ["#10b981", "#ef4444", "#64748b"]; // Positive, Negative, Neutral
 
 export default function ReportDetailPage() {
   const params = useParams();
@@ -112,6 +113,10 @@ export default function ReportDetailPage() {
     return <div className="p-12 text-center text-sm font-semibold text-rose-500 bg-rose-50 rounded-2xl">{error}</div>;
   }
 
+  if (isPrint) {
+    return <ExecutivePDFReport data={data} />;
+  }
+
   const sentimentData = [
     { name: "Positive", value: data.kpis.positiveFeedback },
     { name: "Negative", value: data.kpis.negativeFeedback },
@@ -119,93 +124,93 @@ export default function ReportDetailPage() {
   ].filter(d => d.value > 0);
 
   return (
-    <div className="space-y-6 print:space-y-4 print:bg-white print:text-black">
-      {/* Hide navigation elements when printing */}
-      <div className="flex items-center justify-between print:hidden">
+    <div className="space-y-6 max-w-7xl mx-auto">
+      {/* Header Navigation */}
+      <div className="flex items-center justify-between">
         <button 
           onClick={() => router.push("/reports")}
-          className="flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-slate-900 transition"
+          className="flex items-center gap-2 text-sm font-bold text-slate-500 dark:text-dark-muted hover:text-slate-900 dark:hover:text-white transition"
         >
           <ArrowLeft className="h-4 w-4" /> Back to Reports
         </button>
         <Button 
           onClick={() => window.print()}
-          className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold flex items-center gap-2"
+          className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold flex items-center gap-2 shadow-sm rounded-xl px-4 py-2"
         >
-          <Download className="h-4 w-4" /> Download PDF
+          <Download className="h-4 w-4" /> Download PDF Report
         </Button>
       </div>
 
       {/* Header section */}
-      <div className="bg-white p-8 rounded-2xl border border-slate-200/80 shadow-sm print:shadow-none print:border-none print:p-0">
+      <div className="bg-white dark:bg-dark-card p-8 rounded-2xl border border-slate-200 dark:border-dark-border shadow-sm">
         <div className="flex items-center gap-4 mb-4">
           <Badge variant={data.report.status === "Ready" ? "green" : "amber"} className="uppercase font-extrabold tracking-wider">
             {data.report.status}
           </Badge>
           <span className="text-xs font-bold text-slate-400">Generated on {data.report.date}</span>
         </div>
-        <h1 className="text-3xl font-black text-slate-900 mb-4">{data.report.title}</h1>
+        <h1 className="text-3xl font-black text-slate-900 dark:text-white mb-5">{data.report.title}</h1>
         
         {/* Executive AI Summary */}
-        <div className="bg-indigo-50/50 border border-indigo-100 rounded-xl p-5 print:bg-transparent print:border-l-4 print:border-indigo-600 print:rounded-none">
-          <h3 className="text-sm font-bold text-indigo-900 mb-2 flex items-center gap-2">
-            <Activity className="h-4 w-4 text-indigo-600" /> Executive AI Summary
+        <div className="bg-indigo-50/70 dark:bg-indigo-950/20 border border-indigo-100 dark:border-indigo-900/40 rounded-xl p-5">
+          <h3 className="text-sm font-bold text-indigo-900 dark:text-indigo-400 mb-2 flex items-center gap-2">
+            <Activity className="h-4 w-4 text-indigo-600 dark:text-indigo-400" /> Executive AI Summary
           </h3>
-          <p className="text-sm text-indigo-800 leading-relaxed font-medium">
+          <p className="text-[13px] text-indigo-800 dark:text-indigo-200/80 leading-relaxed font-medium">
             {data.report.summary}
           </p>
         </div>
       </div>
 
       {/* KPI Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 print:grid-cols-4 print:gap-2">
-        <Card className="print:shadow-none print:border-slate-300">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <Card className="bg-white dark:bg-dark-card border-slate-200 dark:border-dark-border shadow-sm">
           <CardContent className="p-5">
-            <p className="text-[11px] font-extrabold text-slate-400 uppercase tracking-wider">Total Feedback</p>
-            <h3 className="text-2xl font-black text-slate-900 mt-1">{data.kpis.totalFeedback.toLocaleString()}</h3>
+            <p className="text-[11px] font-black text-slate-400 dark:text-dark-muted uppercase tracking-wider">Total Feedback</p>
+            <h3 className="text-[28px] font-black text-slate-900 dark:text-white mt-1.5 leading-none">{data.kpis.totalFeedback.toLocaleString()}</h3>
           </CardContent>
         </Card>
-        <Card className="print:shadow-none print:border-slate-300">
+        <Card className="bg-emerald-50/50 dark:bg-emerald-950/10 border-emerald-100 dark:border-emerald-900/30 shadow-sm">
           <CardContent className="p-5">
-            <p className="text-[11px] font-extrabold text-emerald-500 uppercase tracking-wider flex items-center gap-1">
+            <p className="text-[11px] font-black text-emerald-600 dark:text-emerald-500 uppercase tracking-wider flex items-center gap-1.5">
               <ThumbsUp className="h-3 w-3" /> Positive
             </p>
-            <h3 className="text-2xl font-black text-slate-900 mt-1">{data.kpis.positiveFeedback.toLocaleString()}</h3>
+            <h3 className="text-[28px] font-black text-emerald-700 dark:text-emerald-400 mt-1.5 leading-none">{data.kpis.positiveFeedback.toLocaleString()}</h3>
           </CardContent>
         </Card>
-        <Card className="print:shadow-none print:border-slate-300">
+        <Card className="bg-rose-50/50 dark:bg-rose-950/10 border-rose-100 dark:border-rose-900/30 shadow-sm">
           <CardContent className="p-5">
-            <p className="text-[11px] font-extrabold text-rose-500 uppercase tracking-wider flex items-center gap-1">
+            <p className="text-[11px] font-black text-rose-600 dark:text-rose-500 uppercase tracking-wider flex items-center gap-1.5">
               <ThumbsDown className="h-3 w-3" /> Negative
             </p>
-            <h3 className="text-2xl font-black text-slate-900 mt-1">{data.kpis.negativeFeedback.toLocaleString()}</h3>
+            <h3 className="text-[28px] font-black text-rose-700 dark:text-rose-400 mt-1.5 leading-none">{data.kpis.negativeFeedback.toLocaleString()}</h3>
           </CardContent>
         </Card>
-        <Card className="print:shadow-none print:border-slate-300">
+        <Card className="bg-white dark:bg-dark-card border-slate-200 dark:border-dark-border shadow-sm">
           <CardContent className="p-5">
-            <p className="text-[11px] font-extrabold text-slate-500 uppercase tracking-wider flex items-center gap-1">
+            <p className="text-[11px] font-black text-slate-500 dark:text-dark-muted uppercase tracking-wider flex items-center gap-1.5">
               <MinusCircle className="h-3 w-3" /> Neutral
             </p>
-            <h3 className="text-2xl font-black text-slate-900 mt-1">{data.kpis.neutralFeedback.toLocaleString()}</h3>
+            <h3 className="text-[28px] font-black text-slate-700 dark:text-slate-300 mt-1.5 leading-none">{data.kpis.neutralFeedback.toLocaleString()}</h3>
           </CardContent>
         </Card>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-[1fr_300px] print:grid-cols-[1fr_300px] print:gap-4">
+      <div className="grid gap-6 lg:grid-cols-[1fr_300px]">
         {/* Trend Graph */}
-        <Card className="print:shadow-none print:border-slate-300 print:break-inside-avoid">
+        <Card className="bg-white dark:bg-dark-card border-slate-200 dark:border-dark-border shadow-sm">
           <CardContent className="p-6">
-            <h3 className="text-sm font-extrabold text-slate-900 uppercase tracking-widest mb-6">Feedback Volume Trend</h3>
+            <h3 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest mb-6">Feedback Volume Trend</h3>
             <div className="h-64">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={data.trend}>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
-                  <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: "#64748b" }} tickFormatter={(val) => new Date(val).toLocaleDateString("en-US", { weekday: "short" })} />
-                  <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: "#64748b" }} />
-                  <RechartsTooltip contentStyle={{ borderRadius: "12px", border: "none", boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)" }} />
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#334155" opacity={0.15} />
+                  <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: "#64748b", fontWeight: 600 }} tickFormatter={(val) => new Date(val).toLocaleDateString("en-US", { weekday: "short" })} />
+                  <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: "#64748b", fontWeight: 600 }} />
+                  <RechartsTooltip contentStyle={{ borderRadius: "12px", border: "1px solid #e2e8f0", backgroundColor: "rgba(255,255,255,0.95)", boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1)" }} />
                   <Legend wrapperStyle={{ fontSize: "11px", fontWeight: "bold" }} />
-                  <Line type="monotone" dataKey="positive" stroke="#10b981" strokeWidth={3} dot={{ r: 4, strokeWidth: 2 }} activeDot={{ r: 6 }} name="Positive" />
-                  <Line type="monotone" dataKey="negative" stroke="#ef4444" strokeWidth={3} dot={{ r: 4, strokeWidth: 2 }} activeDot={{ r: 6 }} name="Negative" />
+                  <Line type="monotone" dataKey="positive" stroke="#10b981" strokeWidth={3} dot={{ r: 4, strokeWidth: 2, fill: "#fff" }} activeDot={{ r: 6 }} name="Positive" />
+                  <Line type="monotone" dataKey="negative" stroke="#f43f5e" strokeWidth={3} dot={{ r: 4, strokeWidth: 2, fill: "#fff" }} activeDot={{ r: 6 }} name="Negative" />
                 </LineChart>
               </ResponsiveContainer>
             </div>
@@ -213,9 +218,9 @@ export default function ReportDetailPage() {
         </Card>
 
         {/* Sentiment Distribution */}
-        <Card className="print:shadow-none print:border-slate-300 print:break-inside-avoid">
+        <Card className="bg-white dark:bg-dark-card border-slate-200 dark:border-dark-border shadow-sm">
           <CardContent className="p-6">
-            <h3 className="text-sm font-extrabold text-slate-900 uppercase tracking-widest mb-4">Sentiment Mix</h3>
+            <h3 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest mb-4">Sentiment Mix</h3>
             <div className="h-56">
               {sentimentData.length > 0 ? (
                 <ResponsiveContainer width="100%" height="100%">
@@ -228,12 +233,13 @@ export default function ReportDetailPage() {
                       outerRadius={80}
                       paddingAngle={5}
                       dataKey="value"
+                      stroke="none"
                     >
                       {sentimentData.map((entry, index) => (
                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                       ))}
                     </Pie>
-                    <RechartsTooltip contentStyle={{ borderRadius: "12px", border: "none", boxShadow: "0 4px 6px -1px rgb(0 0 0 / 0.1)" }} />
+                    <RechartsTooltip contentStyle={{ borderRadius: "12px", border: "none", backgroundColor: "rgba(255,255,255,0.95)", boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1)" }} />
                     <Legend wrapperStyle={{ fontSize: "11px", fontWeight: "bold" }} />
                   </PieChart>
                 </ResponsiveContainer>
@@ -245,26 +251,28 @@ export default function ReportDetailPage() {
         </Card>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-2 print:grid-cols-2 print:gap-4 print:break-inside-avoid">
+      <div className="grid gap-6 lg:grid-cols-2">
         {/* Top Themes */}
-        <Card className="print:shadow-none print:border-slate-300">
+        <Card className="bg-white dark:bg-dark-card border-slate-200 dark:border-dark-border shadow-sm">
           <CardContent className="p-6">
-            <h3 className="text-sm font-extrabold text-slate-900 uppercase tracking-widest mb-4 flex items-center gap-2">
-              <TrendingUp className="h-4 w-4" /> Top Discussion Themes
+            <h3 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest mb-5 flex items-center gap-2">
+              <TrendingUp className="h-4 w-4 text-brand" /> Top Discussion Themes
             </h3>
             {data.themes.length === 0 ? (
-              <p className="text-xs text-slate-500 font-medium">No themes detected yet.</p>
+              <div className="py-8 text-center bg-slate-50 dark:bg-dark-bg rounded-xl border border-dashed border-slate-200 dark:border-dark-border">
+                <p className="text-xs text-slate-500 dark:text-dark-muted font-bold">No themes detected yet.</p>
+              </div>
             ) : (
               <ul className="space-y-4">
                 {data.themes.map((theme) => (
-                  <li key={theme.id} className="flex items-center justify-between border-b border-slate-100 pb-2 last:border-0 last:pb-0">
-                    <div className="flex items-center gap-3">
-                      <div className="h-8 w-8 rounded-lg bg-indigo-50 flex items-center justify-center text-xs font-black text-indigo-600">
+                  <li key={theme.id} className="flex items-center justify-between border-b border-slate-100 dark:border-dark-border pb-3 last:border-0 last:pb-0">
+                    <div className="flex items-center gap-3.5">
+                      <div className="h-9 w-9 rounded-xl bg-indigo-50 dark:bg-brand/10 border border-indigo-100 dark:border-brand/20 flex items-center justify-center text-xs font-black text-indigo-600 dark:text-brand shadow-sm">
                         {theme.count}
                       </div>
-                      <span className="font-bold text-sm text-slate-800">{theme.name}</span>
+                      <span className="font-bold text-[13px] text-slate-800 dark:text-slate-100">{theme.name}</span>
                     </div>
-                    <Badge variant="green" className="font-bold text-[10px]">+{theme.growth}%</Badge>
+                    <Badge variant="green" className="font-bold text-[10px] uppercase tracking-wider">+{theme.growth}%</Badge>
                   </li>
                 ))}
               </ul>
@@ -273,21 +281,23 @@ export default function ReportDetailPage() {
         </Card>
 
         {/* Customer Quotes */}
-        <Card className="print:shadow-none print:border-slate-300">
+        <Card className="bg-white dark:bg-dark-card border-slate-200 dark:border-dark-border shadow-sm">
           <CardContent className="p-6">
-            <h3 className="text-sm font-extrabold text-slate-900 uppercase tracking-widest mb-4 flex items-center gap-2">
-              <MessageSquareQuote className="h-4 w-4" /> Notable Feedback
+            <h3 className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-widest mb-5 flex items-center gap-2">
+              <MessageSquareQuote className="h-4 w-4 text-brand" /> Notable Feedback
             </h3>
             {data.quotes.length === 0 ? (
-              <p className="text-xs text-slate-500 font-medium">No notable quotes to display.</p>
+              <div className="py-8 text-center bg-slate-50 dark:bg-dark-bg rounded-xl border border-dashed border-slate-200 dark:border-dark-border">
+                <p className="text-xs text-slate-500 dark:text-dark-muted font-bold">No notable quotes to display.</p>
+              </div>
             ) : (
               <ul className="space-y-3">
                 {data.quotes.map((quote) => (
-                  <li key={quote.id} className="bg-slate-50 p-3 rounded-xl border border-slate-100 print:bg-white print:border-slate-200">
-                    <p className="text-sm text-slate-700 italic leading-snug">"{quote.content}"</p>
-                    <div className="flex justify-between mt-2 items-center">
-                      <span className="text-[10px] font-bold text-slate-500">{quote.customerName}</span>
-                      <Badge variant={quote.sentimentLabel?.toLowerCase() === "positive" ? "green" : quote.sentimentLabel?.toLowerCase() === "negative" ? "rose" : "slate"} className="text-[9px]">
+                  <li key={quote.id} className="bg-slate-50 dark:bg-dark-bg p-4 rounded-xl border border-slate-200 dark:border-dark-border shadow-sm">
+                    <p className="text-[13px] text-slate-700 dark:text-slate-200 italic font-medium leading-relaxed font-serif">"{quote.content}"</p>
+                    <div className="flex justify-between mt-3 items-center border-t border-slate-200 dark:border-dark-border pt-2.5">
+                      <span className="text-[10px] font-bold text-slate-500 dark:text-dark-muted">Customer: {quote.customerName}</span>
+                      <Badge variant={quote.sentimentLabel?.toLowerCase() === "positive" ? "green" : quote.sentimentLabel?.toLowerCase() === "negative" ? "rose" : "slate"} className="text-[9px] uppercase tracking-wider">
                         {quote.sentimentLabel}
                       </Badge>
                     </div>

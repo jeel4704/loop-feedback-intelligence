@@ -108,9 +108,9 @@ export default function InboxPage() {
     }
 
     return [
-      <div key={item.id} className="space-y-2">
-        <p className="font-bold text-xs text-slate-900 dark:text-slate-100">{item.customerName}</p>
-        <p className="mt-1 text-xs text-slate-500 dark:text-dark-muted leading-normal">{excerpt}</p>
+      <div key={item.id} className="space-y-2 py-1">
+        <p className="font-bold text-[13px] text-slate-950 dark:text-gray-100">{item.customerName}</p>
+        <p className="mt-1 text-xs text-slate-600 dark:text-dark-muted leading-relaxed line-clamp-2">{excerpt}</p>
         {s === "possible duplicate" && (
           <div className="flex items-center gap-2 mt-2 bg-amber-50/50 border border-amber-100 p-2 rounded-xl w-fit">
             <span className="text-[10px] font-bold text-amber-700">Possible Duplicate:</span>
@@ -129,9 +129,22 @@ export default function InboxPage() {
           </div>
         )}
       </div>,
-      item.source,
-      themeName,
-      item.sentimentLabel || "Neutral",
+      <div className="flex items-center gap-2">
+        <span className="px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-dark-elevated text-[11px] font-bold text-slate-700 dark:text-gray-300 border border-slate-200 dark:border-dark-border">
+          {item.source}
+        </span>
+      </div>,
+      <span className="text-[13px] font-semibold text-slate-800 dark:text-gray-200">{themeName}</span>,
+      <div className="flex items-center gap-1.5">
+        <div className={`w-1.5 h-1.5 rounded-full ${
+          item.sentimentLabel === 'Positive' ? 'bg-emerald-500' :
+          item.sentimentLabel === 'Negative' ? 'bg-rose-500' :
+          'bg-slate-400'
+        }`} />
+        <span className="text-[12px] font-bold text-slate-700 dark:text-gray-300">
+          {item.sentimentLabel || "Neutral"}
+        </span>
+      </div>,
       <Badge
         key={`${item.id}-status`}
         variant={variant}
@@ -150,13 +163,13 @@ export default function InboxPage() {
         description="Search, filter, and triage raw customer feedback before turning it into themes, reports, and action items."
       />
 
-      <Card>
-        <CardContent className="grid gap-4 p-6 sm:grid-cols-2 lg:grid-cols-5">
+      <Card className="border border-slate-200 dark:border-dark-border bg-white dark:bg-dark-card shadow-sm rounded-2xl overflow-hidden">
+        <CardContent className="grid gap-4 p-5 sm:grid-cols-2 lg:grid-cols-5">
           <Input 
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search customer, quote, or keyword" 
-            className="lg:col-span-2 text-xs" 
+            className="lg:col-span-2 text-[13px] font-medium" 
           />
           <Select 
             value={channel}
@@ -195,12 +208,16 @@ export default function InboxPage() {
       </Card>
 
       {loading ? (
-        <div className="text-center py-12 text-xs text-slate-400 font-semibold">
+        <div className="text-center py-12 text-[13px] text-slate-500 dark:text-dark-muted font-semibold animate-pulse">
           Loading feedback inbox records...
         </div>
       ) : items.length === 0 ? (
-        <div className="rounded-[24px] border border-dashed border-slate-200 bg-white p-12 text-center shadow-sm">
-          <p className="text-xs text-slate-400">No feedback has been collected yet.</p>
+        <div className="rounded-2xl border border-dashed border-slate-200 dark:border-dark-border bg-white dark:bg-dark-card p-12 text-center shadow-sm max-w-2xl mx-auto mt-8">
+          <div className="bg-slate-50 dark:bg-dark-elevated w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 border border-slate-100 dark:border-dark-border">
+            <span className="text-2xl">📥</span>
+          </div>
+          <h3 className="font-extrabold text-lg text-slate-950 dark:text-white">No feedback collected yet</h3>
+          <p className="text-[13px] text-slate-500 dark:text-dark-muted mt-2 font-medium">When you ingest feedback via email, surveys, or integrations, it will appear here.</p>
         </div>
       ) : (
         <>
@@ -215,15 +232,16 @@ export default function InboxPage() {
             rows={rows}
           />
 
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <p className="text-xs text-slate-500 font-semibold">
-              Showing {Math.min((page - 1) * limit + 1, totalCount)}–{Math.min(page * limit, totalCount)} of {totalCount} records
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between bg-white dark:bg-dark-card p-4 rounded-2xl border border-slate-200 dark:border-dark-border shadow-sm">
+            <p className="text-[13px] text-slate-500 dark:text-dark-muted font-semibold">
+              Showing <span className="text-slate-950 dark:text-gray-200">{Math.min((page - 1) * limit + 1, totalCount)}</span> to <span className="text-slate-950 dark:text-gray-200">{Math.min(page * limit, totalCount)}</span> of <span className="text-slate-950 dark:text-gray-200">{totalCount}</span> records
             </p>
             <div className="flex items-center gap-2">
               <Button
                 variant="secondary"
                 onClick={() => setPage(p => Math.max(1, p - 1))}
                 disabled={page === 1}
+                className="text-xs font-bold text-slate-700 dark:text-gray-300 hover:text-brand dark:hover:text-brand hover:bg-slate-100 dark:hover:bg-dark-hover border border-slate-200 dark:border-dark-border bg-white dark:bg-dark-elevated shadow-sm"
               >
                 Previous
               </Button>
@@ -231,6 +249,7 @@ export default function InboxPage() {
                 variant="secondary"
                 onClick={() => setPage(p => p + 1)}
                 disabled={page * limit >= totalCount}
+                className="text-xs font-bold text-slate-700 dark:text-gray-300 hover:text-brand dark:hover:text-brand hover:bg-slate-100 dark:hover:bg-dark-hover border border-slate-200 dark:border-dark-border bg-white dark:bg-dark-elevated shadow-sm"
               >
                 Next
               </Button>
