@@ -12,6 +12,7 @@ const credentialsSchema = z.object({
 });
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  secret: process.env.AUTH_SECRET || "fallback_secret_for_build_only_1234567890",
   ...authConfig,
   providers: [
     Credentials({
