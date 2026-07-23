@@ -4,8 +4,8 @@ import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 
 export async function GET(req: Request, { params }: { params: { id: string } }) {
+  const session = await auth();
   try {
-    const session = await auth();
     if (!session || !session.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -215,8 +215,8 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
 
 // PUT - Update/Archive workspace metadata
 export async function PUT(req: Request, { params }: { params: { id: string } }) {
+  const session = await auth();
   try {
-    const session = await auth();
     if (!session || !session.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -264,8 +264,8 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
 
 // DELETE - Archive/Delete workspace
 export async function DELETE(req: Request, { params }: { params: { id: string } }) {
+  const session = await auth();
   try {
-    const session = await auth();
     if (!session || !session.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }

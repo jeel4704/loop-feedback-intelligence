@@ -11,8 +11,8 @@ function generateMockVector(): number[] {
 
 // 1. GET - Retrieve workspace feedback entries (Tenant isolated)
 export async function GET(req: Request) {
+  const session = await auth();
   try {
-    const session = await auth();
     if (!session || !session.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -84,8 +84,8 @@ export async function GET(req: Request) {
 
 // 2. POST - Insert a new customer feedback entry manually
 export async function POST(req: Request) {
+  const session = await auth();
   try {
-    const session = await auth();
     if (!session || !session.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }

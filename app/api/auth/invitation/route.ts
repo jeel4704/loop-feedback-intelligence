@@ -52,8 +52,8 @@ export async function GET(req: Request) {
 
 // 2. POST - Invite team member (restricted to OWNER or ADMIN)
 export async function POST(req: Request) {
+  const session = await auth();
   try {
-    const session = await auth();
     if (!session || !session.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }

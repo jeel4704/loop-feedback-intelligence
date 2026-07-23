@@ -5,8 +5,8 @@ import { auth } from "@/auth";
 
 // PATCH - Update workspace member role
 export async function PATCH(req: Request, { params }: { params: { id: string, memberId: string } }) {
+  const session = await auth();
   try {
-    const session = await auth();
     if (!session || !session.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -78,8 +78,8 @@ export async function PATCH(req: Request, { params }: { params: { id: string, me
 
 // DELETE - Remove member from workspace
 export async function DELETE(req: Request, { params }: { params: { id: string, memberId: string } }) {
+  const session = await auth();
   try {
-    const session = await auth();
     if (!session || !session.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }

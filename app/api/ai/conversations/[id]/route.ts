@@ -4,8 +4,8 @@ import { auth } from "@/auth";
 import { ConversationRepository } from "@/repositories/conversation.repository";
 
 export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
+  const session = await auth();
   try {
-    const session = await auth();
     if (!session?.user?.id) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     const conversation = await ConversationRepository.getConversationById(params.id, session.user.id);
@@ -19,8 +19,8 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
 }
 
 export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+  const session = await auth();
   try {
-    const session = await auth();
     if (!session?.user?.id) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     await ConversationRepository.deleteConversation(params.id, session.user.id);
