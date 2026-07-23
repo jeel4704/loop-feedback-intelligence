@@ -1,4 +1,4 @@
-import { groq } from "@ai-sdk/groq";
+import { createGroq } from "@ai-sdk/groq";
 import { generateText, streamText } from "ai";
 import { PromptBuilder } from "./prompt.builder";
 
@@ -13,6 +13,12 @@ interface ChatRequest {
 }
 
 export class LLMService {
+  private static getGroqProvider() {
+    return createGroq({
+      apiKey: process.env.GROQ_API_KEY || "dummy-key-to-bypass-build-check",
+    });
+  }
+
   /**
    * The default model used for AI Assistant chats.
    * Fetches dynamically from environment variables, defaults to LLaMA 3.3.
@@ -27,6 +33,7 @@ export class LLMService {
   static async generateChatResponse({ messages, systemContext }: ChatRequest) {
     const systemPrompt = PromptBuilder.buildSystemPrompt(systemContext);
     const modelId = this.getModelName();
+    const groq = this.getGroqProvider();
 
     const { text, usage } = await generateText({
       model: groq(modelId),
@@ -54,6 +61,7 @@ export class LLMService {
   static async streamChatResponse({ messages, systemContext, onFinish }: ChatRequest) {
     const systemPrompt = PromptBuilder.buildSystemPrompt(systemContext);
     const modelId = this.getModelName();
+    const groq = this.getGroqProvider();
 
     const stream = await streamText({
       model: groq(modelId),
