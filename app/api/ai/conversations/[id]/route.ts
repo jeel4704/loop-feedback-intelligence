@@ -3,7 +3,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { ConversationRepository } from "@/repositories/conversation.repository";
 
-export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(req: NextRequest, context: { params: { id: string } }) {
+  const params = context?.params || ({} as any);
   const session = await auth();
   try {
     if (!session?.user?.id) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -18,7 +19,8 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
   }
 }
 
-export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(req: NextRequest, context: { params: { id: string } }) {
+  const params = context?.params || ({} as any);
   const session = await auth();
   try {
     if (!session?.user?.id) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

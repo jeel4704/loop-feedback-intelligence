@@ -3,7 +3,8 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 
-export async function GET(req: Request, { params }: { params: { id: string } }) {
+export async function GET(req: Request,  context: { params: { id: string } }) {
+  const params = context?.params || ({} as any);
   const session = await auth();
   try {
     if (!session || !session.user) {
@@ -214,7 +215,8 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
 }
 
 // PUT - Update/Archive workspace metadata
-export async function PUT(req: Request, { params }: { params: { id: string } }) {
+export async function PUT(req: Request,  context: { params: { id: string } }) {
+  const params = context?.params || ({} as any);
   const session = await auth();
   try {
     if (!session || !session.user) {
@@ -263,7 +265,8 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
 }
 
 // DELETE - Archive/Delete workspace
-export async function DELETE(req: Request, { params }: { params: { id: string } }) {
+export async function DELETE(req: Request,  context: { params: { id: string } }) {
+  const params = context?.params || ({} as any);
   const session = await auth();
   try {
     if (!session || !session.user) {

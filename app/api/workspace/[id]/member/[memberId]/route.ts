@@ -4,7 +4,8 @@ import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 
 // PATCH - Update workspace member role
-export async function PATCH(req: Request, { params }: { params: { id: string, memberId: string } }) {
+export async function PATCH(req: Request,  context: { params: { id: string, memberId: string } }) {
+  const params = context?.params || ({} as any);
   const session = await auth();
   try {
     if (!session || !session.user) {
@@ -77,7 +78,8 @@ export async function PATCH(req: Request, { params }: { params: { id: string, me
 }
 
 // DELETE - Remove member from workspace
-export async function DELETE(req: Request, { params }: { params: { id: string, memberId: string } }) {
+export async function DELETE(req: Request,  context: { params: { id: string, memberId: string } }) {
+  const params = context?.params || ({} as any);
   const session = await auth();
   try {
     if (!session || !session.user) {
