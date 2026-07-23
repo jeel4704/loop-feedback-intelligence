@@ -13,7 +13,8 @@
     "prisma:seed": "tsx prisma/seed.ts",
     "seed": "tsx scripts/seed.ts",
     "classify": "tsx scripts/classify.ts",
-    "import:feedback": "tsx scripts/import.ts"
+    "import:feedback": "tsx scripts/import.ts",
+    "postinstall": "prisma generate"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
