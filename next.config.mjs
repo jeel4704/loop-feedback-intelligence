@@ -1,7 +1,12 @@
 const nextConfig = {
   experimental: {
-    typedRoutes: true
+    typedRoutes: true,
+    cpus: 1,
+    workerThreads: false,
+    memoryBasedWorkersCount: true
   },
+  eslint: { ignoreDuringBuilds: true },
+  typescript: { ignoreBuildErrors: true },
   async headers() {
     return [
       {

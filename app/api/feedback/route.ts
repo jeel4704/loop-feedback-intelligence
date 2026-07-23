@@ -29,7 +29,7 @@ export async function GET(req: Request) {
       return NextResponse.json({ error: "No workspace isolated for session" }, { status: 400 });
     }
 
-    const { searchParams } = new URL(req.url);
+    const searchParams = req.nextUrl.searchParams;
     const sentiment = searchParams.get("sentiment");
     const channel = searchParams.get("channel");
     const status = searchParams.get("status");

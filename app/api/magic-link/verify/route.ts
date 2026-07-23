@@ -9,7 +9,7 @@ import { prisma } from "@/lib/prisma";
  */
 export async function GET(req: Request) {
   try {
-    const { searchParams } = new URL(req.url);
+    const searchParams = req.nextUrl.searchParams;
     const token = searchParams.get("token");
     if (!token) {
       return NextResponse.redirect(new URL("/login?error=invalid_token", req.url));

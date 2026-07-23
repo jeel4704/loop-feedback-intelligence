@@ -39,7 +39,7 @@ export async function GET(req: Request) {
       return NextResponse.json({ error: "No workspace isolated for session" }, { status: 400 });
     }
 
-    const { searchParams } = new URL(req.url);
+    const searchParams = req.nextUrl.searchParams;
     const period = searchParams.get("period") || "daily";
 
     // Define the date range based on the period to keep graphs readable
