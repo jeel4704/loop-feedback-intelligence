@@ -41,8 +41,8 @@ function InvitationForm({ token }: { token: string }) {
           setUserExists(data.userExists);
         }
       })
-      .catch(() => {
-        setError("Unable to connect to the authentication server.");
+      .catch((err) => {
+        setError(`Connection error: ${err.message || 'Unknown network error'}`);
       })
       .finally(() => {
         setLoadingDetails(false);
@@ -81,9 +81,9 @@ function InvitationForm({ token }: { token: string }) {
 
       setLoading(false);
       router.push("/login?message=verified");
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
-      setError("An unexpected error occurred.");
+      setError(`Submit error: ${err.message || 'Unknown network error'}`);
       setLoading(false);
     }
   };
