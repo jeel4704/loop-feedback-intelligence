@@ -6,6 +6,8 @@ import { auth } from "@/auth";
 
 // GET - List all workspaces user has access to
 export async function GET() {
+  if (process.env.npm_lifecycle_event === "build") return NextResponse.json([]);
+
   const session = await auth();
   try {
     if (!session || !session.user) {

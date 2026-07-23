@@ -8,6 +8,8 @@ import { prisma } from "@/lib/prisma";
  * NextAuth's `/api/auth/*` catch‑all which expects auth actions.
  */
 export async function GET(req: Request) {
+  if (process.env.npm_lifecycle_event === "build") return NextResponse.json([]);
+
   try {
     const searchParams = (req.nextUrl?.searchParams || new URL(req.url || 'http://localhost').searchParams);
     const token = searchParams.get("token");

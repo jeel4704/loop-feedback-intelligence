@@ -19,6 +19,8 @@ function getISOWeekInfo(date: Date) {
 }
 
 export async function GET(req: Request) {
+  if (process.env.npm_lifecycle_event === "build") return NextResponse.json([]);
+
   const session = await auth();
   try {
     if (!session || !session.user) {

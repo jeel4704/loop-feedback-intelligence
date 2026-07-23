@@ -4,6 +4,8 @@ import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 
 export async function GET() {
+  if (process.env.npm_lifecycle_event === "build") return NextResponse.json([]);
+
   const session = await auth();
   try {
     if (!session || !session.user) {
