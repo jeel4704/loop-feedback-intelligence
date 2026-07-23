@@ -122,7 +122,10 @@ export async function POST(req: Request) {
     });
     const workspaceName = workspace?.name || "LOOP Workspace";
 
-    const baseUrl = (process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000").replace(/\/$/, "");
+    // Dynamically get the base URL from the incoming request, fallback to env var
+    const protocol = req.headers.get("x-forwarded-proto") || "http";
+    const host = req.headers.get("host");
+    const baseUrl = host ? `${protocol}://${host}` : (process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000").replace(/\/$/, "");
     const inviteUrl = `${baseUrl}/login?inviteToken=${token}`;
 
     // Send invitation email
