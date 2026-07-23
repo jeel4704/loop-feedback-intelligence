@@ -16,7 +16,7 @@ export async function GET(req: Request) {
       return NextResponse.json({ error: "No workspace isolated for session" }, { status: 400 });
     }
 
-    const searchParams = req.nextUrl.searchParams;
+    const searchParams = (req.nextUrl?.searchParams || new URL(req.url || 'http://localhost').searchParams);
     const startDateParam = searchParams.get("startDate");
     const endDateParam = searchParams.get("endDate");
 

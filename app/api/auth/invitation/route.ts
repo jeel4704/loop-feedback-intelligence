@@ -9,7 +9,7 @@ import crypto from "crypto";
 // 1. GET - Fetch invitation details for display on registration page (Locked Badge)
 export async function GET(req: Request) {
   try {
-    const searchParams = req.nextUrl.searchParams;
+    const searchParams = (req.nextUrl?.searchParams || new URL(req.url || 'http://localhost').searchParams);
     const token = searchParams.get("token");
 
     if (!token) {

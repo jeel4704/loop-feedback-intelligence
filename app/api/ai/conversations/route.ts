@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
     }
 
     // Defaulting to the user's first workspace if none passed via query
-    let workspaceId = req.nextUrl.searchParams.get("workspaceId");
+    let workspaceId = (req.nextUrl?.searchParams || new URL(req.url || 'http://localhost').searchParams).get("workspaceId");
 
     if (!workspaceId) {
       const membership = await prisma.workspaceMembership.findFirst({
