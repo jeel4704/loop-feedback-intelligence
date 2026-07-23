@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 
 // 1. GET - Retrieve workspace reports list
 export async function GET() {
-  if (process.env.npm_lifecycle_event === "build") return NextResponse.json([]);
+  if (process.env.NEXT_BUILD_PHASE === "true" || process.env.npm_lifecycle_event === "build") return NextResponse.json([]);
 
   const session = await auth();
   try {

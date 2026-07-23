@@ -5,7 +5,7 @@ import { auth } from "@/auth";
 export const dynamic = "force-dynamic";
 
 export async function GET(req: Request,  context: { params: { id: string } }) {
-  if (process.env.npm_lifecycle_event === "build") return NextResponse.json([]);
+  if (process.env.NEXT_BUILD_PHASE === "true" || process.env.npm_lifecycle_event === "build") return NextResponse.json([]);
 
   const params = context?.params || ({} as any);
   const session = await auth();

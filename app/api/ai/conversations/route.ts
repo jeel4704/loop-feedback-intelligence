@@ -6,7 +6,7 @@ import { prisma } from "@/lib/prisma";
 export const dynamic = "force-dynamic";
 
 export async function GET(req: NextRequest) {
-  if (process.env.npm_lifecycle_event === "build") return NextResponse.json([]);
+  if (process.env.NEXT_BUILD_PHASE === "true" || process.env.npm_lifecycle_event === "build") return NextResponse.json([]);
 
   // Move auth() outside try/catch so Next.js can catch its internal DynamicServerError during build!
   const session = await auth();

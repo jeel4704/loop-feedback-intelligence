@@ -2,7 +2,7 @@ export const dynamic = "force-dynamic";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  if (process.env.npm_lifecycle_event === "build") return NextResponse.json([]);
+  if (process.env.NEXT_BUILD_PHASE === "true" || process.env.npm_lifecycle_event === "build") return NextResponse.json([]);
 
   const headers = ["Name", "Feedback", "Date", "Status", "Channel", "Theme", "Sentiment"];
   const exampleRows = [
