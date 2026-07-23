@@ -1,5 +1,5 @@
 export const dynamic = "force-dynamic";
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 import { checkForDuplicate, logDuplicateEvent, logDuplicateAuditRecord } from "@/lib/duplicate-detector";
@@ -10,7 +10,7 @@ function generateMockVector(): number[] {
 }
 
 // 1. GET - Retrieve workspace feedback entries (Tenant isolated)
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
   if (process.env.NEXT_BUILD_PHASE === "true" || process.env.npm_lifecycle_event === "build") return NextResponse.json([]);
 
   const session = await auth();

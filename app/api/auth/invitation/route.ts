@@ -1,5 +1,5 @@
 export const dynamic = "force-dynamic";
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 import { hashPassword, verifyPassword } from "@/lib/password";
@@ -7,7 +7,7 @@ import { sendInvitationEmail } from "@/lib/email";
 import crypto from "crypto";
 
 // 1. GET - Fetch invitation details for display on registration page (Locked Badge)
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
   if (process.env.NEXT_BUILD_PHASE === "true" || process.env.npm_lifecycle_event === "build") return NextResponse.json([]);
 
   try {

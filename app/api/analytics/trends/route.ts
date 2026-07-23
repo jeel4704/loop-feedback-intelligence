@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 
@@ -18,7 +18,7 @@ function getISOWeekInfo(date: Date) {
   return { year: target.getFullYear(), week: weekNumber };
 }
 
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
   if (process.env.NEXT_BUILD_PHASE === "true" || process.env.npm_lifecycle_event === "build") return NextResponse.json([]);
 
   const session = await auth();
