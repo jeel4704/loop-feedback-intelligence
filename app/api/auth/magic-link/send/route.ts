@@ -4,6 +4,8 @@ import { hashPassword } from "@/lib/password";
 import { sendMagicLinkEmail } from "@/lib/email";
 import crypto from "crypto";
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(req: Request) {
   try {
     const body = await req.json();

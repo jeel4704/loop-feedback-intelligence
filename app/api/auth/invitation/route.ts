@@ -51,6 +51,8 @@ export async function GET(req: Request) {
 }
 
 // 2. POST - Invite team member (restricted to OWNER or ADMIN)
+export const dynamic = 'force-dynamic';
+
 export async function POST(req: Request) {
   try {
     const session = await auth();
