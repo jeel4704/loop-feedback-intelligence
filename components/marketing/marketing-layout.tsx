@@ -3,7 +3,7 @@
 import { useState, useEffect, ReactNode } from "react";
 import NextLink from "next/link";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Github, Linkedin } from "lucide-react";
 import { motion } from "framer-motion";
 import { Logo } from "@/components/ui";
 
@@ -106,53 +106,72 @@ export function MarketingLayout({ children }: MarketingLayoutProps) {
 
       {/* FOOTER */}
       <motion.footer 
-        className="border-t border-white/10 bg-slate-950 py-10 text-xs text-slate-400 font-bold relative z-10"
+        className="border-t border-white/10 bg-slate-950 py-10 text-xs text-slate-400 relative z-10"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-50px" }}
         transition={{ duration: 0.6 }}
       >
-        <div className="mx-auto max-w-6xl px-6 flex flex-col md:flex-row md:justify-between gap-12">
-          <div className="space-y-4 md:max-w-xs">
-            <BrandLogo />
-            <p className="text-[10px] text-slate-500 leading-relaxed font-semibold">
-              AI Customer Feedback Intelligence Platform. Engineered for product alignment, security, and velocity.
-            </p>
-          </div>
+        <div className="mx-auto max-w-5xl px-6">
+          <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 md:grid-cols-4 md:gap-8">
+            <div className="md:col-span-2 space-y-5">
+              <BrandLogo />
+              <p className="text-[11px] text-slate-500 font-medium leading-relaxed max-w-[280px]">
+                AI Customer Feedback Intelligence Platform. Engineered for product alignment, security, and velocity.
+              </p>
+            </div>
 
-          <div className="flex gap-16 md:gap-24">
-            <div>
-              <p className="text-[10px] font-extrabold uppercase tracking-wider text-slate-500">Resources</p>
-              <ul className="mt-4 space-y-2.5 text-slate-300 font-semibold">
-                <li><NextLink href="/login" className="hover:text-white transition-colors">Workspace Login</NextLink></li>
-                <li><NextLink href="/signup" className="hover:text-white transition-colors">Workspace Signup</NextLink></li>
-                <li><NextLink href="/resources" className="hover:text-white transition-colors">Documentation</NextLink></li>
+            <div className="space-y-5">
+              <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Resources</p>
+              <ul className="space-y-3 font-semibold">
+                <li>
+                  <NextLink href="/login" className="flex items-center text-slate-300 hover:text-white hover:translate-x-1 transition-all duration-300">
+                    Workspace Login
+                  </NextLink>
+                </li>
+                <li>
+                  <NextLink href="/signup" className="flex items-center text-slate-300 hover:text-white hover:translate-x-1 transition-all duration-300">
+                    Workspace Signup
+                  </NextLink>
+                </li>
+                <li>
+                  <NextLink href="/resources" className="flex items-center text-slate-300 hover:text-white hover:translate-x-1 transition-all duration-300">
+                    Documentation
+                  </NextLink>
+                </li>
               </ul>
             </div>
 
-            <div>
-              <p className="text-[10px] font-extrabold uppercase tracking-wider text-slate-500">Connect</p>
-              <ul className="mt-4 space-y-2.5 text-slate-300 font-semibold">
-                <li><NextLink href="/company" className="hover:text-white transition-colors">GitHub</NextLink></li>
-                <li><NextLink href="/company" className="hover:text-white transition-colors">LinkedIn</NextLink></li>
+            <div className="space-y-5">
+              <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Connect</p>
+              <ul className="space-y-3 font-semibold">
+                <li>
+                  <NextLink href="/company" className="flex items-center gap-2.5 text-slate-300 hover:text-white hover:translate-x-1 transition-all duration-300 group">
+                    <Github className="h-[18px] w-[18px] text-slate-400 group-hover:text-white transition-colors" />
+                    GitHub
+                  </NextLink>
+                </li>
+                <li>
+                  <NextLink href="/company" className="flex items-center gap-2.5 text-slate-300 hover:text-white hover:translate-x-1 transition-all duration-300 group">
+                    <Linkedin className="h-[18px] w-[18px] text-slate-400 group-hover:text-white transition-colors" />
+                    LinkedIn
+                  </NextLink>
+                </li>
               </ul>
             </div>
           </div>
-        </div>
-
-        <div className="mx-auto max-w-6xl px-6 mt-12 pt-6 border-t border-white/5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <p className="text-[10px] tracking-wider text-slate-500 uppercase">
-            &copy; {new Date().getFullYear()} LOOP AI Technologies. All rights reserved.
-          </p>
-          <div className="flex gap-6 text-[10px] text-slate-400">
-            <a href="#" className="hover:text-white transition-colors relative group">
-              Privacy Policy
-              <span className="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-slate-400 transition-all duration-300 group-hover:w-full"></span>
-            </a>
-            <a href="#" className="hover:text-white transition-colors relative group">
-              Terms of Service
-              <span className="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-slate-400 transition-all duration-300 group-hover:w-full"></span>
-            </a>
+          
+          <div className="mt-12 pt-6 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="text-[11px] text-slate-500 text-center md:text-left">
+              <span className="block font-semibold">&copy; {new Date().getFullYear()} LOOP Feedback Intelligence.</span>
+              <span className="block mt-1">Built for enterprise customer insights.</span>
+            </div>
+            
+            <div className="flex flex-wrap justify-center gap-6 font-semibold text-[11px] text-slate-400">
+              <NextLink href="/privacy" className="hover:text-white transition-colors">Privacy</NextLink>
+              <NextLink href="/terms" className="hover:text-white transition-colors">Terms</NextLink>
+              <NextLink href="/resources" className="hover:text-white transition-colors">Documentation</NextLink>
+            </div>
           </div>
         </div>
       </motion.footer>
