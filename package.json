@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && rm -rf .next && NEXT_BUILD_PHASE=true next build",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
@@ -13,7 +13,8 @@
     "prisma:seed": "tsx prisma/seed.ts",
     "seed": "tsx scripts/seed.ts",
     "classify": "tsx scripts/classify.ts",
-    "import:feedback": "tsx scripts/import.ts"
+    "import:feedback": "tsx scripts/import.ts",
+    "postinstall": "prisma generate"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"

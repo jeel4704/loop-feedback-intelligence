@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 
@@ -18,9 +18,11 @@ function getISOWeekInfo(date: Date) {
   return { year: target.getFullYear(), week: weekNumber };
 }
 
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
+  if (process.env.NEXT_BUILD_PHASE === "true" || process.env.npm_lifecycle_event === "build") return NextResponse.json([]);
+
+  const session = await auth();
   try {
-    const session = await auth();
     if (!session || !session.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -39,7 +41,7 @@ export async function GET(req: Request) {
       return NextResponse.json({ error: "No workspace isolated for session" }, { status: 400 });
     }
 
-    const { searchParams } = new URL(req.url);
+    const searchParams = (req.nextUrl?.searchParams || new URL(req.url || 'http://localhost').searchParams);
     const period = searchParams.get("period") || "daily";
 
     // Define the date range based on the period to keep graphs readable

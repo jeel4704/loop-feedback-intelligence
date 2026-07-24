@@ -1,20 +1,18 @@
 "use client";
 
 import { useState, useEffect, Suspense } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
-import Image from "next/image";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Button, Input, Badge, Logo } from "@/components/ui";
 
-function InvitationForm() {
-  const searchParams = useSearchParams();
+function InvitationForm({ token }: { token: string }) {
   const router = useRouter();
-  const token = searchParams.get("token");
 
   const [loadingDetails, setLoadingDetails] = useState(true);
   const [workspaceName, setWorkspaceName] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
+  const [userExists, setUserExists] = useState(false);
 
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -40,10 +38,11 @@ function InvitationForm() {
           setWorkspaceName(data.workspaceName);
           setEmail(data.email);
           setRole(data.role);
+          setUserExists(data.userExists);
         }
       })
-      .catch(() => {
-        setError("Unable to connect to the authentication server.");
+      .catch((err) => {
+        setError(`Connection error: ${err.message || 'Unknown network error'}`);
       })
       .finally(() => {
         setLoadingDetails(false);
@@ -54,7 +53,7 @@ function InvitationForm() {
     e.preventDefault();
     setError("");
 
-    if (password !== confirmPassword) {
+    if (!userExists && password !== confirmPassword) {
       setError("Passwords do not match.");
       return;
     }
@@ -62,13 +61,12 @@ function InvitationForm() {
     setLoading(true);
 
     try {
-      // Direct acceptance of invitation via PUT request (token-only authentication)
       const res = await fetch("/api/auth/invitation", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           token,
-          name,
+          name: userExists ? undefined : name,
           password
         })
       });
@@ -76,18 +74,16 @@ function InvitationForm() {
       const data = await res.json();
 
       if (!res.ok) {
-        setError(data.error || "Failed to complete account registration.");
+        setError(data.error || "Failed to accept invitation.");
         setLoading(false);
         return;
       }
 
       setLoading(false);
-
-      // Redirect to Login page with success indicator
-      router.push("/login?message=verified" as any);
-    } catch (err) {
+      router.push("/login?message=verified");
+    } catch (err: any) {
       console.error(err);
-      setError("An unexpected error occurred.");
+      setError(`Submit error: ${err.message || 'Unknown network error'}`);
       setLoading(false);
     }
   };
@@ -102,13 +98,15 @@ function InvitationForm() {
 
   if (error && !email) {
     return (
-      <div className="space-y-4 py-8">
-        <div className="rounded-xl bg-rose-50 border border-rose-200 p-4 text-xs font-semibold text-rose-700">
+      <div className="space-y-6 py-8">
+        <div className="rounded-xl bg-rose-50 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-900 p-5 text-sm font-semibold text-rose-700 dark:text-rose-400 text-center">
           {error}
         </div>
-        <Link href="/" className="text-xs text-blue-600 hover:text-blue-700 font-medium block text-center">
-          Go back to Home
-        </Link>
+        <div className="flex justify-center">
+          <Link href="/login">
+            <Button variant="secondary">Return to Login</Button>
+          </Link>
+        </div>
       </div>
     );
   }
@@ -136,64 +134,77 @@ function InvitationForm() {
         </div>
       )}
 
-      <label className="block">
-        <span className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">
-          Full Name
-        </span>
-        <Input 
-          required
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="Jane Doe" 
-        />
-      </label>
+      {userExists ? (
+        <div className="rounded-xl bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900 p-4 mb-4">
+          <p className="text-sm font-semibold text-amber-800 dark:text-amber-400 mb-1">Account Exists</p>
+          <p className="text-xs text-amber-700 dark:text-amber-500">
+            You already have an account with {email}. Please enter your password to confirm and accept this invitation.
+          </p>
+        </div>
+      ) : (
+        <label className="block">
+          <span className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">
+            Full Name
+          </span>
+          <Input 
+            required
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Jane Doe" 
+          />
+        </label>
+      )}
+
+      {!userExists && (
+        <label className="block">
+          <span className="mb-2 block text-sm font-medium text-slate-400 dark:text-slate-500">
+            Business Email (Read Only)
+          </span>
+          <Input 
+            type="email"
+            disabled
+            value={email}
+            className="bg-slate-100/80 dark:bg-dark-card border-slate-200 dark:border-dark-border text-slate-400 dark:text-slate-500 font-medium"
+          />
+        </label>
+      )}
 
       <label className="block">
-        <span className="mb-2 block text-sm font-medium text-slate-400 dark:text-slate-500">
-          Business Email (Read Only)
-        </span>
-        <Input 
-          type="email"
-          disabled
-          value={email}
-          className="bg-slate-100/80 dark:bg-dark-card border-slate-200 dark:border-dark-border text-slate-400 dark:text-slate-500 font-medium"
-        />
-      </label>
-
-      <label className="block">
         <span className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">
-          Password
+          {userExists ? "Current Password" : "Password"}
         </span>
         <Input 
           type="password" 
           required
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          placeholder="Create secure password (min 8 chars)" 
+          placeholder={userExists ? "Enter your current password" : "Create secure password (min 8 chars)"} 
         />
       </label>
 
-      <label className="block">
-        <span className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">
-          Confirm Password
-        </span>
-        <Input 
-          type="password" 
-          required
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          placeholder="Re-enter password" 
-        />
-      </label>
+      {!userExists && (
+        <label className="block">
+          <span className="mb-2 block text-sm font-medium text-slate-700 dark:text-slate-300">
+            Confirm Password
+          </span>
+          <Input 
+            type="password" 
+            required
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            placeholder="Re-enter password" 
+          />
+        </label>
+      )}
 
       <Button type="submit" fullWidth disabled={loading}>
-        {loading ? "Processing..." : "Create Account"}
+        {loading ? "Processing..." : (userExists ? "Log in & Accept" : "Create Account")}
       </Button>
     </form>
   );
 }
 
-export default function InvitationPage() {
+export default function InvitationClient({ token }: { token: string }) {
   return (
     <main className="min-h-screen bg-slate-50 dark:bg-black px-6 py-16 flex items-center justify-center">
       <div className="mx-auto grid max-w-6xl w-full gap-10 lg:grid-cols-[1.2fr_0.9fr] lg:items-center">
@@ -233,11 +244,11 @@ export default function InvitationPage() {
             Accept Invitation
           </p>
           <h2 className="mt-3 text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-950 dark:text-white">
-            Create Team Account
+            Join Workspace
           </h2>
           <div className="mt-8 relative z-10">
             <Suspense fallback={<div className="text-xs text-slate-400 font-semibold">Loading invitation form...</div>}>
-              <InvitationForm />
+              <InvitationForm token={token} />
             </Suspense>
           </div>
         </section>

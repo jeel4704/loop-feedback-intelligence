@@ -1,7 +1,12 @@
 import { Suspense } from "react";
 import { AuthForm, AuthShell } from "@/components/auth";
+import InvitationClient from "@/components/auth/invitation-client";
 
-export default function LoginPage() {
+export default function LoginPage({ searchParams }: { searchParams: { inviteToken?: string } }) {
+  if (searchParams?.inviteToken) {
+    return <InvitationClient token={searchParams.inviteToken} />;
+  }
+
   return (
     <AuthShell
       title="Login"

@@ -3,7 +3,7 @@
 import NextLink from "next/link";
 import { MarketingLayout } from "@/components/marketing/marketing-layout";
 import { Badge, Card } from "@/components/ui";
-import { BookOpen, FileSpreadsheet, MessageSquarePlus, LifeBuoy, ArrowRight, ShieldCheck, FileText } from "lucide-react";
+import { BookOpen, FileSpreadsheet, MessageSquarePlus, LifeBuoy, ArrowRight, ShieldCheck } from "lucide-react";
 
 export default function ResourcesPage() {
   const resourceCards = [
@@ -46,14 +46,6 @@ export default function ResourcesPage() {
       color: "text-amber-500",
       bg: "bg-amber-500/10",
       link: "/resources/faq"
-    },
-    {
-      title: "Release Notes",
-      desc: "Stay up to date with the latest features, improvements, and AI model upgrades added to the LOOP platform.",
-      icon: FileText,
-      color: "text-teal-500",
-      bg: "bg-teal-500/10",
-      link: "/resources/release-notes"
     }
   ];
 
@@ -73,12 +65,18 @@ export default function ResourcesPage() {
       </section>
 
       {/* Grid */}
-      <section className="mx-auto max-w-7xl px-6 py-10">
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      <section className="mx-auto max-w-7xl px-6 pt-10 pb-24">
+        <div className="grid gap-8 grid-cols-1 sm:grid-cols-6">
           {resourceCards.map((res, idx) => {
             const Icon = res.icon;
+            
+            // Dynamic span logic for 5 items
+            let colSpan = "sm:col-span-3 lg:col-span-2"; 
+            if (idx === 3) colSpan = "sm:col-span-3 lg:col-span-3";
+            if (idx === 4) colSpan = "sm:col-span-6 lg:col-span-3";
+
             return (
-              <Card key={idx} className="rounded-[24px] border border-slate-800 bg-slate-900/50 p-8 shadow-sm hover:shadow-md hover:translate-y-[-2px] transition-all duration-300 flex flex-col justify-between text-left">
+              <Card key={idx} className={`rounded-[24px] border border-slate-800 bg-slate-900/50 p-8 shadow-sm hover:shadow-md hover:translate-y-[-2px] transition-all duration-300 flex flex-col justify-between text-left ${colSpan}`}>
                 <div className="space-y-5">
                   <div className={`h-11 w-11 rounded-[14px] ${res.bg} ${res.color} flex items-center justify-center border border-slate-700/50`}>
                     <Icon className="h-5 w-5" />
@@ -93,25 +91,6 @@ export default function ResourcesPage() {
               </Card>
             );
           })}
-        </div>
-      </section>
-
-      {/* Support CTA */}
-      <section className="mx-auto max-w-5xl px-6 py-20">
-        <div className="rounded-[32px] bg-gradient-to-tr from-slate-950 to-slate-900 border border-slate-800 p-8 sm:p-12 text-center text-white shadow-xl">
-          <h2 className="text-3xl font-extrabold tracking-tight">Need further assistance?</h2>
-          <p className="mt-4 text-slate-400 max-w-xl mx-auto font-semibold">
-            Our support team is ready to help you configure your data imports and optimize your AI feedback pipelines.
-          </p>
-          <div className="mt-8 flex justify-center gap-4">
-            <NextLink
-              href="/company"
-              className="inline-flex items-center justify-center gap-2 rounded-[14px] bg-blue-600 px-6 py-3.5 text-sm font-semibold text-white shadow-xl shadow-blue-500/25 hover:bg-blue-700 hover:shadow-blue-600/30 transition-all duration-300 hover:translate-y-[-1px]"
-            >
-              Contact Support
-              <ArrowRight className="h-4 w-4" />
-            </NextLink>
-          </div>
         </div>
       </section>
     </MarketingLayout>

@@ -6,8 +6,10 @@ import { auth } from "@/auth";
 
 // GET - List all workspaces user has access to
 export async function GET() {
+  if (process.env.NEXT_BUILD_PHASE === "true" || process.env.npm_lifecycle_event === "build") return NextResponse.json([]);
+
+  const session = await auth();
   try {
-    const session = await auth();
     if (!session || !session.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -73,8 +75,8 @@ export async function GET() {
 
 // POST - Create a new workspace
 export async function POST(req: Request) {
+  const session = await auth();
   try {
-    const session = await auth();
     if (!session || !session.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }

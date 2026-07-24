@@ -4,8 +4,10 @@ import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 
 export async function GET(req: Request) {
+  if (process.env.NEXT_BUILD_PHASE === "true" || process.env.npm_lifecycle_event === "build") return NextResponse.json([]);
+
+  const session = await auth();
   try {
-    const session = await auth();
     if (!session || !session.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }

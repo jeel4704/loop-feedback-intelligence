@@ -6,11 +6,14 @@ declare global {
   var prisma: PrismaClient | undefined;
 }
 
+// Prevent Prisma from spawning massive Rust engines during Next.js static collection worker evaluation
 export const prisma =
   global.prisma ??
-  new PrismaClient({
-    log: process.env.NODE_ENV === "development" ? ["warn", "error"] : ["error"]
-  });
+  (process.env.NEXT_BUILD_PHASE === "true"
+    ? (new Proxy({}, { get: () => () => Promise.resolve() }) as unknown as PrismaClient)
+    : new PrismaClient({
+        log: process.env.NODE_ENV === "development" ? ["warn", "error"] : ["error"]
+      }));
 
 if (process.env.NODE_ENV !== "production") {
   global.prisma = prisma;

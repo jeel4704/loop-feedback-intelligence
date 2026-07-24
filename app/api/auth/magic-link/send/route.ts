@@ -1,10 +1,14 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { hashPassword } from "@/lib/password";
 import { sendMagicLinkEmail } from "@/lib/email";
 import crypto from "crypto";
 
-export async function POST(req: Request) {
+
+
+export const dynamic = 'force-dynamic';
+
+export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const { email, name, workspaceName, password, purpose = "SIGNUP" } = body;
@@ -47,7 +51,10 @@ export async function POST(req: Request) {
       create: { email, name, workspaceName, passwordHash, token, expiresAt }
     });
 
-    const verificationUrl = `${process.env.NEXTAUTH_URL || 'http://localhost:3000'}/api/magic-link/verify?token=${encodeURIComponent(token)}`;
+    const protocol = req.headers.get("x-forwarded-proto") || "http";
+    const host = req.headers.get("host");
+    const baseUrl = host ? `${protocol}://${host}` : (process.env.NEXTAUTH_URL || 'http://localhost:3000').replace(/\/$/, "");
+    const verificationUrl = `${baseUrl}/api/magic-link/verify?token=${encodeURIComponent(token)}`;
     console.log("-----------------------------------------");
     console.log("✉️ [DEVELOPMENT Verification Link]:", verificationUrl);
     console.log("-----------------------------------------");

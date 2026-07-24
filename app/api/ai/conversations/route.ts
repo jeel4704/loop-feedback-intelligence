@@ -6,15 +6,18 @@ import { prisma } from "@/lib/prisma";
 export const dynamic = "force-dynamic";
 
 export async function GET(req: NextRequest) {
+  if (process.env.NEXT_BUILD_PHASE === "true" || process.env.npm_lifecycle_event === "build") return NextResponse.json([]);
+
+  // Move auth() outside try/catch so Next.js can catch its internal DynamicServerError during build!
+  const session = await auth();
+  if (!session?.user?.id) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   try {
-    const session = await auth();
-    if (!session?.user?.id) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
 
     // Defaulting to the user's first workspace if none passed via query
-    const url = new URL(req.url);
-    let workspaceId = url.searchParams.get("workspaceId");
+    let workspaceId = (req.nextUrl?.searchParams || new URL(req.url || 'http://localhost').searchParams).get("workspaceId");
 
     if (!workspaceId) {
       const membership = await prisma.workspaceMembership.findFirst({

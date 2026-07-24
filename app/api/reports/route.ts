@@ -6,8 +6,10 @@ export const dynamic = "force-dynamic";
 
 // 1. GET - Retrieve workspace reports list
 export async function GET() {
+  if (process.env.NEXT_BUILD_PHASE === "true" || process.env.npm_lifecycle_event === "build") return NextResponse.json([]);
+
+  const session = await auth();
   try {
-    const session = await auth();
     if (!session || !session.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -97,8 +99,8 @@ export async function GET() {
 
 // 2. POST - Generate a new VOC report snapshot
 export async function POST(req: Request) {
+  const session = await auth();
   try {
-    const session = await auth();
     if (!session || !session.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }

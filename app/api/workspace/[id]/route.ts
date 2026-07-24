@@ -3,9 +3,12 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 
-export async function GET(req: Request, { params }: { params: { id: string } }) {
+export async function GET(req: Request,  context: { params: { id: string } }) {
+  if (process.env.NEXT_BUILD_PHASE === "true" || process.env.npm_lifecycle_event === "build") return NextResponse.json([]);
+
+  const params = context?.params || ({} as any);
+  const session = await auth();
   try {
-    const session = await auth();
     if (!session || !session.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -214,9 +217,10 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
 }
 
 // PUT - Update/Archive workspace metadata
-export async function PUT(req: Request, { params }: { params: { id: string } }) {
+export async function PUT(req: Request,  context: { params: { id: string } }) {
+  const params = context?.params || ({} as any);
+  const session = await auth();
   try {
-    const session = await auth();
     if (!session || !session.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -263,9 +267,10 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
 }
 
 // DELETE - Archive/Delete workspace
-export async function DELETE(req: Request, { params }: { params: { id: string } }) {
+export async function DELETE(req: Request,  context: { params: { id: string } }) {
+  const params = context?.params || ({} as any);
+  const session = await auth();
   try {
-    const session = await auth();
     if (!session || !session.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }

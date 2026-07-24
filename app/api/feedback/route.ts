@@ -1,5 +1,5 @@
 export const dynamic = "force-dynamic";
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 import { checkForDuplicate, logDuplicateEvent, logDuplicateAuditRecord } from "@/lib/duplicate-detector";
@@ -10,9 +10,11 @@ function generateMockVector(): number[] {
 }
 
 // 1. GET - Retrieve workspace feedback entries (Tenant isolated)
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
+  if (process.env.NEXT_BUILD_PHASE === "true" || process.env.npm_lifecycle_event === "build") return NextResponse.json([]);
+
+  const session = await auth();
   try {
-    const session = await auth();
     if (!session || !session.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
@@ -29,7 +31,7 @@ export async function GET(req: Request) {
       return NextResponse.json({ error: "No workspace isolated for session" }, { status: 400 });
     }
 
-    const { searchParams } = new URL(req.url);
+    const searchParams = (req.nextUrl?.searchParams || new URL(req.url || 'http://localhost').searchParams);
     const sentiment = searchParams.get("sentiment");
     const channel = searchParams.get("channel");
     const status = searchParams.get("status");
@@ -84,8 +86,8 @@ export async function GET(req: Request) {
 
 // 2. POST - Insert a new customer feedback entry manually
 export async function POST(req: Request) {
+  const session = await auth();
   try {
-    const session = await auth();
     if (!session || !session.user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }

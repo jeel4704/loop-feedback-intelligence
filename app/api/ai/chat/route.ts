@@ -8,7 +8,7 @@ import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { IntentValidator } from "@/services/ai/intent.validator";
 
-export const maxDuration = 60; // Allow Vercel Edge longer execution time for LLMs
+// export const maxDuration = 60; // Disabled for Vercel Hobby plan compatibility
 // Ensure this route is dynamic and supports streaming
 export const dynamic = "force-dynamic";
 
