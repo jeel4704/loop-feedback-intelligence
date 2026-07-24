@@ -146,13 +146,13 @@ export function MarketingLayout({ children }: MarketingLayoutProps) {
               <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Connect</p>
               <ul className="space-y-3 font-semibold">
                 <li>
-                  <NextLink href="/company" className="flex items-center gap-2.5 text-slate-300 hover:text-white hover:translate-x-1 transition-all duration-300 group">
+                  <NextLink href="https://github.com/jeel4704" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2.5 text-slate-300 hover:text-white hover:translate-x-1 transition-all duration-300 group">
                     <Github className="h-[18px] w-[18px] text-slate-400 group-hover:text-white transition-colors" />
                     GitHub
                   </NextLink>
                 </li>
                 <li>
-                  <NextLink href="/company" className="flex items-center gap-2.5 text-slate-300 hover:text-white hover:translate-x-1 transition-all duration-300 group">
+                  <NextLink href="https://www.linkedin.com/in/patel-jeel-649978226" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2.5 text-slate-300 hover:text-white hover:translate-x-1 transition-all duration-300 group">
                     <Linkedin className="h-[18px] w-[18px] text-slate-400 group-hover:text-white transition-colors" />
                     LinkedIn
                   </NextLink>
