@@ -3,7 +3,7 @@
 import NextLink from "next/link";
 import { MarketingLayout } from "@/components/marketing/marketing-layout";
 import { Badge, Card } from "@/components/ui";
-import { BookOpen, FileSpreadsheet, MessageSquarePlus, LifeBuoy, ArrowRight, ShieldCheck, FileText } from "lucide-react";
+import { BookOpen, FileSpreadsheet, MessageSquarePlus, LifeBuoy, ArrowRight, ShieldCheck } from "lucide-react";
 
 export default function ResourcesPage() {
   const resourceCards = [
@@ -46,14 +46,6 @@ export default function ResourcesPage() {
       color: "text-amber-500",
       bg: "bg-amber-500/10",
       link: "/resources/faq"
-    },
-    {
-      title: "Release Notes",
-      desc: "Stay up to date with the latest features, improvements, and AI model upgrades added to the LOOP platform.",
-      icon: FileText,
-      color: "text-teal-500",
-      bg: "bg-teal-500/10",
-      link: "/resources/release-notes"
     }
   ];
 
