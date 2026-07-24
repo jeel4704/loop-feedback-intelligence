@@ -112,7 +112,7 @@ export function MarketingLayout({ children }: MarketingLayoutProps) {
         viewport={{ once: true, margin: "-50px" }}
         transition={{ duration: 0.6 }}
       >
-        <div className="mx-auto max-w-7xl px-6 grid gap-10 md:grid-cols-4">
+        <div className="mx-auto max-w-7xl px-6 grid gap-10 md:grid-cols-3">
           <div className="space-y-4">
             <BrandLogo />
             <p className="text-[10px] text-slate-500 leading-relaxed max-w-xs font-semibold">
@@ -121,22 +121,11 @@ export function MarketingLayout({ children }: MarketingLayoutProps) {
           </div>
 
           <div>
-            <p className="text-[10px] font-extrabold uppercase tracking-wider text-slate-500">Features</p>
-            <ul className="mt-4 space-y-2.5 text-slate-300 font-semibold">
-              <li><NextLink href="/features" className="hover:text-white transition-colors">AI Classification</NextLink></li>
-              <li><NextLink href="/features" className="hover:text-white transition-colors">Thematic Clustering</NextLink></li>
-              <li><NextLink href="/product" className="hover:text-white transition-colors">Ask LOOP RAG</NextLink></li>
-              <li><NextLink href="/product" className="hover:text-white transition-colors">VOC Reports</NextLink></li>
-            </ul>
-          </div>
-
-          <div>
             <p className="text-[10px] font-extrabold uppercase tracking-wider text-slate-500">Resources</p>
             <ul className="mt-4 space-y-2.5 text-slate-300 font-semibold">
               <li><NextLink href="/login" className="hover:text-white transition-colors">Workspace Login</NextLink></li>
               <li><NextLink href="/signup" className="hover:text-white transition-colors">Workspace Signup</NextLink></li>
               <li><NextLink href="/resources" className="hover:text-white transition-colors">Documentation</NextLink></li>
-              <li><NextLink href="/resources" className="hover:text-white transition-colors">Security Policy</NextLink></li>
             </ul>
           </div>
 
@@ -144,7 +133,6 @@ export function MarketingLayout({ children }: MarketingLayoutProps) {
             <p className="text-[10px] font-extrabold uppercase tracking-wider text-slate-500">Connect</p>
             <ul className="mt-4 space-y-2.5 text-slate-300 font-semibold">
               <li><NextLink href="/company" className="hover:text-white transition-colors">GitHub</NextLink></li>
-              <li><NextLink href="/company" className="hover:text-white transition-colors">Twitter</NextLink></li>
               <li><NextLink href="/company" className="hover:text-white transition-colors">LinkedIn</NextLink></li>
             </ul>
           </div>

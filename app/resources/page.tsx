@@ -73,7 +73,7 @@ export default function ResourcesPage() {
       </section>
 
       {/* Grid */}
-      <section className="mx-auto max-w-7xl px-6 py-10">
+      <section className="mx-auto max-w-7xl px-6 pt-10 pb-24">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {resourceCards.map((res, idx) => {
             const Icon = res.icon;
@@ -93,25 +93,6 @@ export default function ResourcesPage() {
               </Card>
             );
           })}
-        </div>
-      </section>
-
-      {/* Support CTA */}
-      <section className="mx-auto max-w-5xl px-6 py-20">
-        <div className="rounded-[32px] bg-gradient-to-tr from-slate-950 to-slate-900 border border-slate-800 p-8 sm:p-12 text-center text-white shadow-xl">
-          <h2 className="text-3xl font-extrabold tracking-tight">Need further assistance?</h2>
-          <p className="mt-4 text-slate-400 max-w-xl mx-auto font-semibold">
-            Our support team is ready to help you configure your data imports and optimize your AI feedback pipelines.
-          </p>
-          <div className="mt-8 flex justify-center gap-4">
-            <NextLink
-              href="/company"
-              className="inline-flex items-center justify-center gap-2 rounded-[14px] bg-blue-600 px-6 py-3.5 text-sm font-semibold text-white shadow-xl shadow-blue-500/25 hover:bg-blue-700 hover:shadow-blue-600/30 transition-all duration-300 hover:translate-y-[-1px]"
-            >
-              Contact Support
-              <ArrowRight className="h-4 w-4" />
-            </NextLink>
-          </div>
         </div>
       </section>
     </MarketingLayout>
