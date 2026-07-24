@@ -106,39 +106,41 @@ export function MarketingLayout({ children }: MarketingLayoutProps) {
 
       {/* FOOTER */}
       <motion.footer 
-        className="border-t border-white/10 bg-slate-950 py-16 text-xs text-slate-400 font-bold relative z-10"
+        className="border-t border-white/10 bg-slate-950 py-10 text-xs text-slate-400 font-bold relative z-10"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-50px" }}
         transition={{ duration: 0.6 }}
       >
-        <div className="mx-auto max-w-7xl px-6 grid gap-10 md:grid-cols-3">
-          <div className="space-y-4">
+        <div className="mx-auto max-w-6xl px-6 flex flex-col md:flex-row md:justify-between gap-12">
+          <div className="space-y-4 md:max-w-xs">
             <BrandLogo />
-            <p className="text-[10px] text-slate-500 leading-relaxed max-w-xs font-semibold">
+            <p className="text-[10px] text-slate-500 leading-relaxed font-semibold">
               AI Customer Feedback Intelligence Platform. Engineered for product alignment, security, and velocity.
             </p>
           </div>
 
-          <div>
-            <p className="text-[10px] font-extrabold uppercase tracking-wider text-slate-500">Resources</p>
-            <ul className="mt-4 space-y-2.5 text-slate-300 font-semibold">
-              <li><NextLink href="/login" className="hover:text-white transition-colors">Workspace Login</NextLink></li>
-              <li><NextLink href="/signup" className="hover:text-white transition-colors">Workspace Signup</NextLink></li>
-              <li><NextLink href="/resources" className="hover:text-white transition-colors">Documentation</NextLink></li>
-            </ul>
-          </div>
+          <div className="flex gap-16 md:gap-24">
+            <div>
+              <p className="text-[10px] font-extrabold uppercase tracking-wider text-slate-500">Resources</p>
+              <ul className="mt-4 space-y-2.5 text-slate-300 font-semibold">
+                <li><NextLink href="/login" className="hover:text-white transition-colors">Workspace Login</NextLink></li>
+                <li><NextLink href="/signup" className="hover:text-white transition-colors">Workspace Signup</NextLink></li>
+                <li><NextLink href="/resources" className="hover:text-white transition-colors">Documentation</NextLink></li>
+              </ul>
+            </div>
 
-          <div>
-            <p className="text-[10px] font-extrabold uppercase tracking-wider text-slate-500">Connect</p>
-            <ul className="mt-4 space-y-2.5 text-slate-300 font-semibold">
-              <li><NextLink href="/company" className="hover:text-white transition-colors">GitHub</NextLink></li>
-              <li><NextLink href="/company" className="hover:text-white transition-colors">LinkedIn</NextLink></li>
-            </ul>
+            <div>
+              <p className="text-[10px] font-extrabold uppercase tracking-wider text-slate-500">Connect</p>
+              <ul className="mt-4 space-y-2.5 text-slate-300 font-semibold">
+                <li><NextLink href="/company" className="hover:text-white transition-colors">GitHub</NextLink></li>
+                <li><NextLink href="/company" className="hover:text-white transition-colors">LinkedIn</NextLink></li>
+              </ul>
+            </div>
           </div>
         </div>
 
-        <div className="mx-auto max-w-7xl px-6 mt-16 pt-8 border-t border-white/5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div className="mx-auto max-w-6xl px-6 mt-12 pt-6 border-t border-white/5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <p className="text-[10px] tracking-wider text-slate-500 uppercase">
             &copy; {new Date().getFullYear()} LOOP AI Technologies. All rights reserved.
           </p>
