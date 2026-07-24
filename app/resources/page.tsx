@@ -66,11 +66,17 @@ export default function ResourcesPage() {
 
       {/* Grid */}
       <section className="mx-auto max-w-7xl px-6 pt-10 pb-24">
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-8 grid-cols-1 sm:grid-cols-6">
           {resourceCards.map((res, idx) => {
             const Icon = res.icon;
+            
+            // Dynamic span logic for 5 items
+            let colSpan = "sm:col-span-3 lg:col-span-2"; 
+            if (idx === 3) colSpan = "sm:col-span-3 lg:col-span-3";
+            if (idx === 4) colSpan = "sm:col-span-6 lg:col-span-3";
+
             return (
-              <Card key={idx} className="rounded-[24px] border border-slate-800 bg-slate-900/50 p-8 shadow-sm hover:shadow-md hover:translate-y-[-2px] transition-all duration-300 flex flex-col justify-between text-left">
+              <Card key={idx} className={`rounded-[24px] border border-slate-800 bg-slate-900/50 p-8 shadow-sm hover:shadow-md hover:translate-y-[-2px] transition-all duration-300 flex flex-col justify-between text-left ${colSpan}`}>
                 <div className="space-y-5">
                   <div className={`h-11 w-11 rounded-[14px] ${res.bg} ${res.color} flex items-center justify-center border border-slate-700/50`}>
                     <Icon className="h-5 w-5" />
