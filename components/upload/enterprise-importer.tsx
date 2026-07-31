@@ -95,7 +95,12 @@ export function EnterpriseImporter() {
       setProgressPercent(100);
       setProgressLog(prev => [...prev, "Updating analytics and dashboards..."]);
       
-      setImportSummary(data);
+      setImportSummary({
+        total: items.length,
+        imported: data.imported || 0,
+        duplicates: (data.duplicateReports?.length || 0) + (data.skipped || 0),
+        failed: data.errors || 0
+      });
       setTimeout(() => setStep("SUMMARY"), 1200);
       
     } catch (err: any) {
