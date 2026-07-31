@@ -323,7 +323,7 @@ export async function POST(req: Request) {
       });
     }
 
-    revalidatePath("/feedback");
+    revalidatePath("/", "layout");
 
     return NextResponse.json({
       success: true,
